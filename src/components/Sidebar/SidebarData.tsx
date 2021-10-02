@@ -14,7 +14,7 @@ export const SidebarData = [{
 {
     title: "Přehled kryptoměn",
     // icon: <MonetizationOnIcon />,
-    Link: "/home"
+    Link: "/cryptoList"
 },
 {
     title: "Vlastní pordfolio",
@@ -29,6 +29,6 @@ export const SidebarData = [{
 {
     title: "Odhlásit se",
     // icon: <LogoutIcon />,
-    Link: "/home"
+    Link: "/logout"
 }
 ]

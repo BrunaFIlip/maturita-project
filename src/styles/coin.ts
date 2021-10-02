@@ -103,3 +103,50 @@ color: #e2e2e2;
     color: #e2e2e2;
 }
 `
+
+
+
+
+
+
+const MainTitle = styled.h1`
+margin-left: 10%;
+padding-top: 10%;
+font-size: 6rem;
+text-align: left;
+color: black;
+`
+const MainTitle2 = styled.h1`
+margin-top: -2%;
+margin-left: 10%;
+font-size: 6rem;
+text-align: left;
+color: black;
+`
+
+const BitCoinImage = styled.img`
+width: 500px;
+display: block;
+margin-top: 7%;
+margin-right: 15%;
+float: right;
+`
+const STable = styled.table`
+margin-left: 5%;
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 90%;
+`
+
+const STd = styled.td`
+  border: 1px solid #ddd;
+  padding: 8px;
+`
+
+const STh = styled.th`
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+`
