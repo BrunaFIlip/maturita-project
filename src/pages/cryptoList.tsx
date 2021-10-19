@@ -1,6 +1,6 @@
 import React, {FC, useState, useEffect} from 'react'
 import axios from "axios"
-import Coin from '../Coin';
+import {Coin} from '../components/Coin';
 import {
   SCoinApp,
   SCoinSearch,
@@ -9,7 +9,7 @@ import {
 } from '../../src/styles/coin'
 import IPageProps from '../interfaces/page';
 
-export const lisOfCrypto: FC = () => {
+const ListOfCrypto: FC<IPageProps> = () => {
     const[coins, setCoins] = useState([])
     const[search, setSearch] = useState('')
     
@@ -27,7 +27,8 @@ export const lisOfCrypto: FC = () => {
       const filteredCoins = coins.filter(coin => coin['name'])
 
 
-    return (
+    return (<>
+    <p>no nazdar ty debílku</p>
 <SCoinApp>
 <SCoinSearch>
 <SCoinText>
@@ -49,5 +50,9 @@ export const lisOfCrypto: FC = () => {
   )
 })}
 </SCoinApp>
+</>
     )
 }
+
+
+export default ListOfCrypto;

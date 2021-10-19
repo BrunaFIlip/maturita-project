@@ -6,6 +6,8 @@ import LogoutPage from "../pages/auth/logout";
 import RegisterPage from "../pages/auth/register";
 import ResetPasswordPage from "../pages/auth/reset";
 import HomePage from "../pages/home";
+import ListOfCrypto from '../pages/cryptoList'
+import Main from '../pages/portfolio/main'
 
 const routes: IRoute[] = [
     {
@@ -56,6 +58,20 @@ const routes: IRoute[] = [
         component: ResetPasswordPage,
         name: 'Reset Password Page',
         protected: false
+    },
+    {
+        path: '/cryptoList',
+        exact: true,
+        component: ListOfCrypto,
+        name: 'Crypto List Pagess',
+        protected: true
+    },
+    {
+        path: '/portfolioMain',
+        exact: true,
+        component: Main,
+        name: 'Portfolio Main Page',
+        protected: true
     }
 ];
 

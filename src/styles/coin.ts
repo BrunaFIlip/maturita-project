@@ -13,6 +13,7 @@ align-items: center;
 height: 80px;
 border-bottom: 1px solid #d7d7d7;
 width: 900px;
+color: black;
 `
 
 export const SCoin = styled.div`
@@ -93,11 +94,7 @@ width: 300px;
 height: 50px;
 border-radius: 4px;
 border: none;
-background-image: linear-gradient(
-    -225deg,
-    #ac32e4 0%,
-    #7918f2 48%,
-    #4801ff 100%);
+background-color: black;
 color: #e2e2e2;
 ::placeholder {
     color: #e2e2e2;
@@ -148,5 +145,5 @@ const STh = styled.th`
   padding-bottom: 12px;
   text-align: left;
   background-color: #04AA6D;
-  color: white;
+  color: black;
 `

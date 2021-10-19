@@ -27,7 +27,7 @@ export const Coin = ({name, image, symbol, price, volume, priceChange, marketcap
     <CoinPrice>
         ${price}
     </CoinPrice>
-    <CoinVolume>${volume.toLocalString()}</CoinVolume>
+    <CoinVolume>${volume}</CoinVolume>
     {priceChange < 0 ? (
         <Red>{priceChange.toFixed(2)}%</Red>
     ) : (
@@ -35,7 +35,7 @@ export const Coin = ({name, image, symbol, price, volume, priceChange, marketcap
     )
 }
 <CoinMarketcap>
-    Mkt Cap: ${marketcap.toLocaleString()}
+    Mkt Cap: ${marketcap}
 </CoinMarketcap>
 </CoinData>
 </CoinRow>

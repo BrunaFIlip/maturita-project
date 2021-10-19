@@ -19,7 +19,7 @@ export const SidebarData = [{
 {
     title: "Vlastní pordfolio",
     // icon: <ListAltIcon />,
-    Link: "/home"
+    Link: "/portfolioMain"
 },
 {
     title: "Profil",

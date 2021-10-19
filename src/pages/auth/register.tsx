@@ -19,7 +19,7 @@ const RegisterPage: React.FunctionComponent<IPageProps> = props => {
     const signUpWithEmailAndPassword = () => {
         if (password !== confirm)
         {
-            setError('Please make sure your passwords match.');
+            setError('Prosím ujistěte se, že vaše heslo je správně.');
             return;
         }
 
