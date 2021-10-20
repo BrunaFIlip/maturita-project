@@ -135,12 +135,12 @@ margin-left: 5%;
   width: 90%;
 `
 
-const STd = styled.td`
+export const STd = styled.td`
   border: 1px solid #ddd;
   padding: 8px;
 `
 
-const STh = styled.th`
+export const STr = styled.tr`
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;

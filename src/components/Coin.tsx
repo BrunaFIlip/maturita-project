@@ -11,7 +11,9 @@ import {
     CoinVolume,
     Red,
     Green,
-    CoinMarketcap
+    CoinMarketcap,
+    STd,
+    STr
 } from '../styles/coin'
 
 export const Coin = ({name, image, symbol, price, volume, priceChange, marketcap}: {name: any, image: any, symbol: any, price: any, volume: any, priceChange: any, marketcap: any}) => {
