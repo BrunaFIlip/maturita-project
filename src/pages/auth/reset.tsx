@@ -3,7 +3,7 @@ import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { Button, FormGroup, Input, Spinner } from 'reactstrap';
 import AuthContainer from '../../components/AuthContainer';
 import ErrorText from '../../components/ErrorText';
-import { auth } from '../../database/firebase';
+import {auth} from '../../database/firebase';
 import logging from '../../database/logging';
 import IPageProps from '../../interfaces/page';
 import queryString from 'querystring';
@@ -87,7 +87,7 @@ const ResetPasswordPage: React.FunctionComponent<IPageProps & RouteComponentProp
     }
 
     return (
-        <AuthContainer header="Reset Password">
+        <AuthContainer>
             {verifying ?
                 <Spinner color="info" />
             :

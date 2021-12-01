@@ -3,9 +3,11 @@ import { Redirect, useHistory } from 'react-router-dom';
 import { Button, FormGroup, Input } from 'reactstrap';
 import AuthContainer from '../../components/AuthContainer';
 import ErrorText from '../../components/ErrorText';
-import { auth } from '../../database/firebase';
+import {auth} from '../../database/firebase';
 import logging from '../../database/logging';
 import IPageProps from '../../interfaces/page';
+import { SInput, STable, UserBox, SH1, SButton, SP } from '../../styles/authStyles';
+
 
 const ChangePasswordPage: React.FunctionComponent<IPageProps> = props => {
     const [changing, setChanging] = useState<boolean>(false);
@@ -43,9 +45,11 @@ const ChangePasswordPage: React.FunctionComponent<IPageProps> = props => {
         return <Redirect to="/" />;
 
     return (
-        <AuthContainer header="Change Password">
+        <STable>
+        <AuthContainer>
+            <UserBox>
             <FormGroup>
-                <Input 
+                <SInput 
                     autoComplete="new-password"
                     type="password"
                     name="oldPassword"
@@ -56,7 +60,7 @@ const ChangePasswordPage: React.FunctionComponent<IPageProps> = props => {
                 />
             </FormGroup>
             <FormGroup>
-                <Input 
+                <SInput 
                     autoComplete="new-password"
                     type="password"
                     name="password"
@@ -67,7 +71,7 @@ const ChangePasswordPage: React.FunctionComponent<IPageProps> = props => {
                 />
             </FormGroup>
             <FormGroup>
-                <Input 
+                <SInput 
                     autoComplete="new-password"
                     type="password"
                     name="confirm"
@@ -77,16 +81,17 @@ const ChangePasswordPage: React.FunctionComponent<IPageProps> = props => {
                     value={confirm}
                 />
             </FormGroup>
-            <Button
+            </UserBox>
+            <SButton
                 disabled={changing}
                 color="success"
-                block
                 onClick={() => passwordChangeRequest()}
             >
                 Change Password
-            </Button>
+            </SButton>
             <ErrorText error={error} />
         </AuthContainer>
+        </STable>
     );
 }
 

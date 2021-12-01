@@ -1,12 +1,9 @@
 import React from 'react';
-import { Card, CardBody, CardHeader, Col, Container, Row } from 'reactstrap';
+import { Card, CardBody, Col, Container, Row } from 'reactstrap';
 
-export interface IAuthContainerProps {
-    header: any;
-}
 
-const AuthContainer: React.FunctionComponent<IAuthContainerProps> = props => {
-    const { children, header } = props;
+const AuthContainer: React.FunctionComponent = props => {
+    const { children} = props;
 
     return (
         <Container>
@@ -18,9 +15,6 @@ const AuthContainer: React.FunctionComponent<IAuthContainerProps> = props => {
                     lg={{ size: 4, offset: 4 }}
                 >
                     <Card className='mt-5'>
-                        <CardHeader className="bg-primary text-white">
-                            {header}
-                        </CardHeader>
                         <CardBody>
                             {children}
                         </CardBody>

@@ -1,45 +1,42 @@
-import React, {useState} from 'react'
-import Firebase from '../../database/firebase';
-import { auth } from '../../database/firebase';
-import { Button, FormGroup, Input } from 'reactstrap';
-
+import { useState} from 'react'
+import { auth, db } from '../../database/firebase';
+import { Button } from 'reactstrap';
+import {ref, child, get} from 'firebase/database'
+import ListOfYourCrypto from './listOfYourCrypto';
 
 
 const Main = () => {
     const[exist, setExist] = useState(false);
     const[uid, setUid] = useState(auth.currentUser?.uid);
 
-
-    const refreshPage = () => {
-        window.location.reload();
-    }
-
-    const createNewPortfolio = () => {
-        Firebase.database().ref('users').child(String(uid)).set({
-            crypto: 0
-        }).then(() => {
-            refreshPage();
+        
+        get(child(ref(db), 'users/'+uid)).then((snapshot) => {
+            if(snapshot.exists()){
+                setExist(true);
+            } else{
+                setExist(false);
+            }
+        }).catch((error:any) => {
+            console.log(error);
         })
-    }
 
-    Firebase.database().ref('users/'+uid).once("value", snapshot => {
-        if(snapshot.exists()){
-            setExist(true);
-        }
-    })
 
-    if(exist){
+
+    
+
+
+    if(!exist){
         return(<>
         <Button
         block
-        onClick={() => createNewPortfolio()}
+        onClick={() => window.location.pathname = "/newCrypto"}
         >
             Vytvořit portfolio
         </Button>
         </>)
     }
     else{
-        return(<><p>už tam jsi ;)</p></>)
+        return(<><ListOfYourCrypto/></>)
     }
 }
 

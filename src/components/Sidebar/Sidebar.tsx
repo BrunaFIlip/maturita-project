@@ -1,14 +1,16 @@
-import React from 'react'
 import {
     SSideBar,
     SUl,
     STitle,
-    // SIcon
+    SIcon
 } from '../../styles/sidebar'
 import {SidebarData} from './SidebarData'
+import { Header } from '../Header'
 
-export const Sidebar = () => {
+const Sidebar = () => {
     return (
+        <>
+        <Header/>
         <SSideBar>
         <SUl>
             {SidebarData.map((val, key) => {
@@ -21,11 +23,15 @@ export const Sidebar = () => {
                     }}
                 > 
                 {" "} 
+                <SIcon>{val.icon}</SIcon>
                 <STitle>{val.title}</STitle>{" "}
                 </li>
             )
         })}
         </SUl>
         </SSideBar>
+        </>
     )
 }
+
+export default Sidebar;

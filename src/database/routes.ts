@@ -8,6 +8,9 @@ import ResetPasswordPage from "../pages/auth/reset";
 import HomePage from "../pages/home";
 import ListOfCrypto from '../pages/cryptoList'
 import Main from '../pages/portfolio/main'
+import NewCrpytoForNow from "../pages/portfolio/newCryptoForNow";
+import Chart from "../components/Graphs/cryptoChart";
+
 
 const routes: IRoute[] = [
     {
@@ -71,6 +74,20 @@ const routes: IRoute[] = [
         exact: true,
         component: Main,
         name: 'Portfolio Main Page',
+        protected: true
+    },
+    {
+        path: '/newCrypto',
+        exact: true,
+        component: NewCrpytoForNow,
+        name: 'Přidat crypto',
+        protected: true
+    },
+    {
+        path: '/nasrat/:id',
+        exact: true,
+        component: Chart,
+        name: 'nasrat',
         protected: true
     }
 ];

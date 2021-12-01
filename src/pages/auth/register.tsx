@@ -3,9 +3,11 @@ import { Link, useHistory } from 'react-router-dom';
 import { Button, FormGroup, Input } from 'reactstrap';
 import AuthContainer from '../../components/AuthContainer';
 import ErrorText from '../../components/ErrorText';
-import { auth } from '../../database/firebase';
+import {auth} from '../../database/firebase';
 import logging from '../../database/logging';
 import IPageProps from '../../interfaces/page';
+import { SInput, STable, UserBox, SH1, SButton, SP } from '../../styles/authStyles';
+
 
 const RegisterPage: React.FunctionComponent<IPageProps> = props => {
     const [registering, setRegistering] = useState<boolean>(false);
@@ -53,9 +55,11 @@ const RegisterPage: React.FunctionComponent<IPageProps> = props => {
     }
 
     return (
-        <AuthContainer header="Register">
+        <STable>
+        <AuthContainer>
+            <UserBox>
             <FormGroup>
-                <Input 
+                <SInput 
                     type="email"
                     name="email"
                     id="email"
@@ -65,7 +69,7 @@ const RegisterPage: React.FunctionComponent<IPageProps> = props => {
                 />
             </FormGroup>
             <FormGroup>
-                <Input 
+                <SInput 
                     autoComplete="new-password"
                     type="password"
                     name="password"
@@ -76,7 +80,7 @@ const RegisterPage: React.FunctionComponent<IPageProps> = props => {
                 />
             </FormGroup>
             <FormGroup>
-                <Input 
+                <SInput 
                     autoComplete="new-password"
                     type="password"
                     name="confirm"
@@ -86,19 +90,18 @@ const RegisterPage: React.FunctionComponent<IPageProps> = props => {
                     value={confirm}
                 />
             </FormGroup>
-            <Button
+            </UserBox>
+            <SButton
                 disabled={registering}
                 color="success"
-                block
                 onClick={() => signUpWithEmailAndPassword()}
-            >
+                >
                 Sign Up
-            </Button>
-            <small>
-                <p className='m-1 text-center'>Already have an account? <Link to="/login">Login.</Link></p>
-            </small>
+            </SButton>
+                <SP>Already have an account? <Link to="/login">Login.</Link></SP>
             <ErrorText error={error} />
         </AuthContainer>
+        </STable>
     );
 }
 

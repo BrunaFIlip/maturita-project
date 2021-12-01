@@ -1,4 +1,4 @@
-import React, {FC, useState, useEffect} from 'react'
+import {FC, useState, useEffect} from 'react'
 import axios from "axios"
 import {Coin} from '../components/Coin';
 import {
@@ -9,8 +9,10 @@ import {
 } from '../../src/styles/coin'
 import IPageProps from '../interfaces/page';
 
+
+
 const ListOfCrypto: FC<IPageProps> = () => {
-    const[coins, setCoins] = useState([])
+    const[coins, setCoins] = useState<any[]>([])
     const[search, setSearch] = useState('')
     
     
@@ -24,12 +26,16 @@ const ListOfCrypto: FC<IPageProps> = () => {
           setSearch(e.target.value)
       }
 
-      const filteredCoins = coins.filter(coin => coin['name'])
 
+      const filteredCoins = coins.filter(coin =>
+        coin['name'].toLowerCase().includes(search.toLowerCase())
+      );
+    
 
     return (<>
-    <p>no nazdar ty debílku</p>
 <SCoinApp>
+<table>
+  <thead>
 <SCoinSearch>
 <SCoinText>
 <form>
@@ -37,9 +43,18 @@ const ListOfCrypto: FC<IPageProps> = () => {
 </form>
 </SCoinText>
 </SCoinSearch>
-{filteredCoins.map(coin => {
+</thead>
+  <tbody>
+  {filteredCoins.map(coin => {
   return (
-    <Coin key={coin['id']} 
+    <tr
+    onClick={() => {
+      window.location.pathname = '/nasrat/' + coin['id']
+    }}
+    >
+      <td>
+    <Coin 
+    key={coin['id']} 
     name={coin['name']} 
     image={coin['image']} 
     symbol={coin['symbol']} 
@@ -47,8 +62,12 @@ const ListOfCrypto: FC<IPageProps> = () => {
     price={coin['current_price']} 
     priceChange={coin['price_change_percentage_24h']}
     volume={coin['totasl_volume']}/>
+    </td>
+    </tr>
   )
 })}
+  </tbody>
+</table>
 </SCoinApp>
 </>
     )

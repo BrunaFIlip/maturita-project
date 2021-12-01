@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Button, FormGroup, Input } from 'reactstrap';
 import AuthContainer from '../../components/AuthContainer';
 import ErrorText from '../../components/ErrorText';
-import { auth } from '../../database/firebase';
+import {auth} from '../../database/firebase';
 import logging from '../../database/logging';
 import IPageProps from '../../interfaces/page';
+import { SInput, STable, UserBox, SH1, SButton, SP } from '../../styles/authStyles';
+
 
 const ForgotPasswordPage: React.FunctionComponent<IPageProps> = props => {
     const [sending, setSending] = useState<boolean>(false);
@@ -31,14 +33,16 @@ const ForgotPasswordPage: React.FunctionComponent<IPageProps> = props => {
     }
 
     return (
-        <AuthContainer header="Send Password Reset">
+        <STable>
+        <AuthContainer>
+            <UserBox>
             {sent ?
-                <p>A link has been sent to your email with instructions.</p>
+                <SP>A link has been sent to your email with instructions.</SP>
             :
                 <>
-                    <p>Please enter your email.</p>
+                    <SP>Please enter your email.</SP>
                     <FormGroup>
-                        <Input 
+                        <SInput 
                             type="email"
                             name="email"
                             id="email"
@@ -47,18 +51,19 @@ const ForgotPasswordPage: React.FunctionComponent<IPageProps> = props => {
                             value={email}
                         />
                     </FormGroup>
-                    <Button
+                    <SButton
                         disabled={sending}
                         color="success"
-                        block
                         onClick={() => resetPasswordRequest()}
                     >
                         Send Reset Link
-                    </Button>
+                    </SButton>
                     <ErrorText error={error} />
                 </>
             }
+            </UserBox>
         </AuthContainer>
+        </STable>
     );
 }
 

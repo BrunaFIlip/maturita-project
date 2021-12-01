@@ -3,10 +3,10 @@ import { Link, useHistory } from 'react-router-dom';
 import { Button, FormGroup, Input } from 'reactstrap';
 import AuthContainer from '../../components/AuthContainer';
 import ErrorText from '../../components/ErrorText';
-import { auth } from '../../database/firebase';
+import {auth} from '../../database/firebase';
 import logging from '../../database/logging';
 import IPageProps from '../../interfaces/page';
-import firebase from 'firebase/app';
+import { SInput, STable, UserBox, SH1, SButton, SP } from '../../styles/authStyles';
 
 const LoginPage: React.FunctionComponent<IPageProps> = props => {
     const [authenticating, setAuthenticating] = useState<boolean>(false);
@@ -34,9 +34,12 @@ const LoginPage: React.FunctionComponent<IPageProps> = props => {
     }
 
     return (
-        <AuthContainer header="Login">
+        <STable>
+        <AuthContainer>
+            <UserBox>
+            <SH1>Login</SH1>
             <FormGroup>
-                <Input 
+                <SInput 
                     type="email"
                     name="email"
                     id="email"
@@ -46,7 +49,7 @@ const LoginPage: React.FunctionComponent<IPageProps> = props => {
                 />
             </FormGroup>
             <FormGroup>
-                <Input 
+                <SInput 
                     autoComplete="new-password"
                     type="password"
                     name="password"
@@ -56,21 +59,20 @@ const LoginPage: React.FunctionComponent<IPageProps> = props => {
                     value={password}
                 />
             </FormGroup>
-            <Button
+            </UserBox>
+            <SButton
                 disabled={authenticating}
                 color="success"
-                block
                 onClick={() => signInWithEmailAndPassword()}
             >
                 Login
-            </Button>
-            <small>
-                <p className='m-1 text-center'>Don't have an account? <Link to="/register">Register here.</Link></p>
-                <p className='m-1 text-center'><Link to="/forget">Forget your password?</Link></p>
-            </small>
+            </SButton>
+                <SP>Don't have an account? <Link to="/register">Register here.</Link></SP>
+                <SP><Link to="/forget">Forget your password?</Link></SP>
             <ErrorText error={error} />
             <hr className="bg-info m-3" />
         </AuthContainer>
+        </STable>
     );
 }
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Route, RouteComponentProps, Switch } from 'react-router-dom';
 import { Spinner } from 'reactstrap';
 import AuthRoute from './components/AuthRoute';
-import { auth } from './database/firebase';
+import {auth} from './database/firebase';
 import logging from './database/logging';
 import routes from './database/routes';
 

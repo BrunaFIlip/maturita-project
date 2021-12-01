@@ -71,8 +71,9 @@ color: #11d811;
 export const SCoinApp = styled.div`
   display: flex; flex-direction: colun;
   align-items: center;
-  margin-top: 64px;
   color: #fff;
+  margin-left: 6%;
+  padding-top: 3.4%
 `
 
 export const SCoinSearch = styled.div`

@@ -1,7 +1,9 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { auth } from '../../database/firebase';
+import {auth} from '../../database/firebase';
 import logging from '../../database/logging';
+import Sidebar from '../Sidebar/Sidebar';
+import { Padding } from '../../styles/padding';
 
 export interface IAuthRouteProps { }
 
@@ -15,7 +17,7 @@ const AuthRoute: React.FunctionComponent<IAuthRouteProps> = props => {
     }
 
     return (
-        <div>{children}</div>
+        <div><Sidebar/><Padding>{children}</Padding></div>
     );
 }
 
