@@ -11,4 +11,7 @@ padding: 10px;
 export const SPie = styled.div`
 width: 15%;
 font-size: 7px;
+position: relative;
+left: 80%;
+margin-top: -95px
 `

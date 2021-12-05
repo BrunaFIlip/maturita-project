@@ -4,7 +4,6 @@ import {ref, child, get} from 'firebase/database'
 import { db, auth } from '../../database/firebase';
 import { SPie } from '../../styles/myCrypto';
 import { getMarketData } from './marketData';
-import { Add } from '@material-ui/icons';
 
 const MainPieChart = () => {
     const[uid, setUid] = useState(auth.currentUser?.uid);
