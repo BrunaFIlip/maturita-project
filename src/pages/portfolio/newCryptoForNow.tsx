@@ -8,45 +8,102 @@ SButton,
 SInput
 } from '../../styles/newCrypto';
 import { auth, db } from '../../database/firebase';
-import {ref, set, child, get} from 'firebase/database'
+import {ref, set, child, get, update} from 'firebase/database'
+
+
 
 
 
 const NewCrpytoForNow = ()  => {
     const[coins, setCoins] = useState([])
     const[count, setCount] = useState<string>('')
-    const[selectedCoin, setSelectedCoin] = useState<string>('');
+    const[selectedCoin, setSelectedCoin] = useState<string>('Bitcoin');
     const[uid, setUid] = useState(auth.currentUser?.uid);
     const[price, setPrice] = useState<string>('');
+    const[exist, setExist] = useState(false);
+    const[data, setData] = useState<any>({});
+
+    const[oldValue, setOldValue] = useState<number>(0);
+    const[oldAmount, setOldAmount] = useState<number>(0);
 
 
+    
+        const defaultOption = 'Bitcoin';
+    
+        useEffect(() => {
+            axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=CZK&order=market_cap_desc&per_page=100&page=1&sparkline=false').then(res => {
+              setCoins(res.data)
+            }).catch(error => console.log(error))
+          }, []);
+    
+          useEffect(() => {
+            get(child(ref(db), 'users/'+uid)).then((snapshot) => {
+                if(snapshot.exists()){
+                    setData(snapshot.val())
+                }
+            }).catch((error:any) => {
+                console.log(error);
+            })
+        }, [])
 
-    const cryptos = ["bitcoin", "lightcoin", "dogecoin", "ethereum", "nevim jakej coin"]
-    const defaultOption = cryptos[0];
+    const Exists = (coin: any) => {
+        get(child(ref(db), 'users/'+ uid + '/' + coin)).then((snapshot) => {
+            if(snapshot.exists()){
+                setExist(true);
+            } else{
+                setExist(false);
+            }
+        }).catch((error:any) => {
+            console.log(error);
+        })
+    }
 
-    useEffect(() => {
-        axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=CZK&order=market_cap_desc&per_page=100&page=1&sparkline=false').then(res => {
-          setCoins(res.data)
-        }).catch(error => console.log(error))
-      }, []);
 
-      const filteredCoins = coins.filter(coin => coin['name'])
-
-      console.log(coins.map(coin => {
-          return(
-              coin['name']
-          )
-      }));
+    const OldData = () =>{
+        Object.entries(data[selectedCoin]).map((value) => {
+            if(value[0] == 'pocet')
+            setOldAmount(Number(value[1]));
+            else if(value[0] == 'cena')
+            setOldValue(Number(value[1]));
+        })
+    }
 
 
       const saveToDatabase = () => {
-        set(ref(db, 'users/' + uid + "/" + selectedCoin), {
-            pocet: count,
-            cena: price
-        }).then(() => {
-            window.location.pathname = "/portfolioMain"
-        }).catch((error:any) =>{
-            console.log("tohle je se nepovedlo: " + error)
+        get(child(ref(db), 'users/'+ uid + '/' + selectedCoin)).then((snapshot) => {
+            if(!snapshot.exists()){
+                set(ref(db, 'users/' + uid + "/" + selectedCoin), {
+                    pocet: count,
+                    cena: price
+                }).then(() => {
+                    window.location.pathname = "/portfolioMain"
+                }).catch((error:any) =>{
+                    console.log("tohle se nepovedlo: " + error)
+                })
+            } else{
+                let oldValue = 0;
+                let oldAmount = 0;
+                Object.entries(data[selectedCoin]).map((value) => {
+                    if(value[0] == 'pocet')
+                    oldAmount = Number(value[1]);
+                    else if(value[0] == 'cena')
+                    oldValue = Number(value[1]);
+                })
+                const newAmount = oldAmount + Number(count);
+                const newValue = oldValue + Number(price);
+                const postData = {
+                    pocet: newAmount,
+                    cena: newValue
+                }
+                
+                update(ref(db, 'users/' + uid + "/" + selectedCoin), postData).then(() => {
+                    window.location.pathname = "/portfolioMain"
+                }).catch((error:any) => {
+                    console.log("tohle se nepovedlo: " + error)
+                })
+            }
+        }).catch((error:any) => {
+            console.log(error);
         })
       }
 
@@ -67,7 +124,7 @@ const NewCrpytoForNow = ()  => {
                 <SInput type="text" 
                 name="count"
                 id="count"
-                placeholder="napište částku v KČ"
+                placeholder="napište počet coinu"
                 onChange={event => setCount(event.target.value)}
                 value={count}
                 />
