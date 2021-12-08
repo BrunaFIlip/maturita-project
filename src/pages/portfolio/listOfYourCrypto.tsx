@@ -103,10 +103,12 @@ const ListOfYourCrypto = () => {
             return(<SRec onClick={()=>setShow(!show)}><h2>{coin[0]}</h2>
         <br/>
         {Object.entries(data[coin[0]]).map((value) => {
-            return(<>
-            {value[0]} : {value[1]}<br/>
-            </>
-        )
+            if(value[0] == "cena"){
+                return(<>Profit: {value[1] + values[i]} <br/></>)
+            }
+            else if(value[0] == "pocet"){
+                return(<>Pocet coinu: {value[1]}</>)
+            }
         })}
         <p>hodnota: {values[i]}</p>
         </SRec>)
