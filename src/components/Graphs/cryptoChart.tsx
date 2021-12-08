@@ -3,6 +3,7 @@ import { getMarketData } from './marketData';
 import {Line} from 'react-chartjs-2'
 import { SDiv } from '../../styles/popUpCharts';
 import {useParams} from 'react-router-dom'
+import moment from 'moment';
 
 
 const Chart = (props:any) => {
@@ -38,8 +39,12 @@ useEffect(() => {
                 try{
                     const nevim = data[x]['sparkline_in_7d']['price'][i]['x'];
                     xArray.push(nevim);
-                    const nevim2 = data[x]['sparkline_in_7d']['price'][i]['y'];
-                    yArray.push(nevim2);
+                    const date = new Date(data[x]['sparkline_in_7d']['price'][i]['y']);
+                    let time = date.getHours() > 12 ? `${date.getHours() - 12}:${date.getMinutes()} PM` : `${date.getHours()}:${date.getMinutes()} AM`;
+                    let formattedDate = date.toLocaleDateString();
+
+                    console.log(formattedDate)
+                    yArray.push(date);
                     
                     i++;
                 }catch(error:any){
@@ -61,7 +66,7 @@ useEffect(() => {
 
 }, [data])
 
-console.log(data)
+
 const data2 = {
     labels: prices,
     datasets: [

@@ -5,6 +5,7 @@ import {Button} from 'reactstrap'
 import { SRec } from '../../styles/myCrypto';
 import MainPieChart from '../../components/Graphs/pieChart';
 import { getMarketData } from '../../components/Graphs/marketData';
+import { SButtonAdd, SButtonDelete } from '../../styles/myCrypto';
 
 
 const ListOfYourCrypto = () => {
@@ -84,12 +85,16 @@ const ListOfYourCrypto = () => {
     let i = -1;
     return(<>
         <h1>Mé portfolio</h1>
-        <Button
-        block
+        <SButtonAdd
         onClick={() => {window.location.pathname = '/newCrypto'}}
         >
             Přidat Coin
-        </Button>
+        </SButtonAdd>
+        <SButtonDelete
+        onClick={() => {window.location.pathname = '/sellCrypto'}}
+        >
+            Odebrat Coin
+        </SButtonDelete>
 
         <SRec>
             <h2>Celkem</h2>
@@ -104,7 +109,8 @@ const ListOfYourCrypto = () => {
         <br/>
         {Object.entries(data[coin[0]]).map((value) => {
             if(value[0] == "cena"){
-                return(<>Profit: {value[1] + values[i]} <br/></>)
+                let procent = Number((values[i] / ((Number(value[1]) * -1) / 100)) - 100).toFixed(2);
+                return(<p>Profit: {value[1] + values[i]} ({procent}%) <br/></p>)
             }
             else if(value[0] == "pocet"){
                 return(<>Pocet coinu: {value[1]}</>)
