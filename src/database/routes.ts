@@ -5,21 +5,14 @@ import LoginPage from "../pages/auth/login";
 import LogoutPage from "../pages/auth/logout";
 import RegisterPage from "../pages/auth/register";
 import ResetPasswordPage from "../pages/auth/reset";
-import HomePage from "../pages/home";
 import ListOfCrypto from '../pages/cryptoList'
 import Main from '../pages/portfolio/main'
 import NewCrpytoForNow from "../pages/portfolio/newCryptoForNow";
 import Chart from "../components/Graphs/cryptoChart";
+import SellCrypto from "../pages/portfolio/sellCrypto";
 
 
 const routes: IRoute[] = [
-    {
-        path: '/',
-        exact: true,
-        component: HomePage,
-        name: 'Home Page',
-        protected: true
-    },
     {
         path: '/register',
         exact: true,
@@ -70,7 +63,7 @@ const routes: IRoute[] = [
         protected: true
     },
     {
-        path: '/portfolioMain',
+        path: '/',
         exact: true,
         component: Main,
         name: 'Portfolio Main Page',
@@ -88,6 +81,13 @@ const routes: IRoute[] = [
         exact: true,
         component: Chart,
         name: 'nasrat',
+        protected: true
+    },
+    {
+        path: '/sellCrypto',
+        exact: true,
+        component: SellCrypto,
+        name: 'Prodat crypto',
         protected: true
     }
 ];

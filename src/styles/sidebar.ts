@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 export const SSideBar = styled.div`
+margin-left: -8px;
 height: 100vh;
 width: 250px;
 background-color: #2f4050;

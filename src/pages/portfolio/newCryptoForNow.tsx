@@ -23,12 +23,10 @@ const NewCrpytoForNow = ()  => {
     const[exist, setExist] = useState(false);
     const[data, setData] = useState<any>({});
 
-    const[oldValue, setOldValue] = useState<number>(0);
-    const[oldAmount, setOldAmount] = useState<number>(0);
 
 
     
-        const defaultOption = 'Bitcoin';
+
     
         useEffect(() => {
             axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=CZK&order=market_cap_desc&per_page=100&page=1&sparkline=false').then(res => {
@@ -59,14 +57,6 @@ const NewCrpytoForNow = ()  => {
     }
 
 
-    const OldData = () =>{
-        Object.entries(data[selectedCoin]).map((value) => {
-            if(value[0] == 'pocet')
-            setOldAmount(Number(value[1]));
-            else if(value[0] == 'cena')
-            setOldValue(Number(value[1]));
-        })
-    }
 
 
       const saveToDatabase = () => {
@@ -74,30 +64,25 @@ const NewCrpytoForNow = ()  => {
             if(!snapshot.exists()){
                 set(ref(db, 'users/' + uid + "/" + selectedCoin), {
                     pocet: count,
-                    cena: price
+                    cena: 0 - Number(price)
                 }).then(() => {
                     window.location.pathname = "/portfolioMain"
                 }).catch((error:any) =>{
                     console.log("tohle se nepovedlo: " + error)
                 })
             } else{
-                let oldValue = 0;
-                let oldAmount = 0;
-                Object.entries(data[selectedCoin]).map((value) => {
-                    if(value[0] == 'pocet')
-                    oldAmount = Number(value[1]);
-                    else if(value[0] == 'cena')
-                    oldValue = Number(value[1]);
-                })
+                const oldValue = Number(snapshot.val()['cena']);
+                const oldAmount = Number(snapshot.val()['pocet']);
+
                 const newAmount = oldAmount + Number(count);
-                const newValue = oldValue + Number(price);
+                const newValue = oldValue - Number(price);
                 const postData = {
                     pocet: newAmount,
                     cena: newValue
                 }
                 
                 update(ref(db, 'users/' + uid + "/" + selectedCoin), postData).then(() => {
-                    window.location.pathname = "/portfolioMain"
+                    window.location.pathname = "/"
                 }).catch((error:any) => {
                     console.log("tohle se nepovedlo: " + error)
                 })
@@ -114,7 +99,7 @@ const NewCrpytoForNow = ()  => {
         return(
             coin['name']
         )
-    })} value={defaultOption}
+    })} value={selectedCoin}
      placeholder="Vyber coin který chceš přidat" 
     onChange={event => setSelectedCoin(event.value)}
     />

@@ -7,24 +7,14 @@ import React from 'react'
 
 
 export const SidebarData = [{
-    title: "Domů",
-    icon: <HomeIcon />,
+    title: "Portfolio",
+    icon: <ListAltIcon />,
     Link: "/"
 },
 {
     title: "Přehled kryptoměn",
     icon: <MonetizationOnIcon />,
     Link: "/cryptoList"
-},
-{
-    title: "Vlastní pordfolio",
-    icon: <ListAltIcon />,
-    Link: "/portfolioMain"
-},
-{
-    title: "Profil",
-    icon: <AccountCircleIcon />,
-    Link: "/home"
 },
 {
     title: "Odhlásit se",
