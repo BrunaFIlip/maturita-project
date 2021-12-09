@@ -64,21 +64,25 @@ const NewCrpytoForNow = ()  => {
             if(!snapshot.exists()){
                 set(ref(db, 'users/' + uid + "/" + selectedCoin), {
                     pocet: count,
-                    cena: 0 - Number(price)
+                    cena: 0 - Number(price),
+                    investice: Number(price)
                 }).then(() => {
-                    window.location.pathname = "/portfolioMain"
+                    window.location.pathname = "/"
                 }).catch((error:any) =>{
                     console.log("tohle se nepovedlo: " + error)
                 })
             } else{
                 const oldValue = Number(snapshot.val()['cena']);
                 const oldAmount = Number(snapshot.val()['pocet']);
+                const oldInvestment = Number(snapshot.val()['investice']);
 
                 const newAmount = oldAmount + Number(count);
                 const newValue = oldValue - Number(price);
+                const newInvestment = oldInvestment + Number(price);
                 const postData = {
                     pocet: newAmount,
-                    cena: newValue
+                    cena: newValue,
+                    investice: newInvestment
                 }
                 
                 update(ref(db, 'users/' + uid + "/" + selectedCoin), postData).then(() => {

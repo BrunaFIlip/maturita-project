@@ -43,7 +43,7 @@ const SellCrypto = () => {
     const deleteCoin = () => {
         get(child(ref(db), 'users/'+ uid + '/' + selectedCoin)).then((snapshot) => {
             if(snapshot.exists()){
-                if(snapshot.val()['pocet'] > count && Number(count) > 0){
+                if(snapshot.val()['pocet'] >= count && Number(count) > 0){
                     //update
                     const newCount = snapshot.val()['pocet'] - Number(count);
                     const newPrice = snapshot.val()['cena'] + Number(price)

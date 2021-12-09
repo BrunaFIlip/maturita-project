@@ -5,16 +5,20 @@ import {Button} from 'reactstrap'
 import { SRec } from '../../styles/myCrypto';
 import MainPieChart from '../../components/Graphs/pieChart';
 import { getMarketData } from '../../components/Graphs/marketData';
-import { SButtonAdd, SButtonDelete } from '../../styles/myCrypto';
+import { SButtonAdd, SButtonDelete, SValueProcent } from '../../styles/myCrypto';
+import { SButton } from '../../styles/newCrypto';
 
 
 const ListOfYourCrypto = () => {
     const[uid, setUid] = useState(auth.currentUser?.uid);
     const[data, setData] = useState<any>({});
-    const[show, setShow] = useState<boolean>(false);
     const[absoluteValue, setAbsoluteValue] = useState<number>(0);
     const[marketData, setMarketData] = useState();
     const[values, setValues] = useState<any>([]);
+    const[invest, setInvest] = useState<any>([]);
+
+    
+    const[show, setShow] = useState<boolean>(false);
 
 
 
@@ -48,6 +52,7 @@ const ListOfYourCrypto = () => {
         let number = 0;
         let number2 = 0;
         let xvalues: any = [];
+        let yvalues: any = [];
 
         Object.entries(data).map((coin) => {
             let x = 0;
@@ -57,11 +62,18 @@ const ListOfYourCrypto = () => {
                     if(marketData[x]['name'] == coin[0]){
                         Object.entries(data[coin[0]]).map((value) => {
                             if(value[0] == 'pocet'){
+                                if(value[1] == 0){
+                                    xvalues.push(0);
+                                }else{
                                 console.log()
                                 number += Math.round(Number(value[1]) * marketData[x]['current_price'])
                                 number2 = Math.round(Number(value[1]) * marketData[x]['current_price'])
                                 console.log(Math.round(Number(value[1]) * marketData[x]['current_price']))
                                 xvalues.push(number2);
+                                }
+                            }
+                            else if(value[0] == 'investice'){
+                                yvalues.push(value[1]);
                             }
                         })
                     }
@@ -70,16 +82,15 @@ const ListOfYourCrypto = () => {
                 }
                 x++;
             }
-            // number = number + data[coin[0]]['pocet'] * marketData[coin[0]]['current_price']
         })
         setAbsoluteValue(number);
         setValues(xvalues);
+        setInvest(yvalues);
     }
     },[marketData])
 
-    // Object.entries(data).map((coin) => {
-    //     console.log(coin)
-    // });
+    
+
 
 
     let i = -1;
@@ -95,6 +106,8 @@ const ListOfYourCrypto = () => {
         >
             Odebrat Coin
         </SButtonDelete>
+        <SButton onClick={() => setShow(!show)}>Procenta/Hodnota</SButton>
+
 
         <SRec>
             <h2>Celkem</h2>
@@ -105,18 +118,25 @@ const ListOfYourCrypto = () => {
         </SRec>
         {Object.entries(data).map((coin) =>{
             i++;
-            return(<SRec onClick={()=>setShow(!show)}><h2>{coin[0]}</h2>
+            return(<SRec><h2>{coin[0]}</h2>
         <br/>
         {Object.entries(data[coin[0]]).map((value) => {
             if(value[0] == "cena"){
-                let procent = Number((values[i] / ((Number(value[1]) * -1) / 100)) - 100).toFixed(2);
-                return(<p>Profit: {value[1] + values[i]} ({procent}%) <br/></p>)
+                let procent
+                if(values[i] == 0){
+                    procent = Number(100 / (invest[i] / Number(value[1]))).toFixed(2);
+                    console.log(values[i] + " : " + Number(value[1]) + " : " + invest[i])
+                }else{
+                procent = Number((values[i] + value[1]) / (values[i] / 100)).toFixed(2);
+                }
+
+                return(<SValueProcent><p>Profit: </p> {show? <p>{value[1] + values[i]}</p> : <p>{procent}% </p>}</SValueProcent>)
             }
             else if(value[0] == "pocet"){
-                return(<>Pocet coinu: {value[1]}</>)
+                return(<>Pocet vlasněných coinů: {value[1]}</>)
             }
         })}
-        <p>hodnota: {values[i]}</p>
+        <p>Hodnota vlastněných coinů: {values[i]}</p>
         </SRec>)
         })}
     </>)

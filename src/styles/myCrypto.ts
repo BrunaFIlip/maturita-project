@@ -51,3 +51,13 @@ export const SButtonDelete = styled.button`
     background-color: #e7e7e7;
 }
 `
+
+
+export const SValueProcent = styled.div`
+#idValue{
+  display: block;
+}
+#idProcent{
+  display: block;
+}
+`
