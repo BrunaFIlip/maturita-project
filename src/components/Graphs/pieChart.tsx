@@ -44,7 +44,6 @@ const MainPieChart = () => {
             let x = 0;
             while(true){
                 try{
-                    console.log(marketData[x]['name'] + ' rovná se ' + coin[0])
                     if(marketData[x]['name'] == coin[0]){
                         Object.entries(data[coin[0]]).map((value) => {
                             if(value[0] == 'pocet'){

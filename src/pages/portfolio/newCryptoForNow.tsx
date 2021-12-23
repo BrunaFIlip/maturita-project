@@ -60,12 +60,19 @@ const NewCrpytoForNow = ()  => {
 
 
       const saveToDatabase = () => {
+          var valid = false;
+          if(Number(count) > 0 && Number(price) >= 0){
+          valid = true;
+          }
+
+          if(valid){
         get(child(ref(db), 'users/'+ uid + '/' + selectedCoin)).then((snapshot) => {
             if(!snapshot.exists()){
                 set(ref(db, 'users/' + uid + "/" + selectedCoin), {
                     pocet: count,
                     cena: 0 - Number(price),
-                    investice: Number(price)
+                    investice: Number(price),
+                    oblibene: 0
                 }).then(() => {
                     window.location.pathname = "/"
                 }).catch((error:any) =>{
@@ -94,6 +101,9 @@ const NewCrpytoForNow = ()  => {
         }).catch((error:any) => {
             console.log(error);
         })
+    }else{
+        console.log("něco je zadáno špatně")
+    }
       }
 
 
