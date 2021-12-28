@@ -20,6 +20,7 @@ list-style-type: none;
   height: 100%;
   overflow: auto;  
   padding-top: 6%;
+  z-index: 8;
   @media (max-width: 1300px){
     width: 250px;
     padding-top: 80px
@@ -57,4 +58,5 @@ position: absolute;
 color: ${colors.wh};
 z-index: 10;
 margin-top: 8px;
+position: fixed;
 `

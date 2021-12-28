@@ -5,7 +5,7 @@ import {Button} from 'reactstrap'
 import { SRec } from '../../styles/myCrypto';
 import MainPieChart from '../../components/Graphs/pieChart';
 import { getMarketData } from '../../components/Graphs/marketData';
-import { SButtonAdd, SButtonDelete, SValueProcent, FavouriteButton } from '../../styles/myCrypto';
+import { SButtonAdd, SButtonDelete, SValueProcent, FavouriteButton, SH1 } from '../../styles/myCrypto';
 import { SButton } from '../../styles/newCrypto';
 
 
@@ -128,7 +128,7 @@ const ListOfYourCrypto = () => {
     let i = -1;
     let o = -1;
     return(<>
-        <h1>Mé portfolio</h1>
+        <SH1>Mé portfolio</SH1>
         <SButtonAdd
         onClick={() => {window.location.pathname = '/newCrypto'}}
         >

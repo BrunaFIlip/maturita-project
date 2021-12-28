@@ -6,6 +6,7 @@ border: black;
 border-style: solid;
 border-width: 1px;
 padding: 10px;
+
 `
 
 export const SPie = styled.div`
@@ -14,7 +15,36 @@ font-size: 7px;
 position: relative;
 left: 80%;
 margin-top: -95px;
+@media (min-width: 1921px){
+    width: 220px;
+  }
+@media (max-width: 1300px){
+    width: 150px;
+  }
+  @media (max-width: 900px){
+    width: 150px;
+    left: 60%
+  }
+  @media (max-width: 480px){
+    width: 120px;
+    left: 55%
+  }
+  @media (max-width: 350px){
+    width: 100px;
+    left: 64%
+  }
+  @media (max-width: 326px){
+    visibility: hidden;
+  }
 `
+
+export const SH1 = styled.h1`
+  @media (max-width: 580px){
+    text-align: center;
+  }
+
+`
+
 
 export const SButtonAdd = styled.button`
     background-color: white;
@@ -28,6 +58,11 @@ export const SButtonAdd = styled.button`
   margin: 4px 2px;
   transition-duration: 0.4s;
   cursor: pointer;
+  @media (max-width: 580px){
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
 
 :hover {
     background-color: #e7e7e7;
@@ -46,6 +81,11 @@ export const SButtonDelete = styled.button`
   margin: 4px 2px;
   transition-duration: 0.4s;
   cursor: pointer;
+  @media (max-width: 580px){
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
 
 :hover {
     background-color: #e7e7e7;
@@ -74,6 +114,11 @@ export const FavouriteButton = styled.button`
   margin: 4px 2px;
   transition-duration: 0.4s;
   cursor: pointer;
+  @media (max-width: 580px){
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
 
 :hover {
     background-color: #e7e7e7;

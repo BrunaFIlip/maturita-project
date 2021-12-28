@@ -12,6 +12,11 @@ export const SButton = styled.button`
   margin: 4px 2px;
   transition-duration: 0.4s;
   cursor: pointer;
+  @media (max-width: 580px){
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
 
 :hover {
     background-color: #e7e7e7;

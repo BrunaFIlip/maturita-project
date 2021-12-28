@@ -29,7 +29,7 @@ const Sidebar = () => {
     const [show, setShow]=useState(false)
 
 
-    if(width > 1180){
+    if(width > 1300){
     return (
         <>
         <Header/>
