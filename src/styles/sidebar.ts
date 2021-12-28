@@ -46,3 +46,9 @@ place-items: center;
 export const STitle = styled.div`
 flex: 50%;
 `
+
+export const SHamburger = styled.div`
+position: absolute;
+color: white;
+z-index: 10;
+`
