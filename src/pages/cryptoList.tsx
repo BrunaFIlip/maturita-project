@@ -5,7 +5,8 @@ import {
   SCoinApp,
   SCoinSearch,
   SCoinText,
-  SCoinInput
+  SCoinInput,
+  STd
 } from '../../src/styles/coin'
 import IPageProps from '../interfaces/page';
 
@@ -52,7 +53,7 @@ const ListOfCrypto: FC<IPageProps> = () => {
       window.location.pathname = '/nasrat/' + coin['id']
     }}
     >
-      <td>
+      <STd>
     <Coin 
     key={coin['id']} 
     name={coin['name']} 
@@ -60,9 +61,8 @@ const ListOfCrypto: FC<IPageProps> = () => {
     symbol={coin['symbol']} 
     marketcap={coin['market_cap']} 
     price={coin['current_price']} 
-    priceChange={coin['price_change_percentage_24h']}
-    volume={coin['totasl_volume']}/>
-    </td>
+    priceChange={coin['price_change_percentage_24h']}/>
+    </STd>
     </tr>
   )
 })}

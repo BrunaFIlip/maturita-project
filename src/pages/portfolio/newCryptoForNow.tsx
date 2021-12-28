@@ -7,6 +7,7 @@ Conteiner,
 SButton,
 SInput
 } from '../../styles/newCrypto';
+import { SH1 } from '../../styles/myCrypto';
 import { auth, db } from '../../database/firebase';
 import {ref, set, child, get, update} from 'firebase/database'
 
@@ -108,6 +109,7 @@ const NewCrpytoForNow = ()  => {
 
 
     return(<Conteiner>
+        <SH1>Přidat coin</SH1>
          <SLabel>Vyber coin
     <Dropdown options={coins.map(coin => {
         return(

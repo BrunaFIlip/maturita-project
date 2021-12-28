@@ -29,6 +29,9 @@ export const Conteiner = styled.div`
 margin: auto;
 width: 660px;
 height: auto;
+@media (max-width: 700px){
+  width: auto;
+}
 `
 
 export const SLabel = styled.label`

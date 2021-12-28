@@ -7,6 +7,7 @@ Conteiner,
 SButton,
 SInput
 } from '../../styles/newCrypto';
+import { SH1 } from '../../styles/myCrypto';
 import { auth, db } from '../../database/firebase';
 import {ref, set, child, get, update} from 'firebase/database'
 
@@ -68,6 +69,7 @@ const SellCrypto = () => {
 
 
     return(<Conteiner>
+                <SH1>Odebrat coin</SH1>
         <SLabel>Vyber coin
    <Dropdown options={coins.map(coin => {
        return(

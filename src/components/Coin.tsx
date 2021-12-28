@@ -8,13 +8,12 @@ import {
     CoinSymbol,
     CoinData,
     CoinPrice,
-    CoinVolume,
     Red,
     Green,
     CoinMarketcap
 } from '../styles/coin'
 
-export const Coin = ({name, image, symbol, price, volume, priceChange, marketcap}: {name: any, image: any, symbol: any, price: any, volume: any, priceChange: any, marketcap: any}) => {
+export const Coin = ({name, image, symbol, price, priceChange, marketcap}: {name: any, image: any, symbol: any, price: any, priceChange: any, marketcap: any}) => {
     return (
         <CoinContainer>
 <CoinRow>
@@ -27,7 +26,6 @@ export const Coin = ({name, image, symbol, price, volume, priceChange, marketcap
     <CoinPrice>
         ${price}
     </CoinPrice>
-    <CoinVolume>${volume}</CoinVolume>
     {priceChange < 0 ? (
         <Red>{priceChange.toFixed(2)}%</Red>
     ) : (
