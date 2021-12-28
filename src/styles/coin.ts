@@ -14,6 +14,9 @@ height: 80px;
 border-bottom: 1px solid #d7d7d7;
 width: 900px;
 color: black;
+@media (max-width: 1300px){
+  width: auto;
+  }
 `
 
 export const SCoin = styled.div`
@@ -21,17 +24,26 @@ display: flex;
 align-items: center;
 padding-right: 24px;
 min-width: 300px;
+@media (max-width: 1300px){
+  min-width: auto;
+  }
 `
 
 export const CoinH1 = styled.h1`
 font-size: 16px;
 width: 150px;
+@media (max-width: 1300px){
+  width: 100px;
+  }
 `
 
 export const CoinImg = styled.img`
 height: 30px;
 width: 30px;
 margin-right: 10px;
+@media (max-width: 1300px){
+  width: auto;
+  }
 `
 
 export const CoinSymbol = styled.p`
@@ -46,14 +58,17 @@ width: 100%;
 
 export const CoinPrice = styled.p`
 width: 155px;
+@media (max-width: 1300px){
+  width: auto;
+  }
 `
 
-export const CoinVolume = styled.p`
-width: 230px;
-`
 
 export const  CoinMarketcap = styled.p`
 width: 155px;
+@media (max-width: 1300px){
+  width: auto;
+  }
 `
 
 
@@ -69,11 +84,16 @@ color: #11d811;
 
 
 export const SCoinApp = styled.div`
-  display: flex; flex-direction: colun;
+  display: flex; 
+  flex-direction: column;
   align-items: center;
   color: #fff;
   margin-left: 6%;
   padding-top: 3.4%
+  width: auto;
+  @media (max-width: 1300px){
+  width: auto;
+  }
 `
 
 export const SCoinSearch = styled.div`
@@ -82,6 +102,9 @@ export const SCoinSearch = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  @media (max-width: 1300px){
+  justify-content: left;
+  }
 `
 
 export const SCoinText = styled.div`
@@ -137,7 +160,6 @@ margin-left: 5%;
 `
 
 export const STd = styled.td`
-  border: 1px solid #ddd;
   padding: 8px;
 `
 
