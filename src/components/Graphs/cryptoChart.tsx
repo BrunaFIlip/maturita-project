@@ -3,9 +3,7 @@ import { getMarketData } from './marketData';
 import {Line} from 'react-chartjs-2'
 import { SDiv } from '../../styles/popUpCharts';
 import {useParams} from 'react-router-dom'
-import moment from 'moment';
-import { isFunctionDeclaration, isTemplateTail } from 'typescript';
-import { ConstructionOutlined } from '@mui/icons-material';
+
 
 
 const Chart = (props:any) => {
