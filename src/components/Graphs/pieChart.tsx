@@ -47,7 +47,6 @@ const MainPieChart = () => {
                     if(marketData[x]['name'] == coin[0]){
                         Object.entries(data[coin[0]]).map((value) => {
                             if(value[0] == 'pocet'){
-                                console.log()
                                 number = Math.round(Number(value[1]) * marketData[x]['current_price'])
                                 xvalues.push(number);
                             }
@@ -77,10 +76,12 @@ const MainPieChart = () => {
     let help = 0;
     {Object.entries(data).map((coin) =>{
     {Object.entries(data[coin[0]]).map((value) => {
-        if(value[0] == "cena"){
+        if(value[0] == "pocet"){
             let color = randomColor();
             colors.push(color);
-        chartData.push({title: coin[0], value: values[help], color: colors[help]})
+                if(Number(value[1]) != 0){
+                chartData.push({title: coin[0], value: values[help], color: colors[help]})
+            }
         }
     })}
     help++;
