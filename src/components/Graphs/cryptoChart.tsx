@@ -4,6 +4,8 @@ import {Line} from 'react-chartjs-2'
 import { SDiv } from '../../styles/popUpCharts';
 import {useParams} from 'react-router-dom'
 import moment from 'moment';
+import { isFunctionDeclaration, isTemplateTail } from 'typescript';
+import { ConstructionOutlined } from '@mui/icons-material';
 
 
 const Chart = (props:any) => {
@@ -25,7 +27,6 @@ useEffect(() => {
     fetchMarketData(); 
 }, [])
 
-
 useEffect(() => {
   let xArray:any = [];
   let yArray:any = [];
@@ -40,10 +41,7 @@ useEffect(() => {
                     const nevim = data[x]['sparkline_in_7d']['price'][i]['x'];
                     xArray.push(nevim);
                     const date = new Date(data[x]['sparkline_in_7d']['price'][i]['y']);
-                    let time = date.getHours() > 12 ? `${date.getHours() - 12}:${date.getMinutes()} PM` : `${date.getHours()}:${date.getMinutes()} AM`;
-                    let formattedDate = date.toLocaleDateString();
 
-                    console.log(formattedDate)
                     yArray.push(date);
                     
                     i++;

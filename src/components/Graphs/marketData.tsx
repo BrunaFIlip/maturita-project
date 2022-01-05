@@ -3,10 +3,10 @@ import moment from 'moment'
 
 
 const formatSparkline = (numbers:any) => {
-  const sevenDaysAgo = moment().subtract(7, 'days').unix();
+  const sevenDaysAgo = moment().subtract(7, 'days').calendar();
   let formattedSparkline = numbers.map((item:any, index: any) => {
       return {
-          x: sevenDaysAgo + (index + 1) * 3600,
+          x: moment(sevenDaysAgo).add(index + 1, 'hours').format("MMM Do, h:mm:ss a"),
           y: item,
       }
   })
