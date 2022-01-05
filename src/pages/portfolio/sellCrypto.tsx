@@ -1,15 +1,17 @@
 import React, {useEffect, useState} from 'react'
-import axios from "axios"
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import { SLabel,
 Conteiner,
 SButton,
-SInput
+SInput,
+SButtonBack2
 } from '../../styles/newCrypto';
 import { SH1 } from '../../styles/myCrypto';
 import { auth, db } from '../../database/firebase';
 import {ref, set, child, get, update} from 'firebase/database'
+import ErrorText from '../../components/ErrorText';
+
 
 const SellCrypto = () => {
     const[coins, setCoins] = useState([])
@@ -18,6 +20,7 @@ const SellCrypto = () => {
     const[uid, setUid] = useState(auth.currentUser?.uid);
     const[price, setPrice] = useState<string>('');
     const[data, setData] = useState<any>({});
+    const[error, setError] = useState<string>('');
 
 
     useEffect(() => {
@@ -59,7 +62,7 @@ const SellCrypto = () => {
                         console.log("tohle se nepovedlo: " + error)
                     })
                 }
-                else return(<p>Nesprávný počet coinu</p>)
+                else setError("Zkontrolujte zdali jsou všechna pole zadaná zprávně (nejsou záporná a jsou ve zprávném formátu) a zkustě to znovu.")
             }
         }).catch((error:any) => {
             console.log(error);
@@ -108,6 +111,13 @@ const SellCrypto = () => {
        >
            Odebrat coin
        </SButton>
+       <SButtonBack2
+        color="success"
+        onClick={() => {window.location.pathname = "/"}}
+        >
+            Zpět
+        </SButtonBack2><br/>
+        <ErrorText error={error} />
    </Conteiner>)
 }
 

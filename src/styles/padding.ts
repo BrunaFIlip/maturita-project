@@ -10,3 +10,7 @@ padding-right: 2%;
     padding-top: 70px;
   }
 `
+
+export const Font = styled.body`
+font-family: 'Sora', sans-serif;
+`

@@ -5,11 +5,13 @@ import 'react-dropdown/style.css';
 import { SLabel,
 Conteiner,
 SButton,
+SButtonBack,
 SInput
 } from '../../styles/newCrypto';
 import { SH1 } from '../../styles/myCrypto';
 import { auth, db } from '../../database/firebase';
 import {ref, set, child, get, update} from 'firebase/database'
+import ErrorText from '../../components/ErrorText';
 
 
 
@@ -23,7 +25,7 @@ const NewCrpytoForNow = ()  => {
     const[price, setPrice] = useState<string>('');
     const[exist, setExist] = useState(false);
     const[data, setData] = useState<any>({});
-
+    const[error, setError] = useState<string>('');
 
 
     
@@ -103,7 +105,7 @@ const NewCrpytoForNow = ()  => {
             console.log(error);
         })
     }else{
-        console.log("něco je zadáno špatně")
+        setError("Zkontrolujte zdali jsou všechna pole zadaná zprávně (nejsou záporná a jsou ve zprávném formátu) a zkustě to znovu.")
     }
       }
 
@@ -148,6 +150,14 @@ const NewCrpytoForNow = ()  => {
         >
             Přidat coin
         </SButton>
+        <SButtonBack
+        color="success"
+        onClick={() => {window.location.pathname = "/"}}
+        >
+            Zpět
+        </SButtonBack>
+        <br/>
+        <ErrorText error={error} />
     </Conteiner>)
 }
 

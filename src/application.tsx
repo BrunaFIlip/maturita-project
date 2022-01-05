@@ -5,6 +5,7 @@ import AuthRoute from './components/AuthRoute';
 import {auth} from './database/firebase';
 import logging from './database/logging';
 import routes from './database/routes';
+import {Font} from '../src/styles/padding'
 
 export interface IApplicationProps { }
 
@@ -39,7 +40,7 @@ const Application: React.FunctionComponent<IApplicationProps> = props => {
                         exact={route.exact} 
                         render={(routeProps: RouteComponentProps<any>) => {
                             if (route.protected)
-                                return <AuthRoute><route.component  {...routeProps} /></AuthRoute>;
+                                return <Font><AuthRoute><route.component  {...routeProps} /></AuthRoute></Font>;
 
                             return <route.component  {...routeProps} />;
                         }}
