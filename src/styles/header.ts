@@ -6,7 +6,7 @@ export const SHeader = styled.h1`
 color: white;
   list-style-type: none;
   margin: 0;
-  margin-left: -10px;
+  margin-left: -16px;
   padding: 0;
   overflow: hidden;
   background-color: ${colors.bl};

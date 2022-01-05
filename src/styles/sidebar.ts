@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import {colors} from '../styles/color'
 
 export const SSideBar = styled.div`
-margin-left: -8px;
+margin-left: -16px;
 height: 100vh;
 width: 250px;
 background-color: ${colors.gr};

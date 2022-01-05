@@ -29,11 +29,11 @@ margin-top: -95px;
     width: 120px;
     left: 55%
   }
-  @media (max-width: 350px){
+  @media (max-width: 400px){
     width: 100px;
     left: 64%
   }
-  @media (max-width: 326px){
+  @media (max-width: 350px){
     visibility: hidden;
   }
 `
