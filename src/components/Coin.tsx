@@ -24,7 +24,7 @@ export const Coin = ({name, image, symbol, price, priceChange, marketcap}: {name
 </SCoin>
 <CoinData>
     <CoinPrice>
-        ${price}
+        CZK{price}
     </CoinPrice>
     {priceChange < 0 ? (
         <Red>{priceChange.toFixed(2)}%</Red>

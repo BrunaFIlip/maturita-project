@@ -9,6 +9,7 @@ import {
   STd
 } from '../../src/styles/coin'
 import IPageProps from '../interfaces/page';
+import { getMarketData } from '../components/Graphs/marketData';
 
 
 
@@ -18,9 +19,12 @@ const ListOfCrypto: FC<IPageProps> = () => {
     
     
     useEffect(() => {
-      axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=CZK&order=market_cap_desc&per_page=100&page=1&sparkline=false').then(res => {
-        setCoins(res.data)
-      }).catch(error => console.log(error))
+      const fetchMarketData = async () => {
+        const marketData = await getMarketData();
+        setCoins(marketData);
+        
+    }
+    fetchMarketData(); 
     }, []);
 
       const handleChange = (e:any) => {

@@ -170,7 +170,7 @@ const ListOfYourCrypto = () => {
                                 procent = Number((values[i] + value[1]) / (values[i] / 100)).toFixed(2);
                                 }
                 
-                                return(<SValueProcent><p>Profit: </p> {show? <p>{value[1] + values[i]}</p> : <p>{procent}% </p>}</SValueProcent>)
+                                return(<SValueProcent><p>Profit: </p> {show? <p>{value[1] + values[i]} Kč</p> : <p>{procent}% </p>}</SValueProcent>)
                             }
                             else if(value[0] == "pocet"){
                                 return(<>Pocet vlasněných coinů: {value[1]}</>)

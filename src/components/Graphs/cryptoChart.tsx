@@ -3,6 +3,7 @@ import { getMarketData } from './marketData';
 import {Line} from 'react-chartjs-2'
 import { SDiv } from '../../styles/popUpCharts';
 import {useParams} from 'react-router-dom'
+import { STable, STr, STh } from '../../styles/coinDetails';
 
 
 
@@ -13,8 +14,6 @@ const [prices, setPrices] = useState([]);
 const [dates, setDates] = useState([]);
 const [name, setName] = useState<string>();
 
-//daát to mimo a zavolat to v useeffectu
-//truhá metoda je lepší, použít dva useeffecty a ten druhý zavolat když se změní data
 
 useEffect(() => {
     const fetchMarketData = async () => {
@@ -76,10 +75,26 @@ const data2 = {
   };
 
 
-    return ( 
-        <SDiv>
-    <Line data={data2} />
-    </SDiv>)
+    return ( <>
+      <SDiv>
+        <Line data={data2} />
+      </SDiv>
+      {Object.entries(data).map((coin) => {
+        if(coin[1]['id'] == {id}.id){
+          return(<STable>
+            <STr><th>Cena:</th><th>{coin[1]['current_price']} CZK</th></STr>
+            <STr><th>Market Cap:</th><th>{coin[1]['market_cap']} CZK</th></STr>
+            <STr><th>Volume:</th><th>{coin[1]['total_volume']} CZK</th></STr>
+            <STr><th>Circulating supply:</th><th>{coin[1]['circulating_supply']} CZK</th></STr>
+            <STr><th>All time high:</th><th>{coin[1]['ath']} CZK</th></STr>
+            <STr><th>Oblíbenost:</th><th>#{coin[1]['market_cap_rank']}</th></STr>
+            <STr><th>24h:</th><STh percentage={coin[1]['price_change_percentage_24h']}>{coin[1]['price_change_percentage_24h']}%</STh></STr>
+          </STable>)
+        }
+      })}
+      <p></p>
+      
+      </>)
   
 }
 

@@ -82,14 +82,13 @@ width: 100%;
 color: #11d811;
 `
 
-
 export const SCoinApp = styled.div`
   display: flex; 
   flex-direction: column;
   align-items: center;
   color: #fff;
   margin-left: 6%;
-  padding-top: 3.4%
+  padding-top: 3.4%;
   width: auto;
   @media (max-width: 1300px){
   width: auto;
@@ -161,6 +160,10 @@ margin-left: 5%;
 
 export const STd = styled.td`
   padding: 8px;
+  cursor: pointer;
+  :hover{
+    background-color: #E0E0E0;
+  }
 `
 
 export const STr = styled.tr`
