@@ -11,6 +11,7 @@ export const SButton = styled.button`
   font-size: 16px;
   margin: 4px 2px;
   transition-duration: 0.4s;
+  width: 200px;
   cursor: pointer;
   @media (max-width: 580px){
     display: block;
@@ -35,9 +36,10 @@ export const SButtonBack = styled.button`
   margin: 4px 2px;
   transition-duration: 0.4s;
   cursor: pointer;
-  margin-left: 62.18%;
+  margin-left: 38%;
+  width: 200px;
   @media (max-width: 700px){
-    margin-left: 53.9%;
+    margin-left: 25%;
   }
   @media (max-width: 580px){
     display: block;
@@ -49,32 +51,33 @@ export const SButtonBack = styled.button`
     background-color: #e7e7e7;
 }
 `
-export const SButtonBack2 = styled.button`
-    background-color: white;
-    color: black;
-    border: 2px solid #e7e7e7;
-  padding: 16px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  margin-left: 59%;
-  @media (max-width: 617px){
-    margin-left: 51%;
-  }
-  @media (max-width: 580px){
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
+// export const SButtonBack2 = styled.button`
+//     background-color: white;
+//     color: black;
+//     border: 2px solid #e7e7e7;
+//   padding: 16px 32px;
+//   text-align: center;
+//   text-decoration: none;
+//   display: inline-block;
+//   font-size: 16px;
+//   margin: 4px 2px;
+//   transition-duration: 0.4s;
+//   cursor: pointer;
+//   margin-left: 38%;
+//   width: 200px;
+//   @media (max-width: 617px){
+//     margin-left: 51%;
+//   }
+//   @media (max-width: 580px){
+//     display: block;
+//     margin-left: auto;
+//     margin-right: auto;
+//   }
 
-:hover {
-    background-color: #e7e7e7;
-}
-`
+// :hover {
+//     background-color: #e7e7e7;
+// }
+// `
 
 
 

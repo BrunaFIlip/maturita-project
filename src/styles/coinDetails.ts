@@ -26,4 +26,5 @@ type Props = {
 
   export const STh = styled.th<Pick<Props, 'percentage'>>`
   color: ${({percentage}) => (percentage >= 0 ? "green" : "red")};
+  
   `

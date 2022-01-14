@@ -4,6 +4,7 @@ import {Line} from 'react-chartjs-2'
 import { SDiv } from '../../styles/popUpCharts';
 import {useParams} from 'react-router-dom'
 import { STable, STr, STh } from '../../styles/coinDetails';
+import { SButtonBack } from '../../styles/newCrypto';
 
 
 
@@ -93,7 +94,7 @@ const data2 = {
         }
       })}
       <p></p>
-      
+      <SButtonBack onClick={() => {window.location.pathname = "/cryptoList"}}>Zpět</SButtonBack>
       </>)
   
 }

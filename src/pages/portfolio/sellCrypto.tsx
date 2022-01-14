@@ -5,7 +5,7 @@ import { SLabel,
 Conteiner,
 SButton,
 SInput,
-SButtonBack2
+SButtonBack
 } from '../../styles/newCrypto';
 import { SH1 } from '../../styles/myCrypto';
 import { auth, db } from '../../database/firebase';
@@ -111,12 +111,12 @@ const SellCrypto = () => {
        >
            Odebrat coin
        </SButton>
-       <SButtonBack2
+       <SButtonBack
         color="success"
         onClick={() => {window.location.pathname = "/"}}
         >
             Zpět
-        </SButtonBack2><br/>
+        </SButtonBack><br/>
         <ErrorText error={error} />
    </Conteiner>)
 }

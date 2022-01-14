@@ -2,12 +2,12 @@ import {useState, useEffect, useRef, useCallback} from 'react'
 import {ref, child, get, update} from 'firebase/database'
 import { db, auth } from '../../database/firebase';
 import {Button} from 'reactstrap'
-import { SRec } from '../../styles/myCrypto';
+import { SRec, SMainRec } from '../../styles/myCrypto';
 import MainPieChart from '../../components/Graphs/pieChart';
 import { getMarketData } from '../../components/Graphs/marketData';
 import { SButtonAdd, SButtonDelete, SValueProcent, FavouriteButton, SH1 } from '../../styles/myCrypto';
 import { SButton } from '../../styles/newCrypto';
-
+import StarIcon from '@mui/icons-material/Star';
 
 
 const ListOfYourCrypto = () => {
@@ -142,13 +142,13 @@ const ListOfYourCrypto = () => {
         <SButton onClick={() => setShow(!show)}>Procenta/Hodnota</SButton>
 
 
-        <SRec>
+        <SMainRec>
             <h2>Celkem</h2>
-            <p>Celková hodnota: {absoluteValue}</p>
+            <p>Celková hodnota portfolia: {absoluteValue}</p>
             <MainPieChart/>
 
 
-        </SRec>
+        </SMainRec>
         {/* vypíše oblíbené */}
         {Object.entries(data).map((coin) =>{
             i++;
@@ -157,7 +157,7 @@ const ListOfYourCrypto = () => {
                     return(<SRec><h2>{coin[0]}</h2>
                         <br/>
                         
-                        <FavouriteButton onClick={() => AddToFavourite(coin[0])}>{data[coin[0]]['oblibene'] != 1 ? 'Přidat k oblíbeným' : 'Odebrat z oblíbených'}</FavouriteButton>
+                        <FavouriteButton onClick={() => AddToFavourite(coin[0])} isFavourite={data[coin[0]]['oblibene']}><StarIcon/></FavouriteButton>
                 
                 
                         {Object.entries(data[coin[0]]).map((value) => {
@@ -195,7 +195,7 @@ const ListOfYourCrypto = () => {
             return(<SRec><h2>{coin[0]}</h2>
         <br/>
         
-        <FavouriteButton onClick={() => AddToFavourite(coin[0])}>{data[coin[0]]['oblibene'] != 1 ? 'Přidat k oblíbeným' : 'Odebrat z oblíbených'}</FavouriteButton>
+        <FavouriteButton onClick={() => AddToFavourite(coin[0])} isFavourite={data[coin[0]]['oblibene']}><StarIcon/></FavouriteButton>
 
 
         {Object.entries(data[coin[0]]).map((value) => {
