@@ -5,10 +5,9 @@ import AuthContainer from '../../components/AuthContainer';
 import ErrorText from '../../components/ErrorText';
 import {auth} from '../../database/firebase';
 import logging from '../../database/logging';
-import IPageProps from '../../interfaces/page';
 import queryString from 'querystring';
 
-const ResetPasswordPage: React.FunctionComponent<IPageProps & RouteComponentProps> = props => {
+const ResetPasswordPage: React.FunctionComponent<RouteComponentProps> = props => {
     const [verifying, setVerifying] = useState<boolean>(true);
     const [verified, setVerified] = useState<boolean>(false);
     const [changing, setChanging] = useState<boolean>(false);
@@ -67,7 +66,7 @@ const ResetPasswordPage: React.FunctionComponent<IPageProps & RouteComponentProp
     const passwordResetRequest = () => {
         if (password !== confirm)
         {
-            setError('Make sure your passwords are matching');
+            setError('Ujistěte se, že jsou obě hesla stejná.');
             return;
         }
 
@@ -94,14 +93,14 @@ const ResetPasswordPage: React.FunctionComponent<IPageProps & RouteComponentProp
                 <>
                     {verified ?
                         <>
-                            <p>Please enter a strong password.</p>
+                            <p>Je za potřebí silnější heslo.</p>
                             <FormGroup>
                                 <Input 
                                     autoComplete="new-password"
                                     type="password"
                                     name="password"
                                     id="password"
-                                    placeholder="Enter Password"
+                                    placeholder="Heslo"
                                     onChange={event => setPassword(event.target.value)}
                                     value={password}
                                 />
@@ -112,7 +111,7 @@ const ResetPasswordPage: React.FunctionComponent<IPageProps & RouteComponentProp
                                     type="password"
                                     name="confirm"
                                     id="confirm"
-                                    placeholder="Confirm Password"
+                                    placeholder="Potvrdit heslo"
                                     onChange={event => setConfirm(event.target.value)}
                                     value={confirm}
                                 />
@@ -123,12 +122,12 @@ const ResetPasswordPage: React.FunctionComponent<IPageProps & RouteComponentProp
                                 block
                                 onClick={() => passwordResetRequest()}
                             >
-                                Reset Password
+                                Resetovat heslo
                             </Button>
                             <ErrorText error={error} />
                         </>
                     :
-                        <p>Invalid link.</p>
+                        <p>Špatný email.</p>
                     }
                 </>
             }

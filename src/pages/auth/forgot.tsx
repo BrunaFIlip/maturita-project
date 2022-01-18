@@ -4,11 +4,10 @@ import AuthContainer from '../../components/AuthContainer';
 import ErrorText from '../../components/ErrorText';
 import {auth} from '../../database/firebase';
 import logging from '../../database/logging';
-import IPageProps from '../../interfaces/page';
 import { SInput, STable, UserBox, SH1, SButton, SP } from '../../styles/authStyles';
 
 
-const ForgotPasswordPage: React.FunctionComponent<IPageProps> = props => {
+const ForgotPasswordPage: React.FunctionComponent = props => {
     const [sending, setSending] = useState<boolean>(false);
     const [sent, setSent] = useState<boolean>(false);
     const [email, setEmail] = useState<string>('');
@@ -21,7 +20,7 @@ const ForgotPasswordPage: React.FunctionComponent<IPageProps> = props => {
 
         auth.sendPasswordResetEmail(email)
         .then(() => {
-            logging.info('Email sent.');
+            logging.info('Email poslán.');
             setSent(true);
             setSending(false);
         })
@@ -37,16 +36,16 @@ const ForgotPasswordPage: React.FunctionComponent<IPageProps> = props => {
         <AuthContainer>
             <UserBox>
             {sent ?
-                <SP>A link has been sent to your email with instructions.</SP>
+                <SP>Link vám byl poslán na email.</SP>
             :
                 <>
-                    <SP>Please enter your email.</SP>
+                    <SP>Váš email</SP>
                     <FormGroup>
                         <SInput 
                             type="email"
                             name="email"
                             id="email"
-                            placeholder="Email Address"
+                            placeholder="Emailová adresa"
                             onChange={event => setEmail(event.target.value)}
                             value={email}
                         />
@@ -56,7 +55,7 @@ const ForgotPasswordPage: React.FunctionComponent<IPageProps> = props => {
                         color="success"
                         onClick={() => resetPasswordRequest()}
                     >
-                        Send Reset Link
+                        Zaslat link znovu.
                     </SButton>
                     <ErrorText error={error} />
                 </>

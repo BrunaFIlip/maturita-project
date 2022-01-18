@@ -5,11 +5,10 @@ import AuthContainer from '../../components/AuthContainer';
 import ErrorText from '../../components/ErrorText';
 import {auth} from '../../database/firebase';
 import logging from '../../database/logging';
-import IPageProps from '../../interfaces/page';
 import { SInput, STable, UserBox, SH1, SButton, SP } from '../../styles/authStyles';
 
 
-const ChangePasswordPage: React.FunctionComponent<IPageProps> = props => {
+const ChangePasswordPage: React.FunctionComponent = props => {
     const [changing, setChanging] = useState<boolean>(false);
     const [password, setPassword] = useState<string>('');
     const [old, setOld] = useState<string>('');
@@ -21,7 +20,7 @@ const ChangePasswordPage: React.FunctionComponent<IPageProps> = props => {
     const passwordChangeRequest = () => {
         if (password !== confirm)
         {
-            setError('Make sure your passwords are matching');
+            setError('Ujistěte se, že jsou obě hesla stejná.');
             return;
         }
 
@@ -31,7 +30,7 @@ const ChangePasswordPage: React.FunctionComponent<IPageProps> = props => {
 
         auth.currentUser?.updatePassword(password)
         .then(() => {
-            logging.info('Password change successful.');
+            logging.info('Heslo ústěšně změněno.');
             history.push('/');
         })
         .catch((error: any) => {
@@ -54,7 +53,7 @@ const ChangePasswordPage: React.FunctionComponent<IPageProps> = props => {
                     type="password"
                     name="oldPassword"
                     id="oldPassword"
-                    placeholder="Current Password"
+                    placeholder="Aktuální heslo"
                     onChange={event => setOld(event.target.value)}
                     value={old}
                 />
@@ -65,7 +64,7 @@ const ChangePasswordPage: React.FunctionComponent<IPageProps> = props => {
                     type="password"
                     name="password"
                     id="password"
-                    placeholder="Enter Password"
+                    placeholder="Nové heslo"
                     onChange={event => setPassword(event.target.value)}
                     value={password}
                 />
@@ -76,7 +75,7 @@ const ChangePasswordPage: React.FunctionComponent<IPageProps> = props => {
                     type="password"
                     name="confirm"
                     id="confirm"
-                    placeholder="Confirm Password"
+                    placeholder="Potvrdit nové heslo"
                     onChange={event => setConfirm(event.target.value)}
                     value={confirm}
                 />
@@ -87,7 +86,7 @@ const ChangePasswordPage: React.FunctionComponent<IPageProps> = props => {
                 color="success"
                 onClick={() => passwordChangeRequest()}
             >
-                Change Password
+                Změnit heslo
             </SButton>
             <ErrorText error={error} />
         </AuthContainer>

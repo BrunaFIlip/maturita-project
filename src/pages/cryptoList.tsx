@@ -8,9 +8,11 @@ import {
   SCoinInput,
   STd
 } from '../../src/styles/coin'
-import IPageProps from '../interfaces/page';
 import { getMarketData } from '../components/Graphs/marketData';
 
+interface IPageProps {
+  name: string;
+}
 
 
 const ListOfCrypto: FC<IPageProps> = () => {

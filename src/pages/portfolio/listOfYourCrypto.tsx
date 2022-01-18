@@ -127,6 +127,10 @@ const ListOfYourCrypto = () => {
 
     let i = -1;
     let o = -1;
+    let proc:any = 0;
+    let valuesx:any = 0;
+    let inv:any = 0;
+    let j = -1;
     return(<>
         <SH1>Mé portfolio</SH1>
         <SButtonAdd
@@ -145,6 +149,17 @@ const ListOfYourCrypto = () => {
         <SMainRec>
             <h2>Celkem</h2>
             <p>Celková hodnota portfolia: {absoluteValue}</p>
+            {Object.entries(data).map((coin) => {
+                j++
+                Object.entries(data[coin[0]]).map((value) => {
+                    if(value[0] == "cena"){
+                        valuesx = valuesx + value[1];
+                        inv = inv + invest[j];
+                    }
+                })
+            proc = Number(((absoluteValue + valuesx) / (absoluteValue / 100))).toFixed(2)
+            })}
+            <SValueProcent><p>Profit: {show? (absoluteValue + valuesx) + "Kč" : proc + "%" } </p></SValueProcent>
             <MainPieChart/>
 
 
@@ -170,7 +185,7 @@ const ListOfYourCrypto = () => {
                                 procent = Number((values[i] + value[1]) / (values[i] / 100)).toFixed(2);
                                 }
                 
-                                return(<SValueProcent><p>Profit: </p> {show? <p>{value[1] + values[i]} Kč</p> : <p>{procent}% </p>}</SValueProcent>)
+                                return(<SValueProcent><p>Profit: {show? (value[1] + values[i]) + "Kč" : procent+ "%"} </p></SValueProcent>)
                             }
                             else if(value[0] == "pocet"){
                                 return(<>Pocet vlasněných coinů: {value[1]}</>)
@@ -208,7 +223,7 @@ const ListOfYourCrypto = () => {
                 procent = Number((values[o] + value[1]) / (values[o] / 100)).toFixed(2);
                 }
 
-                return(<SValueProcent><p>Profit: </p> {show? <p>{value[1] + values[o]}</p> : <p>{procent}% </p>}</SValueProcent>)
+                return(<SValueProcent><p>Profit: {show? (value[1] + values[i]) + "Kč" : procent+ "%"} </p></SValueProcent>)
             }
             else if(value[0] == "pocet"){
                 return(<>Pocet vlasněných coinů: {value[1]}</>)

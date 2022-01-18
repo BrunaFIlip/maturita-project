@@ -5,11 +5,10 @@ import AuthContainer from '../../components/AuthContainer';
 import ErrorText from '../../components/ErrorText';
 import {auth} from '../../database/firebase';
 import logging from '../../database/logging';
-import IPageProps from '../../interfaces/page';
 import { SInput, STable, UserBox, SH1, SButton, SP } from '../../styles/authStyles';
 
 
-const RegisterPage: React.FunctionComponent<IPageProps> = props => {
+const RegisterPage: React.FunctionComponent = props => {
     const [registering, setRegistering] = useState<boolean>(false);
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -39,15 +38,15 @@ const RegisterPage: React.FunctionComponent<IPageProps> = props => {
 
             if (error.code.includes('auth/weak-password'))
             {
-                setError('Please enter a stronger password.');
+                setError('Je za potřebí silnější heslo.');
             }
             else if (error.code.includes('auth/email-already-in-use'))
             {
-                setError('Email already in use.');
+                setError('Email již někdo používá.');
             }
             else
             {
-                setError('Unable to register.  Please try again later.')
+                setError('Něco se nepovedlo. Zkustě to prosím později.')
             }
 
             setRegistering(false);
@@ -63,7 +62,7 @@ const RegisterPage: React.FunctionComponent<IPageProps> = props => {
                     type="email"
                     name="email"
                     id="email"
-                    placeholder="Email Address"
+                    placeholder="Emailová adresa"
                     onChange={event => setEmail(event.target.value)}
                     value={email}
                 />
@@ -74,7 +73,7 @@ const RegisterPage: React.FunctionComponent<IPageProps> = props => {
                     type="password"
                     name="password"
                     id="password"
-                    placeholder="Enter Password"
+                    placeholder="Heslo"
                     onChange={event => setPassword(event.target.value)}
                     value={password}
                 />
@@ -85,7 +84,7 @@ const RegisterPage: React.FunctionComponent<IPageProps> = props => {
                     type="password"
                     name="confirm"
                     id="confirm"
-                    placeholder="Confirm Password"
+                    placeholder="Potvrdit heslo"
                     onChange={event => setConfirm(event.target.value)}
                     value={confirm}
                 />
@@ -96,9 +95,9 @@ const RegisterPage: React.FunctionComponent<IPageProps> = props => {
                 color="success"
                 onClick={() => signUpWithEmailAndPassword()}
                 >
-                Sign Up
+                Registrovat
             </SButton>
-                <SP>Already have an account? <Link to="/login">Login.</Link></SP>
+                <SP>Už más účet? <Link to="/login">Přihlásit se.</Link></SP>
             <ErrorText error={error} />
         </AuthContainer>
         </STable>

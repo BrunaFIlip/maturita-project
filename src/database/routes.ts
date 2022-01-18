@@ -1,4 +1,3 @@
-import IRoute from "../interfaces/route";
 import ChangePasswordPage from "../pages/auth/change";
 import ForgotPasswordPage from "../pages/auth/forgot";
 import LoginPage from "../pages/auth/login";
@@ -10,6 +9,14 @@ import Main from '../pages/portfolio/main'
 import NewCrpytoForNow from "../pages/portfolio/newCryptoForNow";
 import Chart from "../components/Graphs/cryptoChart";
 import SellCrypto from "../pages/portfolio/sellCrypto";
+
+interface IRoute {
+    path: string;
+    exact: boolean;
+    component: any;
+    name: string;
+    protected: boolean;
+}
 
 
 const routes: IRoute[] = [

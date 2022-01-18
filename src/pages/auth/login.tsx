@@ -5,10 +5,9 @@ import AuthContainer from '../../components/AuthContainer';
 import ErrorText from '../../components/ErrorText';
 import {auth} from '../../database/firebase';
 import logging from '../../database/logging';
-import IPageProps from '../../interfaces/page';
 import { SInput, STable, UserBox, SH1, SButton, SP } from '../../styles/authStyles';
 
-const LoginPage: React.FunctionComponent<IPageProps> = props => {
+const LoginPage: React.FunctionComponent = props => {
     const [authenticating, setAuthenticating] = useState<boolean>(false);
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -37,13 +36,13 @@ const LoginPage: React.FunctionComponent<IPageProps> = props => {
         <STable>
         <AuthContainer>
             <UserBox>
-            <SH1>Login</SH1>
+            <SH1>Přihlásit se</SH1>
             <FormGroup>
                 <SInput 
                     type="email"
                     name="email"
                     id="email"
-                    placeholder="Email Address"
+                    placeholder="Emailová adresa"
                     onChange={event => setEmail(event.target.value)}
                     value={email}
                 />
@@ -54,7 +53,7 @@ const LoginPage: React.FunctionComponent<IPageProps> = props => {
                     type="password"
                     name="password"
                     id="password"
-                    placeholder="Enter Password"
+                    placeholder="Heslo"
                     onChange={event => setPassword(event.target.value)}
                     value={password}
                 />
@@ -67,8 +66,8 @@ const LoginPage: React.FunctionComponent<IPageProps> = props => {
             >
                 Login
             </SButton>
-                <SP>Don't have an account? <Link to="/register">Register here.</Link></SP>
-                <SP><Link to="/forget">Forget your password?</Link></SP>
+                <SP>Nemáte účet? <Link to="/register">Registrovat se.</Link></SP>
+                <SP><Link to="/forget">Zapomenuté heslo?</Link></SP>
             <ErrorText error={error} />
             <hr className="bg-info m-3" />
         </AuthContainer>

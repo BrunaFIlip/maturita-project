@@ -32,7 +32,7 @@ width: 15%;
 font-size: 7px;
 position: relative;
 left: 80%;
-margin-top: -95px;
+margin-top: -130px;
 @media (min-width: 1921px){
     width: 220px;
   }
@@ -43,15 +43,7 @@ margin-top: -95px;
     width: 150px;
     left: 60%
   }
-  @media (max-width: 480px){
-    width: 120px;
-    left: 55%
-  }
-  @media (max-width: 400px){
-    width: 100px;
-    left: 64%
-  }
-  @media (max-width: 350px){
+  @media (max-width: 530px){
     visibility: hidden;
   }
 `
