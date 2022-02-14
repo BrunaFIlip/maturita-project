@@ -9,6 +9,7 @@ import Main from '../pages/portfolio/main'
 import NewCrpytoForNow from "../pages/portfolio/newCryptoForNow";
 import Chart from "../components/Graphs/cryptoChart";
 import SellCrypto from "../pages/portfolio/sellCrypto";
+import Favourite from "../pages/portfolio/favourite"
 
 interface IRoute {
     path: string;
@@ -95,6 +96,13 @@ const routes: IRoute[] = [
         exact: true,
         component: SellCrypto,
         name: 'Prodat crypto',
+        protected: true
+    },
+    {
+        path: '/favourite',
+        exact: true,
+        component: Favourite,
+        name: 'Oblíbené crypto',
         protected: true
     }
 ];

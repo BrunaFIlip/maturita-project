@@ -8,6 +8,7 @@ import { getMarketData } from '../../components/Graphs/marketData';
 import { SButtonAdd, SButtonDelete, SValueProcent, FavouriteButton, SH1 } from '../../styles/myCrypto';
 import { SButton } from '../../styles/newCrypto';
 import StarIcon from '@mui/icons-material/Star';
+import { idText } from 'typescript';
 
 
 const ListOfYourCrypto = () => {
@@ -18,6 +19,7 @@ const ListOfYourCrypto = () => {
     const[values, setValues] = useState<any>([]);
     const[invest, setInvest] = useState<any>([]);
     const[favouriteCoins, setFavouriteCoins] = useState<any>([]);
+    const[showOnlyFavourites, setShowOnlyFavourites] = useState<boolean>(true);
 
     
     const[show, setShow] = useState<boolean>(false);
@@ -121,8 +123,18 @@ const ListOfYourCrypto = () => {
             console.log("tohle se nepovedlo: " + error)
         })
     }
+    console.log(data);
     }
 
+    const CheckIfFav = (name:string) => {
+        let id;
+        if(data[name]['oblibene'] == 0){
+            id="notFav"
+        }else{
+            id='isFav'
+        }
+        return id;
+    }
 
 
     let i = -1;
@@ -162,14 +174,28 @@ const ListOfYourCrypto = () => {
             <SValueProcent><p>Profit: {show? (absoluteValue + valuesx) + "Kč" : proc + "%" } </p></SValueProcent>
             <MainPieChart/>
 
-
+        <Button onClick={() => {
+            var elemClass = document.getElementsByClassName('notFav') as HTMLCollectionOf<HTMLElement>;
+            if(showOnlyFavourites){
+            for (let index = 0; index < elemClass.length; index++) {
+                elemClass[index].style.visibility = "hidden"
+                elemClass[index].style.position = "absolute"
+            }
+        }else{
+            for (let index = 0; index < elemClass.length; index++) {
+                elemClass[index].style.visibility = "visible"
+                elemClass[index].style.position = "relative"
+            }
+        }
+        setShowOnlyFavourites(!showOnlyFavourites);
+        }}>Zobrazit pouze oblíbené</Button>
         </SMainRec>
         {/* vypíše oblíbené */}
         {Object.entries(data).map((coin) =>{
             i++;
             {for (let index = 0; index < favouriteCoins.length; index++) {
                 if(coin[0] == favouriteCoins[index]){
-                    return(<SRec><h2>{coin[0]}</h2>
+                    return(<SRec className={CheckIfFav(coin[0])}><h2>{coin[0]}</h2>
                         <br/>
                         
                         <FavouriteButton onClick={() => AddToFavourite(coin[0])} isFavourite={data[coin[0]]['oblibene']}><StarIcon/></FavouriteButton>
@@ -197,9 +223,8 @@ const ListOfYourCrypto = () => {
                 
             }}
         })}
-
-        {/* vypíše mé coiny krom oblíbených */}
-        {Object.entries(data).map((coin) =>{
+        {/* vypíše mé coiny krom oblíbených */
+        Object.entries(data).map((coin) =>{
             o++;
             let isf = false;
             {for (let index = 0; index < favouriteCoins.length; index++) {
@@ -207,7 +232,7 @@ const ListOfYourCrypto = () => {
             }
 
                 if(!isf){
-            return(<SRec><h2>{coin[0]}</h2>
+            return(<SRec className={CheckIfFav(coin[0])}><h2>{coin[0]}</h2>
         <br/>
         
         <FavouriteButton onClick={() => AddToFavourite(coin[0])} isFavourite={data[coin[0]]['oblibene']}><StarIcon/></FavouriteButton>
