@@ -8,7 +8,8 @@ import { getMarketData } from '../../components/Graphs/marketData';
 import { SButtonAdd, SButtonDelete, SValueProcent, FavouriteButton, SH1 } from '../../styles/myCrypto';
 import { SButton } from '../../styles/newCrypto';
 import StarIcon from '@mui/icons-material/Star';
-import { idText } from 'typescript';
+import Switch from 'react-switch';
+
 
 
 const ListOfYourCrypto = () => {
@@ -19,7 +20,7 @@ const ListOfYourCrypto = () => {
     const[values, setValues] = useState<any>([]);
     const[invest, setInvest] = useState<any>([]);
     const[favouriteCoins, setFavouriteCoins] = useState<any>([]);
-    const[showOnlyFavourites, setShowOnlyFavourites] = useState<boolean>(true);
+    const[showOnlyFavourites, setShowOnlyFavourites] = useState<boolean>(false);
 
     
     const[show, setShow] = useState<boolean>(false);
@@ -137,6 +138,25 @@ const ListOfYourCrypto = () => {
     }
 
 
+
+    const ToggleFav = () => {
+        var elemClass = document.getElementsByClassName('notFav') as HTMLCollectionOf<HTMLElement>;
+    if(!showOnlyFavourites){
+        for (let index = 0; index < elemClass.length; index++) {
+            elemClass[index].style.visibility = "hidden"
+            elemClass[index].style.position = "absolute"
+        }
+    }else{
+        for (let index = 0; index < elemClass.length; index++) {
+            elemClass[index].style.visibility = "visible"
+            elemClass[index].style.position = "relative"
+        }
+    }
+    setShowOnlyFavourites(!showOnlyFavourites);
+    }
+
+
+
     let i = -1;
     let o = -1;
     let proc:any = 0;
@@ -174,22 +194,8 @@ const ListOfYourCrypto = () => {
             <SValueProcent><p>Profit: {show? (absoluteValue + valuesx) + "Kč" : proc + "%" } </p></SValueProcent>
             <MainPieChart/>
 
-        <Button onClick={() => {
-            var elemClass = document.getElementsByClassName('notFav') as HTMLCollectionOf<HTMLElement>;
-            if(showOnlyFavourites){
-            for (let index = 0; index < elemClass.length; index++) {
-                elemClass[index].style.visibility = "hidden"
-                elemClass[index].style.position = "absolute"
-            }
-        }else{
-            for (let index = 0; index < elemClass.length; index++) {
-                elemClass[index].style.visibility = "visible"
-                elemClass[index].style.position = "relative"
-            }
-        }
-        setShowOnlyFavourites(!showOnlyFavourites);
-        }}>Zobrazit pouze oblíbené</Button>
         </SMainRec>
+        <p>Zobrazit pouze oblíbené <Switch checked={showOnlyFavourites} onChange={ToggleFav}/></p>
         {/* vypíše oblíbené */}
         {Object.entries(data).map((coin) =>{
             i++;
