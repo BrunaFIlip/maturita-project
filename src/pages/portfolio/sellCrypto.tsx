@@ -9,7 +9,7 @@ SButtonBack
 } from '../../styles/newCrypto';
 import { SH1 } from '../../styles/myCrypto';
 import { auth, db } from '../../database/firebase';
-import {ref, set, child, get, update} from 'firebase/database'
+import {ref, child, get, update} from 'firebase/database'
 import ErrorText from '../../components/ErrorText';
 
 
@@ -17,7 +17,7 @@ const SellCrypto = () => {
     const[coins, setCoins] = useState([])
     const[count, setCount] = useState<string>('')
     const[selectedCoin, setSelectedCoin] = useState<string>();
-    const[uid, setUid] = useState(auth.currentUser?.uid);
+    const[uid] = useState(auth.currentUser?.uid);
     const[price, setPrice] = useState<string>('');
     const[data, setData] = useState<any>({});
     const[error, setError] = useState<string>('');

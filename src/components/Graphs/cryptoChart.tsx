@@ -33,7 +33,7 @@ useEffect(() => {
   let x = 0;
   while(true){
       try{
-        if(data[x]['id'] == {id}.id){
+        if(data[x]['id'] === {id}.id){
             while(true){
                 try{
                     const nevim = data[x]['sparkline_in_7d']['price'][i]['x'];
@@ -81,7 +81,7 @@ const data2 = {
         <Line data={data2} />
       </SDiv>
       {Object.entries(data).map((coin) => {
-        if(coin[1]['id'] == {id}.id){
+        if(coin[1]['id'] === {id}.id){
           return(<STable>
             <STr><th>Cena:</th><th>{coin[1]['current_price']} CZK</th></STr>
             <STr><th>Market Cap:</th><th>{coin[1]['market_cap']} CZK</th></STr>

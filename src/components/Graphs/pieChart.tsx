@@ -6,7 +6,7 @@ import { SPie } from '../../styles/myCrypto';
 import { getMarketData } from './marketData';
 
 const MainPieChart = () => {
-    const[uid, setUid] = useState(auth.currentUser?.uid);
+    const[uid] = useState(auth.currentUser?.uid);
     const[data, setData] = useState<any>({});
     const[marketData, setMarketData] = useState();
     const[values, setValues] = useState<any>([]);
@@ -44,9 +44,9 @@ const MainPieChart = () => {
             let x = 0;
             while(true){
                 try{
-                    if(marketData[x]['name'] == coin[0]){
+                    if(marketData[x]['name'] === coin[0]){
                         Object.entries(data[coin[0]]).map((value) => {
-                            if(value[0] == 'pocet'){
+                            if(value[0] === 'pocet'){
                                 number = Math.round(Number(value[1]) * marketData[x]['current_price'])
                                 xvalues.push(number);
                             }
@@ -74,18 +74,18 @@ const MainPieChart = () => {
     }, [marketData])
 
     let help = 0;
-    {Object.entries(data).map((coin) =>{
-    {Object.entries(data[coin[0]]).map((value) => {
-        if(value[0] == "pocet"){
+    Object.entries(data).map((coin) =>{
+    Object.entries(data[coin[0]]).map((value) => {
+        if(value[0] === "pocet"){
             let color = randomColor();
             colors.push(color);
-                if(Number(value[1]) != 0){
+                if(Number(value[1]) !== 0){
                 chartData.push({title: coin[0], value: values[help], color: colors[help]})
             }
         }
-    })}
+    })
     help++;
-    })}
+    })
 
     
     return(

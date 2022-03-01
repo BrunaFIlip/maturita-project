@@ -1,5 +1,4 @@
 import {FC, useState, useEffect} from 'react'
-import axios from "axios"
 import {Coin} from '../components/Coin';
 import {
   SCoinApp,

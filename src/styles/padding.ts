@@ -13,6 +13,7 @@ padding-right: 2%;
 
 export const Font = styled.div`
 font-family: 'Sora', sans-serif;
+color: black;
 `
 export const Background = styled.div`
 background-image: url("/blur_graph.jpg");

@@ -1,4 +1,4 @@
-import { useLayoutEffect, useEffect, useState, FC } from 'react'
+import { useLayoutEffect, useState} from 'react'
 import {
     SSideBar,
     SUl,
@@ -25,7 +25,7 @@ const useWindowSize = () => {
 
 
 const Sidebar = () => {
-    const [width, height] = useWindowSize();
+    const [width] = useWindowSize();
     const [show, setShow]=useState(false)
 
 

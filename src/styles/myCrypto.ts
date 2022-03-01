@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import {colors} from '../styles/color'
-import {useState} from 'react'
 
 type Props = {
   isFavourite: number;
@@ -120,11 +119,16 @@ export const SValueProcent = styled.div`
 
 
 export const FavouriteButton = styled.div<Pick<Props, 'isFavourite'>>`
-color: ${({isFavourite}) => (isFavourite == 0 ? "white" : "yellow")};
+color: ${({isFavourite}) => (isFavourite === 0 ? "white" : "yellow")};
 position: absolute;
     top: 20px;
     right: 20px;
 }
 }
+`
+
+export const ShowPercentage = styled.p`
+text-align: right;
+margin-top: -49px;
 `
 

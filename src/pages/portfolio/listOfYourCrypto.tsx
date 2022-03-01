@@ -1,19 +1,17 @@
 import {useState, useEffect, useRef, useCallback} from 'react'
 import {ref, child, get, update} from 'firebase/database'
 import { db, auth } from '../../database/firebase';
-import {Button} from 'reactstrap'
 import { SRec, SMainRec } from '../../styles/myCrypto';
 import MainPieChart from '../../components/Graphs/pieChart';
 import { getMarketData } from '../../components/Graphs/marketData';
-import { SButtonAdd, SButtonDelete, SValueProcent, FavouriteButton, SH1 } from '../../styles/myCrypto';
-import { SButton } from '../../styles/newCrypto';
+import { SButtonAdd, SButtonDelete, SValueProcent, FavouriteButton, SH1, ShowPercentage } from '../../styles/myCrypto';
 import StarIcon from '@mui/icons-material/Star';
 import Switch from 'react-switch';
 
 
 
 const ListOfYourCrypto = () => {
-    const[uid, setUid] = useState(auth.currentUser?.uid);
+    const[uid] = useState(auth.currentUser?.uid);
     const[data, setData] = useState<any>({});
     const[absoluteValue, setAbsoluteValue] = useState<number>(0);
     const[marketData, setMarketData] = useState();
@@ -64,25 +62,23 @@ const ListOfYourCrypto = () => {
             let x = 0;
             while(true){
                 try{
-                    console.log(marketData[x]['name'] + ' rovná se ' + coin[0])
-                    if(marketData[x]['name'] == coin[0]){
+                    if(marketData[x]['name'] === coin[0]){
                         Object.entries(data[coin[0]]).map((value) => {
-                            if(value[0] == 'pocet'){
-                                if(value[1] == 0){
+                            if(value[0] === 'pocet'){
+                                if(value[1] === 0){
                                     xvalues.push(0);
                                 }else{
-                                console.log()
                                 number += Math.round(Number(value[1]) * marketData[x]['current_price'])
                                 number2 = Math.round(Number(value[1]) * marketData[x]['current_price'])
                                 console.log(Math.round(Number(value[1]) * marketData[x]['current_price']))
                                 xvalues.push(number2);
                                 }
                             }
-                            else if(value[0] == 'investice'){
+                            else if(value[0] === 'investice'){
                                 yvalues.push(value[1]);
                             }
-                            if(value[0] == 'oblibene'){
-                                if(value[1] == 1){
+                            if(value[0] === 'oblibene'){
+                                if(value[1] === 1){
                                     favourite.push(coin[0]);
                                 }
                             }
@@ -105,7 +101,7 @@ const ListOfYourCrypto = () => {
     const forceUpdate = useCallback(() => updateState({}), []);
 
     const AddToFavourite = (coin: string) => {
-        if(Number(data[coin]['oblibene']) == 1){
+        if(Number(data[coin]['oblibene']) === 1){
             update(ref(db, 'users/' + uid + "/" + coin), {
                 oblibene: 0
             }).then(() => {
@@ -129,7 +125,7 @@ const ListOfYourCrypto = () => {
 
     const CheckIfFav = (name:string) => {
         let id;
-        if(data[name]['oblibene'] == 0){
+        if(data[name]['oblibene'] === 0){
             id="notFav"
         }else{
             id='isFav'
@@ -175,7 +171,7 @@ const ListOfYourCrypto = () => {
         >
             Odebrat Coin
         </SButtonDelete>
-        <SButton onClick={() => setShow(!show)}>Procenta/Hodnota</SButton>
+        {/* <SButton onClick={() => setShow(!show)}>Procenta/Hodnota</SButton> */}
 
 
         <SMainRec>
@@ -184,23 +180,24 @@ const ListOfYourCrypto = () => {
             {Object.entries(data).map((coin) => {
                 j++
                 Object.entries(data[coin[0]]).map((value) => {
-                    if(value[0] == "cena"){
+                    if(value[0] === "cena"){
                         valuesx = valuesx + value[1];
                         inv = inv + invest[j];
                     }
                 })
             proc = Number(((absoluteValue + valuesx) / (absoluteValue / 100))).toFixed(2)
             })}
-            <SValueProcent><p>Profit: {show? (absoluteValue + valuesx) + "Kč" : proc + "%" } </p></SValueProcent>
+            <SValueProcent><p>Profit: {show? (absoluteValue + valuesx).toFixed(2) + "Kč" : proc + "%" } </p></SValueProcent>
             <MainPieChart/>
 
         </SMainRec>
         <p>Zobrazit pouze oblíbené <Switch checked={showOnlyFavourites} onChange={ToggleFav}/></p>
+        <ShowPercentage>Procenta/Částka <Switch checked={show} onChange={() => setShow(!show)}/></ShowPercentage>
         {/* vypíše oblíbené */}
         {Object.entries(data).map((coin) =>{
             i++;
-            {for (let index = 0; index < favouriteCoins.length; index++) {
-                if(coin[0] == favouriteCoins[index]){
+            for (let index = 0; index < favouriteCoins.length; index++) {
+                if(coin[0] === favouriteCoins[index]){
                     return(<SRec className={CheckIfFav(coin[0])}><h2>{coin[0]}</h2>
                         <br/>
                         
@@ -208,9 +205,9 @@ const ListOfYourCrypto = () => {
                 
                 
                         {Object.entries(data[coin[0]]).map((value) => {
-                            if(value[0] == "cena"){
+                            if(value[0] === "cena"){
                                 let procent
-                                if(values[i] == 0){
+                                if(values[i] === 0){
                                     procent = Number(100 / (invest[i] / Number(value[1]))).toFixed(2);
                                     console.log(values[i] + " : " + Number(value[1]) + " : " + invest[i])
                                 }else{
@@ -219,7 +216,7 @@ const ListOfYourCrypto = () => {
                 
                                 return(<SValueProcent><p>Profit: {show? (value[1] + values[i]) + "Kč" : procent+ "%"} </p></SValueProcent>)
                             }
-                            else if(value[0] == "pocet"){
+                            else if(value[0] === "pocet"){
                                 return(<>Pocet vlasněných coinů: {value[1]}</>)
                             }
                         })}
@@ -227,15 +224,15 @@ const ListOfYourCrypto = () => {
                         </SRec>)
                 }
                 
-            }}
+            }
         })}
         {/* vypíše mé coiny krom oblíbených */
         Object.entries(data).map((coin) =>{
             o++;
             let isf = false;
-            {for (let index = 0; index < favouriteCoins.length; index++) {
-                if(coin[0] == favouriteCoins[index]) isf = true;
-            }
+            for (let index = 0; index < favouriteCoins.length; index++) {
+                if(coin[0] === favouriteCoins[index]) isf = true;
+            
 
                 if(!isf){
             return(<SRec className={CheckIfFav(coin[0])}><h2>{coin[0]}</h2>
@@ -245,18 +242,18 @@ const ListOfYourCrypto = () => {
 
 
         {Object.entries(data[coin[0]]).map((value) => {
-            if(value[0] == "cena"){
+            if(value[0] === "cena"){
                 let procent
-                if(values[o] == 0){
+                if(values[o] === 0){
                     procent = Number(100 / (invest[o] / Number(value[1]))).toFixed(2);
                     console.log(values[o] + " : " + Number(value[1]) + " : " + invest[o])
                 }else{
                 procent = Number((values[o] + value[1]) / (values[o] / 100)).toFixed(2);
                 }
 
-                return(<SValueProcent><p>Profit: {show? (value[1] + values[i]) + "Kč" : procent+ "%"} </p></SValueProcent>)
+                return(<SValueProcent><p>Profit: {show? (value[1] + values[o]).toFixed(2) + "Kč" : procent+ "%"} </p></SValueProcent>)
             }
-            else if(value[0] == "pocet"){
+            else if(value[0] === "pocet"){
                 return(<>Pocet vlasněných coinů: {value[1]}</>)
             }
         })}

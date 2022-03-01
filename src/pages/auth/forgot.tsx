@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Button, FormGroup, Input } from 'reactstrap';
+import { FormGroup } from 'reactstrap';
 import AuthContainer from '../../components/AuthContainer';
 import ErrorText from '../../components/ErrorText';
 import {auth} from '../../database/firebase';
 import logging from '../../database/logging';
-import { SInput, STable, UserBox, SH1, SButton, SP } from '../../styles/authStyles';
+import { SInput, STable, UserBox, SButton, SP } from '../../styles/authStyles';
 
 
 const ForgotPasswordPage: React.FunctionComponent = props => {

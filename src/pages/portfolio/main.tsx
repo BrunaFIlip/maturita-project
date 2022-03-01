@@ -7,7 +7,7 @@ import ListOfYourCrypto from './listOfYourCrypto';
 
 const Main = () => {
     const[exist, setExist] = useState(false);
-    const[uid, setUid] = useState(auth.currentUser?.uid);
+    const[uid] = useState(auth.currentUser?.uid);
 
         
         get(child(ref(db), 'users/'+uid)).then((snapshot) => {

@@ -12,69 +12,98 @@ import { SH1 } from '../../styles/myCrypto';
 import { auth, db } from '../../database/firebase';
 import {ref, set, child, get, update} from 'firebase/database'
 import ErrorText from '../../components/ErrorText';
-
+import { 
+    SDataResult,
+    SDataItem
+} from '../../styles/searchBar';
 
 
 
 
 const NewCrpytoForNow = ()  => {
-    const[coins, setCoins] = useState([])
+    const[coins, setCoins] = useState<any[]>([])
     const[count, setCount] = useState<string>('')
     const[selectedCoin, setSelectedCoin] = useState<string>('Bitcoin');
-    const[uid, setUid] = useState(auth.currentUser?.uid);
-    const[price, setPrice] = useState<string>('');
-    const[exist, setExist] = useState(false);
-    const[data, setData] = useState<any>({});
+    const[uid] = useState(auth.currentUser?.uid);
+    const[price, setPrice] = useState<any>('');
     const[error, setError] = useState<string>('');
+    const[currencies, setCurrencies] = useState<any[]>([]);
+    const[selectedCurrency, setSellectedCurrency] = useState<string>('');
+    const[filteredData, setFilteredData] = useState([]);
+    const[pickedCoinPlaceHolder, setPickedCoinPlaceHolder] = useState<string>('Vyber coin');
 
 
-    
+useEffect(() => {
+axios.get('https://freecurrencyapi.net/api/v2/latest?apikey=a9da5980-9586-11ec-acb5-adef3790cfd2&base_currency=CZK').then(res => {
+    setCurrencies(res.data);
+}).catch(error => console.log(error))
+}, [])
 
-    
-        useEffect(() => {
-            axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=czk&order=market_cap_rank&per_page=250&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C200d%2C1y').then(res => {
-              setCoins(res.data)
-            }).catch(error => console.log(error))
-          }, []);
-    
-          useEffect(() => {
-            get(child(ref(db), 'users/'+uid)).then((snapshot) => {
-                if(snapshot.exists()){
-                    setData(snapshot.val())
-                }
-            }).catch((error:any) => {
-                console.log(error);
-            })
-        }, [])
-
-    const Exists = (coin: any) => {
-        get(child(ref(db), 'users/'+ uid + '/' + coin)).then((snapshot) => {
-            if(snapshot.exists()){
-                setExist(true);
-            } else{
-                setExist(false);
-            }
-        }).catch((error:any) => {
-            console.log(error);
-        })
+Object.entries(currencies).map(curr => {
+    if(curr[0] === "data"){
+        setCurrencies(curr[1])
     }
+})
 
+
+// Object.keys(currencies).map((keyName, i) => {
+//     console.log(keyName + " : " + i)
+// })
+
+
+        useEffect(() => {  
+
+                axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=czk&order=market_cap_rank&per_page=250&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C200d%2C1y').then(res => {
+                  setCoins(res.data)
+                }).catch(error => console.log(error))
+            
+          }, []);
+          console.log(coins)
+    
+        //   useEffect(() => {
+        //     get(child(ref(db), 'users/'+uid)).then((snapshot) => {
+        //         if(snapshot.exists()){
+        //             setData(snapshot.val())
+        //         }
+        //     }).catch((error:any) => {
+        //         console.log(error);
+        //     })
+        // }, [])
+
+    // const Exists = (coin: any) => {
+    //     get(child(ref(db), 'users/'+ uid + '/' + coin)).then((snapshot) => {
+    //         if(snapshot.exists()){
+    //             setExist(true);
+    //         } else{
+    //             setExist(false);
+    //         }
+    //     }).catch((error:any) => {
+    //         console.log(error);
+    //     })
+    // }
 
 
 
       const saveToDatabase = () => {
           var valid = false;
-          if(Number(count) > 0 && Number(price) >= 0){
+          if(Number(count) > 0 && Number(price) >= 0 && selectedCurrency !== ''){
           valid = true;
           }
 
           if(valid){
-        get(child(ref(db), 'users/'+ uid + '/' + selectedCoin)).then((snapshot) => {
+              let newPrice = price;
+                Object.entries(currencies).map((val) =>{
+                    if(val[0] === selectedCurrency){
+                        newPrice = Number(price) / val[1];
+                    }
+                })
+              
+            get(child(ref(db), 'users/'+ uid + '/' + selectedCoin)).then((snapshot) => {
             if(!snapshot.exists()){
                 set(ref(db, 'users/' + uid + "/" + selectedCoin), {
                     pocet: count,
-                    cena: 0 - Number(price),
-                    investice: Number(price),
+                    cena: 0 - newPrice,
+                    investice: newPrice,
                     oblibene: 0
                 }).then(() => {
                     window.location.pathname = "/"
@@ -87,8 +116,8 @@ const NewCrpytoForNow = ()  => {
                 const oldInvestment = Number(snapshot.val()['investice']);
 
                 const newAmount = oldAmount + Number(count);
-                const newValue = oldValue - Number(price);
-                const newInvestment = oldInvestment + Number(price);
+                const newValue = oldValue - newPrice;
+                const newInvestment = oldInvestment + newPrice;
                 const postData = {
                     pocet: newAmount,
                     cena: newValue,
@@ -109,20 +138,56 @@ const NewCrpytoForNow = ()  => {
     }
       }
 
+      const handleFilter = (e:any) => {
+        const searchWord = e.target.value
+        const newFilter: any = coins.filter(value => {
+            return value['name'].toLowerCase().includes(searchWord.toLowerCase())
+        });
+        if(searchWord === ""){
+            setFilteredData([])
+        }else{
+
+            setFilteredData(newFilter)
+        }
+      }
+
 
     return(<Conteiner>
         <SH1>Přidat coin</SH1>
+             <form>
          <SLabel>Vyber coin
-    <Dropdown options={coins.map(coin => {
+    {/* <Dropdown options={coins.map(coin => {
         return(
             coin['name']
         )
     })} value={selectedCoin}
      placeholder="Vyber coin který chceš přidat" 
     onChange={event => setSelectedCoin(event.value)}
-    />
+    /> */}
+
+
+    <div>
+        <div>
+            <SInput type="text" placeholder={pickedCoinPlaceHolder} onChange={handleFilter}/>
+            <p>Zvolený coin: {selectedCoin}</p>
+        </div>
+        {filteredData.length !== 0 && (
+        <SDataResult>
+            {filteredData.slice(0, 15).map(coin => {
+                return <SDataItem onClick={() => {
+                    setPickedCoinPlaceHolder(coin['name'])
+                    setFilteredData([])
+                    setSelectedCoin(coin['name'])
+                }}> 
+                    <p>{coin['name']} </p>
+                    </SDataItem>
+            })}
+        </SDataResult>
+        )}
+    </div>
+
+
     </SLabel>
-        <form>
             <SLabel>Vyber počet coinu 
                 <SInput type="text" 
                 name="count"
@@ -132,8 +197,6 @@ const NewCrpytoForNow = ()  => {
                 value={count}
                 />
             </SLabel>
-            </form>
-            <form>
             <SLabel>Kolik jsem za to zaplatil
                 <SInput type="number" 
                 name="price"
@@ -143,6 +206,16 @@ const NewCrpytoForNow = ()  => {
                 value={price}
                 />
             </SLabel>
+            <SLabel>Měna v které jsem nakupoval
+    <Dropdown options={Object.keys(currencies).map((keyName, i) => {
+        return(
+            keyName
+        )
+    })} value={selectedCurrency}
+     placeholder="Vyber měnu v které jsi nakupoval" 
+    onChange={event => setSellectedCurrency(event.value)}
+    />
+    </SLabel>
         </form>
         <SButton
         color="success"
