@@ -1,6 +1,7 @@
  import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
  import ListAltIcon from '@mui/icons-material/ListAlt';
  import LogoutIcon from '@mui/icons-material/Logout';
+ import PasswordIcon from '@mui/icons-material/Password';
 
 
 export const SidebarData = [{
@@ -12,6 +13,11 @@ export const SidebarData = [{
     title: "Přehled kryptoměn",
     icon: <MonetizationOnIcon />,
     Link: "/cryptoList"
+},
+{
+    title: "Změnit heslo",
+    icon: <PasswordIcon/>,
+    Link: "/change"
 },
 {
     title: "Odhlásit se",

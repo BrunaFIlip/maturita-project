@@ -92,7 +92,11 @@ height: auto;
 
 export const SLabel = styled.label`
 color: teal;
-font-weight: 500;
+font-size: 20px;
+`
+export const SLabel2 = styled.label`
+color: teal;
+font-size: 20px;
 `
 
 export const SInput = styled.input`
@@ -103,4 +107,10 @@ export const SInput = styled.input`
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+`
+
+export const SP = styled.p`
+color: black;
+font-size: 19px;
+margin-top: 0;
 `

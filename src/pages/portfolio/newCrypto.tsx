@@ -6,7 +6,8 @@ import { SLabel,
 Conteiner,
 SButton,
 SButtonBack,
-SInput
+SInput,
+SP
 } from '../../styles/newCrypto';
 import { SH1 } from '../../styles/myCrypto';
 import { auth, db } from '../../database/firebase';
@@ -20,7 +21,7 @@ import {
 
 
 
-const NewCrpytoForNow = ()  => {
+const NewCrpyto = ()  => {
     const[coins, setCoins] = useState<any[]>([])
     const[count, setCount] = useState<string>('')
     const[selectedCoin, setSelectedCoin] = useState<string>('Bitcoin');
@@ -156,23 +157,13 @@ Object.entries(currencies).map(curr => {
         <SH1>Přidat coin</SH1>
              <form>
          <SLabel>Vyber coin
-    {/* <Dropdown options={coins.map(coin => {
-        return(
-            coin['name']
-        )
-    })} value={selectedCoin}
-     placeholder="Vyber coin který chceš přidat" 
-    onChange={event => setSelectedCoin(event.value)}
-    /> */}
-
-
     <div>
         <div>
             <SInput type="text" placeholder={pickedCoinPlaceHolder} onChange={handleFilter}/>
-            <p>Zvolený coin: {selectedCoin}</p>
         </div>
+        <SP>Zvolený coin: {selectedCoin}</SP>
         {filteredData.length !== 0 && (
-        <SDataResult>
+            <SDataResult>
             {filteredData.slice(0, 15).map(coin => {
                 return <SDataItem onClick={() => {
                     setPickedCoinPlaceHolder(coin['name'])
@@ -185,8 +176,6 @@ Object.entries(currencies).map(curr => {
         </SDataResult>
         )}
     </div>
-
-
     </SLabel>
             <SLabel>Vyber počet coinu 
                 <SInput type="text" 
@@ -235,4 +224,4 @@ Object.entries(currencies).map(curr => {
 }
 
 
-export default NewCrpytoForNow
+export default NewCrpyto

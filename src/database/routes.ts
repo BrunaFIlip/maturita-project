@@ -6,7 +6,7 @@ import RegisterPage from "../pages/auth/register";
 import ResetPasswordPage from "../pages/auth/reset";
 import ListOfCrypto from '../pages/cryptoList'
 import Main from '../pages/portfolio/main'
-import NewCrpytoForNow from "../pages/portfolio/newCryptoForNow";
+import NewCrpyto from "../pages/portfolio/newCrypto";
 import Chart from "../components/Graphs/cryptoChart";
 import SellCrypto from "../pages/portfolio/sellCrypto";
 import Favourite from "../pages/portfolio/favourite"
@@ -80,7 +80,7 @@ const routes: IRoute[] = [
     {
         path: '/newCrypto',
         exact: true,
-        component: NewCrpytoForNow,
+        component: NewCrpyto,
         name: 'Přidat crypto',
         protected: true
     },

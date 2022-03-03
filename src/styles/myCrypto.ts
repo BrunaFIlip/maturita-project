@@ -125,6 +125,7 @@ position: absolute;
     right: 20px;
 }
 }
+cursor: pointer;
 `
 
 export const ShowPercentage = styled.p`
@@ -132,3 +133,23 @@ text-align: right;
 margin-top: -49px;
 `
 
+export const Logo = styled.img`
+width: 12%;
+font-size: 7px;
+position: relative;
+left: 75%;
+margin-top: -130px;
+@media (min-width: 1921px){
+    width: 220px;
+  }
+@media (max-width: 1300px){
+    width: 150px;
+  }
+  @media (max-width: 900px){
+    width: 150px;
+    left: 60%
+  }
+  @media (max-width: 530px){
+    visibility: hidden;
+  }
+`

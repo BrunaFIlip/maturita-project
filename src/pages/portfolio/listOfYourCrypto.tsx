@@ -2,9 +2,8 @@ import {useState, useEffect, useRef, useCallback} from 'react'
 import {ref, child, get, update} from 'firebase/database'
 import { db, auth } from '../../database/firebase';
 import { SRec, SMainRec } from '../../styles/myCrypto';
-import MainPieChart from '../../components/Graphs/pieChart';
 import { getMarketData } from '../../components/Graphs/marketData';
-import { SButtonAdd, SButtonDelete, SValueProcent, FavouriteButton, SH1, ShowPercentage } from '../../styles/myCrypto';
+import { SButtonAdd, SButtonDelete, SValueProcent, FavouriteButton, SH1, ShowPercentage, Logo } from '../../styles/myCrypto';
 import StarIcon from '@mui/icons-material/Star';
 import Switch from 'react-switch';
 
@@ -188,7 +187,8 @@ const ListOfYourCrypto = () => {
             proc = Number(((absoluteValue + valuesx) / (absoluteValue / 100))).toFixed(2)
             })}
             <SValueProcent><p>Profit: {show? (absoluteValue + valuesx).toFixed(2) + "Kč" : proc + "%" } </p></SValueProcent>
-            <MainPieChart/>
+            {/* <MainPieChart/> */}
+            <Logo src='BCoin-logo.png'/>
 
         </SMainRec>
         <p>Zobrazit pouze oblíbené <Switch checked={showOnlyFavourites} onChange={ToggleFav}/></p>

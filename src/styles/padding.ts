@@ -16,16 +16,24 @@ font-family: 'Sora', sans-serif;
 color: black;
 `
 export const Background = styled.div`
-background-image: url("/blur_graph.jpg");
+background-image: url("/BCoin-background.png");
+background-repeat: no-repeat;
+background-attachment: fixed;
+background-position: center;
+
 min-height: 100%;
 min-width: 100%;
 
+
 width: 100%;
 height: auto; 
+
+
 
 position: fixed;
 
 top: 0;
 left: 0;
-z-index: -1;
+z-index: -1;  
+
 `
