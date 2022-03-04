@@ -11,6 +11,8 @@ import { SH1 } from '../../styles/myCrypto';
 import { auth, db } from '../../database/firebase';
 import {ref, child, get, update} from 'firebase/database'
 import ErrorText from '../../components/ErrorText';
+import axios from "axios"
+
 
 
 const SellCrypto = () => {
@@ -21,6 +23,19 @@ const SellCrypto = () => {
     const[price, setPrice] = useState<string>('');
     const[data, setData] = useState<any>({});
     const[error, setError] = useState<string>('');
+    const[currencies, setCurrencies] = useState<any[]>([]);
+    const[selectedCurrency, setSellectedCurrency] = useState<string>('');
+
+    useEffect(() => {
+        axios.get('https://freecurrencyapi.net/api/v2/latest?apikey=a9da5980-9586-11ec-acb5-adef3790cfd2&base_currency=CZK').then(res => {
+            setCurrencies(res.data);
+        }).catch(error => console.log(error))
+        }, [])
+        Object.entries(currencies).map(curr => {
+            if(curr[0] === "data"){
+                setCurrencies(curr[1])
+            }
+        })
 
 
     useEffect(() => {
@@ -47,10 +62,17 @@ const SellCrypto = () => {
     const deleteCoin = () => {
         get(child(ref(db), 'users/'+ uid + '/' + selectedCoin)).then((snapshot) => {
             if(snapshot.exists()){
-                if(snapshot.val()['pocet'] >= count && Number(count) > 0){
+                if(snapshot.val()['pocet'] >= count && Number(count) > 0 && selectedCurrency !== ""){
+                    //převod na CZK
+                    let newPriceCurr = Number(price);
+                    Object.entries(currencies).map((val) =>{
+                        if(val[0] === selectedCurrency){
+                            newPriceCurr = Number(price) / val[1];
+                        }
+                    })
                     //update
                     const newCount = snapshot.val()['pocet'] - Number(count);
-                    const newPrice = snapshot.val()['cena'] + Number(price)
+                    const newPrice = snapshot.val()['cena'] + newPriceCurr;
                     const postData = {
                         pocet: newCount,
                         cena: newPrice
@@ -104,6 +126,16 @@ const SellCrypto = () => {
                value={price}
                />
            </SLabel>
+           <SLabel>Měna za kterou jsem prodával
+    <Dropdown options={Object.keys(currencies).map((keyName, i) => {
+        return(
+            keyName
+        )
+    })} value={selectedCurrency}
+     placeholder="Vyber měnu za kterou jsi prodával" 
+    onChange={event => setSellectedCurrency(event.value)}
+    />
+    </SLabel>
        </form>
        <SButton
        color="success"
