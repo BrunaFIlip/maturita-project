@@ -7,7 +7,9 @@ import {
   SCoinInput,
   STd
 } from '../../src/styles/coin'
-import { getMarketData } from '../components/Graphs/marketData';
+import { getMarketDataList } from '../components/Graphs/marketData';
+import {useParams} from 'react-router-dom'
+
 
 interface IPageProps {
   name: string;
@@ -17,11 +19,13 @@ interface IPageProps {
 const ListOfCrypto: FC<IPageProps> = () => {
     const[coins, setCoins] = useState<any[]>([])
     const[search, setSearch] = useState('')
+    const {page}: {page: string} = useParams();
     
+    console.log({page}.page)
     
     useEffect(() => {
       const fetchMarketData = async () => {
-        const marketData = await getMarketData();
+        const marketData = await getMarketDataList({page}.page);
         setCoins(marketData);
         
     }
@@ -32,6 +36,7 @@ const ListOfCrypto: FC<IPageProps> = () => {
           setSearch(e.target.value)
       }
 
+      console.log(coins)
 
       const filteredCoins = coins.filter(coin =>
         coin['name'].toLowerCase().includes(search.toLowerCase())
@@ -55,7 +60,7 @@ const ListOfCrypto: FC<IPageProps> = () => {
   return (
     <tr
     onClick={() => {
-      window.location.pathname = '/nasrat/' + coin['id']
+      window.location.pathname = '/details/' + coin['id'] + "/" + {page}.page
     }}
     >
       <STd>

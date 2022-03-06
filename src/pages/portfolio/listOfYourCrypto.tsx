@@ -61,27 +61,31 @@ const ListOfYourCrypto = () => {
             let x = 0;
             while(true){
                 try{
-                    if(marketData[x]['name'] === coin[0]){
-                        Object.entries(data[coin[0]]).map((value) => {
-                            if(value[0] === 'pocet'){
-                                if(value[1] === 0){
-                                    xvalues.push(0);
-                                }else{
-                                number += Math.round(Number(value[1]) * marketData[x]['current_price'])
-                                number2 = Math.round(Number(value[1]) * marketData[x]['current_price'])
-                                console.log(Math.round(Number(value[1]) * marketData[x]['current_price']))
-                                xvalues.push(number2);
+                    for (let index = 0; index < 10; index++) {
+                        if(marketData[index][x]['name'] === coin[0]){
+                            Object.entries(data[coin[0]]).map((value) => {
+                                if(value[0] === 'pocet'){
+                                    if(value[1] === 0){
+                                        xvalues.push(0);
+                                    }else{
+                                    number += Math.round(Number(value[1]) * marketData[index][x]['current_price'])
+                                    number2 = Math.round(Number(value[1]) * marketData[index][x]['current_price'])
+                                    console.log(Math.round(Number(value[1]) * marketData[index][x]['current_price']))
+                                    xvalues.push(number2);
+                                    }
                                 }
-                            }
-                            else if(value[0] === 'investice'){
-                                yvalues.push(value[1]);
-                            }
-                            if(value[0] === 'oblibene'){
-                                if(value[1] === 1){
-                                    favourite.push(coin[0]);
+                                else if(value[0] === 'investice'){
+                                    yvalues.push(value[1]);
                                 }
-                            }
-                        })
+                                if(value[0] === 'oblibene'){
+                                    if(value[1] === 1){
+                                        favourite.push(coin[0]);
+                                    }
+                                }
+                            })
+                        }
+
+                        
                     }
                 }catch{
                     break;
@@ -95,6 +99,7 @@ const ListOfYourCrypto = () => {
         setFavouriteCoins(favourite)
     }
     },[marketData])
+
 
     const [, updateState] = useState<any>();
     const forceUpdate = useCallback(() => updateState({}), []);

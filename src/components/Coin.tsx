@@ -27,9 +27,9 @@ export const Coin = ({name, image, symbol, price, priceChange, marketcap}: {name
         CZK{price}
     </CoinPrice>
     {priceChange < 0 ? (
-        <Red>{priceChange.toFixed(2)}%</Red>
+        <Red>{priceChange != null ? priceChange.toFixed(2) + "%" : "Chybí záznam"}</Red>
     ) : (
-        <Green>{priceChange.toFixed(2)}%</Green>
+        <Green>{priceChange != null ? priceChange.toFixed(2) + "%" : "Chybí záznam"}</Green>
     )
 }
 <CoinMarketcap>

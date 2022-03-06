@@ -34,11 +34,47 @@ const NewCrpyto = ()  => {
     const[pickedCoinPlaceHolder, setPickedCoinPlaceHolder] = useState<string>('Vyber coin');
 
 
-useEffect(() => {
-axios.get('https://freecurrencyapi.net/api/v2/latest?apikey=a9da5980-9586-11ec-acb5-adef3790cfd2&base_currency=CZK').then(res => {
-    setCurrencies(res.data);
-}).catch(error => console.log(error))
-}, [])
+    const fetchData = () => {
+        const getCurrencies = axios.get('https://freecurrencyapi.net/api/v2/latest?apikey=a9da5980-9586-11ec-acb5-adef3790cfd2&base_currency=CZK')
+        const getCoins1 = axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=czk&order=market_cap_rank&per_page=250&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C200d%2C1y')
+        const getCoins2 = axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=czk&order=market_cap_rank&per_page=250&page=2&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C200d%2C1y')
+        const getCoins3 = axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=czk&order=market_cap_rank&per_page=250&page=3&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C200d%2C1y')
+        const getCoins4 = axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=czk&order=market_cap_rank&per_page=250&page=4&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C200d%2C1y')
+        const getCoins5 = axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=czk&order=market_cap_rank&per_page=250&page=5&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C200d%2C1y')
+        const getCoins6 = axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=czk&order=market_cap_rank&per_page=250&page=6&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C200d%2C1y')
+        const getCoins7 = axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=czk&order=market_cap_rank&per_page=250&page=7&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C200d%2C1y')
+        const getCoins8 = axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=czk&order=market_cap_rank&per_page=250&page=8&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C200d%2C1y')
+        const getCoins9 = axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=czk&order=market_cap_rank&per_page=250&page=9&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C200d%2C1y')
+        const getCoins10 = axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=czk&order=market_cap_rank&per_page=250&page=10&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C200d%2C1y')
+
+
+        let help:any = [];
+        let name:any = [];
+        axios.all([getCurrencies, getCoins1, getCoins2, getCoins3, getCoins4, getCoins5, getCoins6, getCoins7, getCoins8, getCoins9, getCoins10]).then(
+            axios.spread((...allData) => {
+                setCurrencies(allData[0].data)
+                for (let index = 1; index <= 10; index++) {   
+                    help = allData[index].data;
+                    const filteredCoins = help.filter((val:any) => val['name'])
+                    filteredCoins.map((value:any) => {
+                        name.push(value['name'])
+                    })
+                }
+                setCoins(name);
+            })
+        )
+    }
+    
+    useEffect(() => {
+        fetchData()
+    }, [])
+
+
+// useEffect(() => {
+// axios.get('https://freecurrencyapi.net/api/v2/latest?apikey=a9da5980-9586-11ec-acb5-adef3790cfd2&base_currency=CZK').then(res => {
+//     setCurrencies(res.data);
+// }).catch(error => console.log(error))
+// }, [])
 
 Object.entries(currencies).map(curr => {
     if(curr[0] === "data"){
@@ -52,14 +88,14 @@ Object.entries(currencies).map(curr => {
 // })
 
 
-        useEffect(() => {  
+        // useEffect(() => {  
 
-                axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=czk&order=market_cap_rank&per_page=250&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C200d%2C1y').then(res => {
-                  setCoins(res.data)
-                }).catch(error => console.log(error))
+        //         axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=czk&order=market_cap_rank&per_page=250&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C200d%2C1y').then(res => {
+        //           setCoins(res.data)
+        //         }).catch(error => console.log(error))
             
-          }, []);
-          console.log(coins)
+        //   }, []);
+        //   console.log(coins)
     
         //   useEffect(() => {
         //     get(child(ref(db), 'users/'+uid)).then((snapshot) => {
@@ -142,7 +178,9 @@ Object.entries(currencies).map(curr => {
       const handleFilter = (e:any) => {
         const searchWord = e.target.value
         const newFilter: any = coins.filter(value => {
-            return value['name'].toLowerCase().includes(searchWord.toLowerCase())
+            if(value.toLowerCase().includes(searchWord.toLowerCase())){
+                return value
+            }
         });
         if(searchWord === ""){
             setFilteredData([])
@@ -166,11 +204,11 @@ Object.entries(currencies).map(curr => {
             <SDataResult>
             {filteredData.slice(0, 15).map(coin => {
                 return <SDataItem onClick={() => {
-                    setPickedCoinPlaceHolder(coin['name'])
+                    setPickedCoinPlaceHolder(coin)
                     setFilteredData([])
-                    setSelectedCoin(coin['name'])
+                    setSelectedCoin(coin)
                 }}> 
-                    <p>{coin['name']} </p>
+                    <p>{coin} </p>
                     </SDataItem>
             })}
         </SDataResult>
