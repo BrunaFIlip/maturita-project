@@ -3,6 +3,16 @@ import styled from 'styled-components'
 export const CoinContainer = styled.div`
 display: flex;
 justify-content: center;
+@media (max-width: 520px){
+  width: auto;
+  margin-left: 4%;
+  justify-content: left;
+}
+@media (max-width: 460px){
+  width: auto;
+  margin-left: 15%;
+  justify-content: left;
+}
 `
 
 export const CoinRow = styled.div`
@@ -54,6 +64,9 @@ display: flex;
 text-align: center;
 justify-content: space-between;
 width: 100%;
+@media (max-width: 520px){
+  width: auto;
+  }
 `
 
 export const CoinPrice = styled.p`
@@ -109,6 +122,11 @@ export const SCoinSearch = styled.div`
 export const SCoinText = styled.div`
   margin-bottom: 32px;
   text-align: center;
+  
+  @media (max-width: 460px){
+  width: auto;
+  margin-left: 80px;
+  }
 `
 
 export const SCoinInput = styled.input`

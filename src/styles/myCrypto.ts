@@ -131,6 +131,11 @@ cursor: pointer;
 export const ShowPercentage = styled.p`
 text-align: right;
 margin-top: -49px;
+@media (max-width: 530px){
+  position: relative;
+    float: left;
+    margin-top: 0;
+  }
 `
 
 export const Logo = styled.img`

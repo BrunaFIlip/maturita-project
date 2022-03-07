@@ -9,6 +9,7 @@ import {
 } from '../../src/styles/coin'
 import { getMarketDataList } from '../components/Graphs/marketData';
 import {useParams} from 'react-router-dom'
+import Paging from '../components/paging'
 
 
 interface IPageProps {
@@ -54,6 +55,7 @@ const ListOfCrypto: FC<IPageProps> = () => {
 </form>
 </SCoinText>
 </SCoinSearch>
+<Paging page={Number({page}.page)}/>
 </thead>
   <tbody>
   {filteredCoins.map(coin => {
@@ -78,6 +80,7 @@ const ListOfCrypto: FC<IPageProps> = () => {
 })}
   </tbody>
 </table>
+<Paging page={Number({page}.page)}/>
 </SCoinApp>
 </>
     )

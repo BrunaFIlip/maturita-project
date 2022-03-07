@@ -1,4 +1,4 @@
-import React from 'react'
+import {useLayoutEffect, useState} from 'react'
 import {
     CoinContainer,
     CoinRow,
@@ -13,7 +13,21 @@ import {
     CoinMarketcap
 } from '../styles/coin'
 
+const useWindowSize = () => {
+    const [size, setSize] = useState([0, 0]);
+    useLayoutEffect(() => {
+      function updateSize() {
+        setSize([window.innerWidth, window.innerHeight]);
+      }
+      window.addEventListener('resize', updateSize);
+      updateSize();
+      return () => window.removeEventListener('resize', updateSize);
+    }, []);
+    return size;
+  }
 export const Coin = ({name, image, symbol, price, priceChange, marketcap}: {name: any, image: any, symbol: any, price: any, priceChange: any, marketcap: any}) => {
+    const [width] = useWindowSize();
+
     return (
         <CoinContainer>
 <CoinRow>
@@ -22,7 +36,7 @@ export const Coin = ({name, image, symbol, price, priceChange, marketcap}: {name
 <CoinH1>{name}</CoinH1>
 <CoinSymbol>{symbol}</CoinSymbol>
 </SCoin>
-<CoinData>
+<CoinData className='ahoj'>
     <CoinPrice>
         CZK{price}
     </CoinPrice>

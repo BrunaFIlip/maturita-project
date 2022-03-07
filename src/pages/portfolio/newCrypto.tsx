@@ -32,94 +32,39 @@ const NewCrpyto = ()  => {
     const[selectedCurrency, setSellectedCurrency] = useState<string>('');
     const[filteredData, setFilteredData] = useState([]);
     const[pickedCoinPlaceHolder, setPickedCoinPlaceHolder] = useState<string>('Vyber coin');
+    const[coinsIds, setCoinIds] = useState<any[]>([])
 
 
-    const fetchData = () => {
-        const getCurrencies = axios.get('https://freecurrencyapi.net/api/v2/latest?apikey=a9da5980-9586-11ec-acb5-adef3790cfd2&base_currency=CZK')
-        const getCoins1 = axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=czk&order=market_cap_rank&per_page=250&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C200d%2C1y')
-        const getCoins2 = axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=czk&order=market_cap_rank&per_page=250&page=2&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C200d%2C1y')
-        const getCoins3 = axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=czk&order=market_cap_rank&per_page=250&page=3&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C200d%2C1y')
-        const getCoins4 = axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=czk&order=market_cap_rank&per_page=250&page=4&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C200d%2C1y')
-        const getCoins5 = axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=czk&order=market_cap_rank&per_page=250&page=5&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C200d%2C1y')
-        const getCoins6 = axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=czk&order=market_cap_rank&per_page=250&page=6&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C200d%2C1y')
-        const getCoins7 = axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=czk&order=market_cap_rank&per_page=250&page=7&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C200d%2C1y')
-        const getCoins8 = axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=czk&order=market_cap_rank&per_page=250&page=8&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C200d%2C1y')
-        const getCoins9 = axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=czk&order=market_cap_rank&per_page=250&page=9&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C200d%2C1y')
-        const getCoins10 = axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=czk&order=market_cap_rank&per_page=250&page=10&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C200d%2C1y')
-
-
+    const fetchData = async () => {
+        const getCoins = await axios.get('https://api.coingecko.com/api/v3/coins/list?include_platform=false')
+        const getCurrencies = await axios.get('http://data.fixer.io/api/latest?access_key=52c22eedc8c48a6bbbab651c40021b43')
         let help:any = [];
         let name:any = [];
-        axios.all([getCurrencies, getCoins1, getCoins2, getCoins3, getCoins4, getCoins5, getCoins6, getCoins7, getCoins8, getCoins9, getCoins10]).then(
+        let id:any = []
+
+        axios.all([getCoins, getCurrencies]).then(
             axios.spread((...allData) => {
-                setCurrencies(allData[0].data)
-                for (let index = 1; index <= 10; index++) {   
-                    help = allData[index].data;
-                    const filteredCoins = help.filter((val:any) => val['name'])
-                    filteredCoins.map((value:any) => {
+                setCurrencies(allData[1]['data']['rates'])
+                    help = allData[0].data;
+                    help.map((value:any) => {
                         name.push(value['name'])
+                        id[value['name']] = value['id']
                     })
-                }
+                    name.sort((a:any , b:any) => b.length - a.length);
+                    name.reverse();
                 setCoins(name);
+                setCoinIds(id)
             })
         )
     }
-    
+
     useEffect(() => {
         fetchData()
     }, [])
 
-
-// useEffect(() => {
-// axios.get('https://freecurrencyapi.net/api/v2/latest?apikey=a9da5980-9586-11ec-acb5-adef3790cfd2&base_currency=CZK').then(res => {
-//     setCurrencies(res.data);
-// }).catch(error => console.log(error))
-// }, [])
-
-Object.entries(currencies).map(curr => {
-    if(curr[0] === "data"){
-        setCurrencies(curr[1])
-    }
-})
-
-
-// Object.keys(currencies).map((keyName, i) => {
-//     console.log(keyName + " : " + i)
-// })
-
-
-        // useEffect(() => {  
-
-        //         axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=czk&order=market_cap_rank&per_page=250&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C200d%2C1y').then(res => {
-        //           setCoins(res.data)
-        //         }).catch(error => console.log(error))
-            
-        //   }, []);
-        //   console.log(coins)
-    
-        //   useEffect(() => {
-        //     get(child(ref(db), 'users/'+uid)).then((snapshot) => {
-        //         if(snapshot.exists()){
-        //             setData(snapshot.val())
-        //         }
-        //     }).catch((error:any) => {
-        //         console.log(error);
-        //     })
-        // }, [])
-
-    // const Exists = (coin: any) => {
-    //     get(child(ref(db), 'users/'+ uid + '/' + coin)).then((snapshot) => {
-    //         if(snapshot.exists()){
-    //             setExist(true);
-    //         } else{
-    //             setExist(false);
-    //         }
-    //     }).catch((error:any) => {
-    //         console.log(error);
-    //     })
-    // }
-
-
+    Object.entries(currencies).map((value) => {
+        console.log(value)
+    })
 
       const saveToDatabase = () => {
           var valid = false;
@@ -129,9 +74,20 @@ Object.entries(currencies).map(curr => {
 
           if(valid){
               let newPrice = price;
+              let coinId:string
+              let czk:number
                 Object.entries(currencies).map((val) =>{
+                    if(val[0] == "CZK"){
+                        czk = val[1];
+                    }
                     if(val[0] === selectedCurrency){
-                        newPrice = Number(price) / val[1];
+                        const currCzk = czk / val[1]
+                        newPrice = Number(price) * currCzk;
+                    }
+                })
+                Object.entries(coinsIds).map((key) => {             
+                    if(key[0] === selectedCoin){
+                        coinId = key[1]
                     }
                 })
               
@@ -141,7 +97,8 @@ Object.entries(currencies).map(curr => {
                     pocet: count,
                     cena: 0 - newPrice,
                     investice: newPrice,
-                    oblibene: 0
+                    oblibene: 0,
+                    id: coinId
                 }).then(() => {
                     window.location.pathname = "/"
                 }).catch((error:any) =>{
@@ -202,7 +159,7 @@ Object.entries(currencies).map(curr => {
         <SP>Zvolený coin: {selectedCoin}</SP>
         {filteredData.length !== 0 && (
             <SDataResult>
-            {filteredData.slice(0, 15).map(coin => {
+            {filteredData.slice(0,15).map(coin => {
                 return <SDataItem onClick={() => {
                     setPickedCoinPlaceHolder(coin)
                     setFilteredData([])

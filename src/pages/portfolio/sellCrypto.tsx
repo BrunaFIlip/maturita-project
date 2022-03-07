@@ -26,16 +26,16 @@ const SellCrypto = () => {
     const[currencies, setCurrencies] = useState<any[]>([]);
     const[selectedCurrency, setSellectedCurrency] = useState<string>('');
 
-    useEffect(() => {
-        axios.get('https://freecurrencyapi.net/api/v2/latest?apikey=a9da5980-9586-11ec-acb5-adef3790cfd2&base_currency=CZK').then(res => {
-            setCurrencies(res.data);
+
+    const fetchData = async () => {
+        await axios.get('http://data.fixer.io/api/latest?access_key=52c22eedc8c48a6bbbab651c40021b43').then(res => {
+            setCurrencies(res['data']['rates']);
         }).catch(error => console.log(error))
+    }
+
+    useEffect(() => {
+        fetchData()
         }, [])
-        Object.entries(currencies).map(curr => {
-            if(curr[0] === "data"){
-                setCurrencies(curr[1])
-            }
-        })
 
 
     useEffect(() => {
@@ -65,9 +65,14 @@ const SellCrypto = () => {
                 if(snapshot.val()['pocet'] >= count && Number(count) > 0 && selectedCurrency !== ""){
                     //převod na CZK
                     let newPriceCurr = Number(price);
+                    let czk:number
                     Object.entries(currencies).map((val) =>{
+                        if(val[0] == "CZK"){
+                            czk = val[1];
+                        }
                         if(val[0] === selectedCurrency){
-                            newPriceCurr = Number(price) / val[1];
+                            const currCzk = czk / val[1]
+                            newPriceCurr = Number(price) * val[1];
                         }
                     })
                     //update
@@ -91,7 +96,7 @@ const SellCrypto = () => {
         })
     }
 
-
+console.log(currencies)
 
     return(<Conteiner>
                 <SH1>Odebrat coin</SH1>
@@ -127,9 +132,9 @@ const SellCrypto = () => {
                />
            </SLabel>
            <SLabel>Měna za kterou jsem prodával
-    <Dropdown options={Object.keys(currencies).map((keyName, i) => {
+    <Dropdown options={Object.entries(currencies).map((value) => {
         return(
-            keyName
+            value[0]
         )
     })} value={selectedCurrency}
      placeholder="Vyber měnu za kterou jsi prodával" 

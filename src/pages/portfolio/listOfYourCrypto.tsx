@@ -1,11 +1,16 @@
 import {useState, useEffect, useRef, useCallback} from 'react'
-import {ref, child, get, update} from 'firebase/database'
+import {ref, child, get, update, remove} from 'firebase/database'
 import { db, auth } from '../../database/firebase';
 import { SRec, SMainRec } from '../../styles/myCrypto';
 import { getMarketData } from '../../components/Graphs/marketData';
 import { SButtonAdd, SButtonDelete, SValueProcent, FavouriteButton, SH1, ShowPercentage, Logo } from '../../styles/myCrypto';
 import StarIcon from '@mui/icons-material/Star';
 import Switch from 'react-switch';
+import CloseIcon from '@mui/icons-material/Close';
+
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
+
 
 
 
@@ -13,25 +18,34 @@ const ListOfYourCrypto = () => {
     const[uid] = useState(auth.currentUser?.uid);
     const[data, setData] = useState<any>({});
     const[absoluteValue, setAbsoluteValue] = useState<number>(0);
-    const[marketData, setMarketData] = useState();
+    const[marketData, setMarketData] = useState<any[]>([]);
     const[values, setValues] = useState<any>([]);
     const[invest, setInvest] = useState<any>([]);
-    const[favouriteCoins, setFavouriteCoins] = useState<any>([]);
     const[showOnlyFavourites, setShowOnlyFavourites] = useState<boolean>(false);
-
     
     const[show, setShow] = useState<boolean>(false);
 
 
 
     useEffect(() => {
+        let ids:any = [];
+        Object.entries(data).map((value) => {
+            ids.push(data[value[0]].id)
+        })
+        let url = 'ids='+ids[0]
+        for (let index = 1; index < ids.length; index++) {
+            url = url+'%2C'+ids[index];
+        }
         const fetchMarketData = async () => {
-            const mData = await getMarketData();
+            const mData = await getMarketData(url);
             setMarketData(mData);
 
         }
         fetchMarketData();
     }, [data])
+
+
+
 
     useEffect(() => {
         get(child(ref(db), 'users/'+uid)).then((snapshot) => {
@@ -43,6 +57,7 @@ const ListOfYourCrypto = () => {
         })
     }, [])
 
+    
     const previousValues = useRef({ data, marketData });
 
     useEffect(() => {
@@ -58,51 +73,38 @@ const ListOfYourCrypto = () => {
         let favourite: any = [];
 
         Object.entries(data).map((coin) => {
-            let x = 0;
-            while(true){
                 try{
-                    for (let index = 0; index < 10; index++) {
-                        if(marketData[index][x]['name'] === coin[0]){
-                            Object.entries(data[coin[0]]).map((value) => {
-                                if(value[0] === 'pocet'){
-                                    if(value[1] === 0){
-                                        xvalues.push(0);
-                                    }else{
-                                    number += Math.round(Number(value[1]) * marketData[index][x]['current_price'])
-                                    number2 = Math.round(Number(value[1]) * marketData[index][x]['current_price'])
-                                    console.log(Math.round(Number(value[1]) * marketData[index][x]['current_price']))
-                                    xvalues.push(number2);
-                                    }
-                                }
-                                else if(value[0] === 'investice'){
-                                    yvalues.push(value[1]);
-                                }
-                                if(value[0] === 'oblibene'){
-                                    if(value[1] === 1){
-                                        favourite.push(coin[0]);
-                                    }
-                                }
-                            })
+                    Object.entries(data[coin[0]]).map((value) => {
+                    if(value[0] === 'pocet'){
+                        if(value[1] === 0){
+                            xvalues.push(0);
+                        }else{
+                            number += Math.round(Number(value[1]) * marketData[0][data[coin[0]].id].czk)
+                            number2 = Math.round(Number(value[1]) * marketData[0][data[coin[0]].id].czk)
+                            xvalues.push(number2);
                         }
-
-                        
-                    }
+                            }
+                            else if(value[0] === 'investice'){
+                                yvalues.push(value[1]);
+                            }
+                            if(value[0] === 'oblibene'){
+                                if(value[1] === 1){
+                                    favourite.push(coin[0]);
+                                }
+                            }
+                        })
                 }catch{
-                    break;
+                    console.log("error: něco se nepovedlo")
                 }
-                x++;
-            }
+                
+                
         })
         setAbsoluteValue(number);
         setValues(xvalues);
         setInvest(yvalues);
-        setFavouriteCoins(favourite)
     }
     },[marketData])
 
-
-    const [, updateState] = useState<any>();
-    const forceUpdate = useCallback(() => updateState({}), []);
 
     const AddToFavourite = (coin: string) => {
         if(Number(data[coin]['oblibene']) === 1){
@@ -124,8 +126,9 @@ const ListOfYourCrypto = () => {
             console.log("tohle se nepovedlo: " + error)
         })
     }
-    console.log(data);
     }
+    const [, updateState] = useState<any>();
+    const forceUpdate = useCallback(() => updateState({}), []);
 
     const CheckIfFav = (name:string) => {
         let id;
@@ -140,7 +143,7 @@ const ListOfYourCrypto = () => {
 
 
     const ToggleFav = () => {
-        var elemClass = document.getElementsByClassName('notFav') as HTMLCollectionOf<HTMLElement>;
+        const elemClass = document.getElementsByClassName('notFav') as HTMLCollectionOf<HTMLElement>;
     if(!showOnlyFavourites){
         for (let index = 0; index < elemClass.length; index++) {
             elemClass[index].style.visibility = "hidden"
@@ -154,6 +157,35 @@ const ListOfYourCrypto = () => {
     }
     setShowOnlyFavourites(!showOnlyFavourites);
     }
+
+    const myContainer = useRef(null)
+
+
+    const DeleteCard = (name:string, id:string) => {
+        remove(ref(db, 'users/'+uid+'/'+name)).then((snapshot) => {
+            const elemId = document.getElementById(id);
+            if(elemId != null)
+            elemId.style.visibility = "hidden";
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+    const submitDelete = (name:string, id:string) => {
+        confirmAlert({
+          title: 'Jste si jisti že chcete odstranit záznam?',
+          message: 'Tato akce nemůže být vrácena.',
+          buttons: [
+            {
+              label: 'Amp',
+              onClick: () => DeleteCard(name, id)
+            },
+            {
+              label: 'Ne',
+              onClick: () => {}
+            }
+          ]
+        });
+      };
 
 
 
@@ -198,52 +230,14 @@ const ListOfYourCrypto = () => {
         </SMainRec>
         <p>Zobrazit pouze oblíbené <Switch checked={showOnlyFavourites} onChange={ToggleFav}/></p>
         <ShowPercentage>Procenta/Částka <Switch checked={show} onChange={() => setShow(!show)}/></ShowPercentage>
-        {/* vypíše oblíbené */}
-        {Object.entries(data).map((coin) =>{
-            i++;
-            for (let index = 0; index < favouriteCoins.length; index++) {
-                if(coin[0] === favouriteCoins[index]){
-                    return(<SRec className={CheckIfFav(coin[0])}><h2>{coin[0]}</h2>
-                        <br/>
-                        
-                        <FavouriteButton onClick={() => AddToFavourite(coin[0])} isFavourite={data[coin[0]]['oblibene']}><StarIcon/></FavouriteButton>
-                
-                
-                        {Object.entries(data[coin[0]]).map((value) => {
-                            if(value[0] === "cena"){
-                                let procent
-                                if(values[i] === 0){
-                                    procent = Number(100 / (invest[i] / Number(value[1]))).toFixed(2);
-                                    console.log(values[i] + " : " + Number(value[1]) + " : " + invest[i])
-                                }else{
-                                procent = Number((values[i] + value[1]) / (values[i] / 100)).toFixed(2);
-                                }
-                
-                                return(<SValueProcent><p>Profit: {show? (value[1] + values[i]) + "Kč" : procent+ "%"} </p></SValueProcent>)
-                            }
-                            else if(value[0] === "pocet"){
-                                return(<>Pocet vlasněných coinů: {value[1]}</>)
-                            }
-                        })}
-                        <p>Hodnota vlastněných coinů: {values[i]}</p>
-                        </SRec>)
-                }
-                
-            }
-        })}
         {/* vypíše mé coiny krom oblíbených */
         Object.entries(data).map((coin) =>{
             o++;
-            let isf = false;
-            for (let index = 0; index < favouriteCoins.length; index++) {
-                if(coin[0] === favouriteCoins[index]) isf = true;
-            
-
-                if(!isf){
-            return(<SRec className={CheckIfFav(coin[0])}><h2>{coin[0]}</h2>
+            return(<SRec className={CheckIfFav(coin[0])} id={data[coin[0]]['id']}><h2>{coin[0]}</h2>
         <br/>
         
         <FavouriteButton onClick={() => AddToFavourite(coin[0])} isFavourite={data[coin[0]]['oblibene']}><StarIcon/></FavouriteButton>
+        <CloseIcon onClick={() => submitDelete(coin[0], data[coin[0]]['id'])}/>
 
 
         {Object.entries(data[coin[0]]).map((value) => {
@@ -264,8 +258,8 @@ const ListOfYourCrypto = () => {
         })}
         <p>Hodnota vlastněných coinů: {values[o]}</p>
         </SRec>)
-        }}
-        })}
+        }
+        )}
     </>)
 }
 
