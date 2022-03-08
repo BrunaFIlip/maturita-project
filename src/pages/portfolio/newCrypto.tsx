@@ -29,9 +29,8 @@ const NewCrpyto = ()  => {
     const[price, setPrice] = useState<any>('');
     const[error, setError] = useState<string>('');
     const[currencies, setCurrencies] = useState<any[]>([]);
-    const[selectedCurrency, setSellectedCurrency] = useState<string>('');
+    const[selectedCurrency, setSellectedCurrency] = useState<string>('CZK');
     const[filteredData, setFilteredData] = useState([]);
-    const[pickedCoinPlaceHolder, setPickedCoinPlaceHolder] = useState<string>('Vyber coin');
     const[coinsIds, setCoinIds] = useState<any[]>([])
 
 
@@ -62,9 +61,6 @@ const NewCrpyto = ()  => {
         fetchData()
     }, [])
 
-    Object.entries(currencies).map((value) => {
-        console.log(value)
-    })
 
       const saveToDatabase = () => {
           var valid = false;
@@ -154,14 +150,13 @@ const NewCrpyto = ()  => {
          <SLabel>Vyber coin
     <div>
         <div>
-            <SInput type="text" placeholder={pickedCoinPlaceHolder} onChange={handleFilter}/>
+            <SInput type="text" placeholder="Vyber coin" onChange={handleFilter}/>
         </div>
         <SP>Zvolený coin: {selectedCoin}</SP>
         {filteredData.length !== 0 && (
             <SDataResult>
             {filteredData.slice(0,15).map(coin => {
                 return <SDataItem onClick={() => {
-                    setPickedCoinPlaceHolder(coin)
                     setFilteredData([])
                     setSelectedCoin(coin)
                 }}> 
@@ -173,10 +168,10 @@ const NewCrpyto = ()  => {
     </div>
     </SLabel>
             <SLabel>Vyber počet coinu 
-                <SInput type="text" 
+                <SInput type="number" 
                 name="count"
                 id="count"
-                placeholder="napište počet coinu"
+                placeholder="Napište počet coinu"
                 onChange={event => setCount(event.target.value)}
                 value={count}
                 />
@@ -185,7 +180,7 @@ const NewCrpyto = ()  => {
                 <SInput type="number" 
                 name="price"
                 id="price"
-                placeholder="napište částku v KČ"
+                placeholder="Napište částku"
                 onChange={event => setPrice(event.target.value)}
                 value={price}
                 />

@@ -22,7 +22,6 @@ const ListOfCrypto: FC<IPageProps> = () => {
     const[search, setSearch] = useState('')
     const {page}: {page: string} = useParams();
     
-    console.log({page}.page)
     
     useEffect(() => {
       const fetchMarketData = async () => {
@@ -37,7 +36,6 @@ const ListOfCrypto: FC<IPageProps> = () => {
           setSearch(e.target.value)
       }
 
-      console.log(coins)
 
       const filteredCoins = coins.filter(coin =>
         coin['name'].toLowerCase().includes(search.toLowerCase())

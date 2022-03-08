@@ -7,16 +7,17 @@ type Props = {
 
 
 export const SRec = styled.div`
-/* border: black;
-border-style: solid;
-border-width: 1px;
-padding: 10px; */
+h2{
+  padding-top: 25px;
+  margin-bottom: -5px;
+}
+
 
 color: white;
 float: left;
-width: 300px;
+min-width: 300px;
 height: auto;
-/* background-color: #00008C; */
+
 background-color: #000033;
 border-radius: 25px;
 padding: 10px;
@@ -125,6 +126,12 @@ position: absolute;
     right: 20px;
 }
 }
+cursor: pointer;
+`
+
+export const DeleteButton = styled.div`
+position: absolute;
+    top: 20px;
 cursor: pointer;
 `
 

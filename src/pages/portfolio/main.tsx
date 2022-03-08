@@ -1,8 +1,8 @@
 import { useState} from 'react'
 import { auth, db } from '../../database/firebase';
-import { Button } from 'reactstrap';
 import {ref, child, get} from 'firebase/database'
 import ListOfYourCrypto from './listOfYourCrypto';
+import { SNewPortfolioButton } from '../../styles/newCrypto';
 
 
 const Main = () => {
@@ -27,12 +27,11 @@ const Main = () => {
 
     if(!exist){
         return(<>
-        <Button
-        block
+        <SNewPortfolioButton
         onClick={() => window.location.pathname = "/newCrypto"}
         >
             Vytvořit portfolio
-        </Button>
+        </SNewPortfolioButton>
         </>)
     }
     else{

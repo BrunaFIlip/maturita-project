@@ -1,7 +1,7 @@
 import {useState, useEffect, useRef, useCallback} from 'react'
 import {ref, child, get, update, remove} from 'firebase/database'
 import { db, auth } from '../../database/firebase';
-import { SRec, SMainRec } from '../../styles/myCrypto';
+import { SRec, SMainRec, DeleteButton } from '../../styles/myCrypto';
 import { getMarketData } from '../../components/Graphs/marketData';
 import { SButtonAdd, SButtonDelete, SValueProcent, FavouriteButton, SH1, ShowPercentage, Logo } from '../../styles/myCrypto';
 import StarIcon from '@mui/icons-material/Star';
@@ -22,6 +22,7 @@ const ListOfYourCrypto = () => {
     const[values, setValues] = useState<any>([]);
     const[invest, setInvest] = useState<any>([]);
     const[showOnlyFavourites, setShowOnlyFavourites] = useState<boolean>(false);
+    const[deletedCoin, setDeletedCoins] = useState<string[]>([]);
     
     const[show, setShow] = useState<boolean>(false);
 
@@ -158,14 +159,14 @@ const ListOfYourCrypto = () => {
     setShowOnlyFavourites(!showOnlyFavourites);
     }
 
-    const myContainer = useRef(null)
-
-
     const DeleteCard = (name:string, id:string) => {
         remove(ref(db, 'users/'+uid+'/'+name)).then((snapshot) => {
             const elemId = document.getElementById(id);
             if(elemId != null)
             elemId.style.visibility = "hidden";
+
+            deletedCoin.push(name)
+            forceUpdate()
         }).catch((error) => {
             console.log(error);
         })
@@ -177,7 +178,9 @@ const ListOfYourCrypto = () => {
           buttons: [
             {
               label: 'Amp',
-              onClick: () => DeleteCard(name, id)
+              onClick: () => {
+                  DeleteCard(name, id)
+            }
             },
             {
               label: 'Ne',
@@ -233,11 +236,12 @@ const ListOfYourCrypto = () => {
         {/* vypíše mé coiny krom oblíbených */
         Object.entries(data).map((coin) =>{
             o++;
+            if(!deletedCoin.some(item => coin[0] === item)){
             return(<SRec className={CheckIfFav(coin[0])} id={data[coin[0]]['id']}><h2>{coin[0]}</h2>
         <br/>
         
         <FavouriteButton onClick={() => AddToFavourite(coin[0])} isFavourite={data[coin[0]]['oblibene']}><StarIcon/></FavouriteButton>
-        <CloseIcon onClick={() => submitDelete(coin[0], data[coin[0]]['id'])}/>
+        <DeleteButton onClick={() => submitDelete(coin[0], data[coin[0]]['id'])}><CloseIcon/></DeleteButton>
 
 
         {Object.entries(data[coin[0]]).map((value) => {
@@ -245,20 +249,22 @@ const ListOfYourCrypto = () => {
                 let procent
                 if(values[o] === 0){
                     procent = Number(100 / (invest[o] / Number(value[1]))).toFixed(2);
-                    console.log(values[o] + " : " + Number(value[1]) + " : " + invest[o])
                 }else{
                 procent = Number((values[o] + value[1]) / (values[o] / 100)).toFixed(2);
                 }
 
                 return(<SValueProcent><p>Profit: {show? (value[1] + values[o]).toFixed(2) + "Kč" : procent+ "%"} </p></SValueProcent>)
             }
+            else if(value[0] === "investice"){
+                return(<p>Celková investice: {Number(value[1]).toFixed(2)} Kč</p>)
+            }
             else if(value[0] === "pocet"){
                 return(<>Pocet vlasněných coinů: {value[1]}</>)
             }
         })}
-        <p>Hodnota vlastněných coinů: {values[o]}</p>
+        <p>Hodnota vlastněných coinů: {values[o]} Kč</p>
         </SRec>)
-        }
+        }}
         )}
     </>)
 }

@@ -1,6 +1,10 @@
 import styled from 'styled-components'
 import {colors} from '../styles/color'
 
+export const SErrorText = styled.small`
+color: white;
+`
+
 
 export const UserBox = styled.div`
     position: relative;
@@ -78,4 +82,7 @@ export const SP = styled.p`
 text-align: center;
 color: ${colors.wh};
 font-size: medium;
+a{
+    color: white;
+}
 `

@@ -1,5 +1,27 @@
 import styled from 'styled-components'
 
+export const SNewPortfolioButton = styled.button`
+  background-color: white;
+  color: black;
+  border: 2px solid #e7e7e7;
+  padding: 20px 40px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  font-size: 20px;
+  margin: auto;
+  width: 50%;
+  float: center;
+  margin-top: 25%;
+
+  transition-duration: 0.4s;
+  cursor: pointer;
+
+  :hover {
+    background-color: #e7e7e7;
+}
+`
+
 export const SButton = styled.button`
     background-color: white;
     color: black;
@@ -51,33 +73,6 @@ export const SButtonBack = styled.button`
     background-color: #e7e7e7;
 }
 `
-// export const SButtonBack2 = styled.button`
-//     background-color: white;
-//     color: black;
-//     border: 2px solid #e7e7e7;
-//   padding: 16px 32px;
-//   text-align: center;
-//   text-decoration: none;
-//   display: inline-block;
-//   font-size: 16px;
-//   margin: 4px 2px;
-//   transition-duration: 0.4s;
-//   cursor: pointer;
-//   margin-left: 38%;
-//   width: 200px;
-//   @media (max-width: 617px){
-//     margin-left: 51%;
-//   }
-//   @media (max-width: 580px){
-//     display: block;
-//     margin-left: auto;
-//     margin-right: auto;
-//   }
-
-// :hover {
-//     background-color: #e7e7e7;
-// }
-// `
 
 
 

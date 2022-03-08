@@ -78,7 +78,7 @@ const data2 = {
       }
     ]
   };
-  console.log(Number(dates))
+
 
 
     return ( <>
