@@ -212,7 +212,6 @@ const ListOfYourCrypto = () => {
         >
             Odebrat Coin
         </SButtonDelete>
-        {/* <SButton onClick={() => setShow(!show)}>Procenta/Hodnota</SButton> */}
 
 
         <SMainRec>
@@ -226,7 +225,7 @@ const ListOfYourCrypto = () => {
                         inv = inv + invest[j];
                     }
                 })
-            proc = Number(((absoluteValue + valuesx) / (absoluteValue / 100))).toFixed(2)
+            proc = Number(((absoluteValue + valuesx) / (inv / 100))).toFixed(2)
             })}
             <SValueProcent><p>Profit: {show? (absoluteValue + valuesx).toFixed(2) + "Kč" : proc + "%" } </p></SValueProcent>
             {/* <MainPieChart/> */}
