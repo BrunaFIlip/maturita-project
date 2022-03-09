@@ -9,6 +9,7 @@ import {
 import {SidebarData} from './SidebarData'
 import { Header } from '../Header'
 import MenuIcon from '@mui/icons-material/Menu';
+import { useHistory } from 'react-router-dom';
 
 const useWindowSize = () => {
   const [size, setSize] = useState([0, 0]);
@@ -28,6 +29,8 @@ const Sidebar = () => {
     const [width] = useWindowSize();
     const [show, setShow]=useState(false)
 
+    const history = useHistory();
+
 
     if(width > 1300){
     return (
@@ -41,7 +44,7 @@ const Sidebar = () => {
                 key={key} 
                 className="row"
                 onClick={() => {
-                    window.location.pathname = val.Link
+                    history.push(val.Link)
                     }}
                 > 
                 {" "} 
@@ -71,7 +74,7 @@ const Sidebar = () => {
                     key={key} 
                      className="row"
                    onClick={() => {
-                        window.location.pathname = val.Link
+                    history.push(val.Link)
                         }}
                     > 
                     {" "} 

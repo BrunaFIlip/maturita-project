@@ -8,7 +8,7 @@ import {
   STd
 } from '../../src/styles/coin'
 import { getMarketDataList } from '../components/Graphs/marketData';
-import {useParams} from 'react-router-dom'
+import {useParams, useHistory} from 'react-router-dom'
 import Paging from '../components/paging'
 
 
@@ -22,6 +22,7 @@ const ListOfCrypto: FC<IPageProps> = () => {
     const[search, setSearch] = useState('')
     const {page}: {page: string} = useParams();
     
+    const history = useHistory()
     
     useEffect(() => {
       const fetchMarketData = async () => {
@@ -44,8 +45,7 @@ const ListOfCrypto: FC<IPageProps> = () => {
 
     return (<>
 <SCoinApp>
-<table>
-  <thead>
+
 <SCoinSearch>
 <SCoinText>
 <form>
@@ -54,13 +54,14 @@ const ListOfCrypto: FC<IPageProps> = () => {
 </SCoinText>
 </SCoinSearch>
 <Paging page={Number({page}.page)}/>
-</thead>
+<table>
+
   <tbody>
   {filteredCoins.map(coin => {
   return (
     <tr
     onClick={() => {
-      window.location.pathname = '/details/' + coin['id'] + "/" + {page}.page
+      history.push('/details/' + coin['id'] + "/" + {page}.page)
     }}
     >
       <STd>

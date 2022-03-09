@@ -5,6 +5,7 @@ import { SDiv } from '../../styles/popUpCharts';
 import {useParams} from 'react-router-dom'
 import { STable, STr, STh } from '../../styles/coinDetails';
 import { SButtonBack } from '../../styles/newCrypto';
+import { useHistory } from 'react-router-dom';
 
 
 
@@ -17,6 +18,7 @@ const Chart = (props:any) => {
   const [dates, setDates] = useState<any>([]);
   const [name, setName] = useState<string>();
   
+  const history = useHistory();
 
   
 useEffect(() => {
@@ -87,7 +89,7 @@ const data2 = {
       </SDiv>
       {Object.entries(data).map((coin) => {
         if(coin[1]['id'] === {id}.id){
-          return(<STable>
+          return(<><STable>
             <STr><th>Cena:</th><th>{coin[1]['current_price'] == undefined || coin[1]['current_price'] == null ? "Záznam chybí" : coin[1]['current_price']} CZK</th></STr>
             <STr><th>Market Cap:</th><th>{coin[1]['market_cap'] == undefined || coin[1]['market_cap'] == null ? "Záznam chybí" : coin[1]['market_cap']} CZK</th></STr>
             <STr><th>Volume:</th><th>{coin[1]['total_volume'] == undefined || coin[1]['total_volume'] == null ? "Záznam chybí" : coin[1]['total_volume']} CZK</th></STr>
@@ -95,11 +97,11 @@ const data2 = {
             <STr><th>All time high:</th><th>{coin[1]['ath'] == undefined || coin[1]['ath'] == null ? "Záznam chybí" : coin[1]['ath']} CZK</th></STr>
             <STr><th>Oblíbenost:</th><th>#{coin[1]['market_cap_rank'] == undefined || coin[1]['market_cap_rank'] == null ? "Záznam chybí" : coin[1]['market_cap_rank']}</th></STr>
             <STr><th>24h:</th><STh percentage={coin[1]['price_change_percentage_24h']}>{coin[1]['price_change_percentage_24h']}%</STh></STr>
-          </STable>)
+          </STable><tfoot></tfoot></>)
         }
       })}
       <p></p>
-      <SButtonBack onClick={() => {window.location.pathname = "/cryptoList/page" + {page}.page}}>Zpět</SButtonBack>
+      <SButtonBack onClick={() => {history.push("/cryptoList/page" + {page}.page)}}>Zpět</SButtonBack>
       </>)
   
 }

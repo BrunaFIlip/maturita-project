@@ -17,6 +17,7 @@ import {
     SDataResult,
     SDataItem
 } from '../../styles/searchBar';
+import { useHistory } from 'react-router-dom';
 
 
 
@@ -32,6 +33,8 @@ const NewCrpyto = ()  => {
     const[selectedCurrency, setSellectedCurrency] = useState<string>('CZK');
     const[filteredData, setFilteredData] = useState([]);
     const[coinsIds, setCoinIds] = useState<any[]>([])
+
+    const history = useHistory();
 
 
     const fetchData = async () => {
@@ -96,7 +99,7 @@ const NewCrpyto = ()  => {
                     oblibene: 0,
                     id: coinId
                 }).then(() => {
-                    window.location.pathname = "/"
+                    history.push("/")
                 }).catch((error:any) =>{
                     console.log("tohle se nepovedlo: " + error)
                 })
@@ -115,7 +118,7 @@ const NewCrpyto = ()  => {
                 }
                 
                 update(ref(db, 'users/' + uid + "/" + selectedCoin), postData).then(() => {
-                    window.location.pathname = "/"
+                    history.push("/")
                 }).catch((error:any) => {
                     console.log("tohle se nepovedlo: " + error)
                 })
@@ -204,7 +207,7 @@ const NewCrpyto = ()  => {
         </SButton>
         <SButtonBack
         color="success"
-        onClick={() => {window.location.pathname = "/"}}
+        onClick={() => {history.push("/")}}
         >
             Zpět
         </SButtonBack>

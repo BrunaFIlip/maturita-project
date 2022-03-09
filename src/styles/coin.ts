@@ -56,7 +56,7 @@ margin-right: 10px;
   }
 `
 
-export const CoinSymbol = styled.p`
+export const CoinSymbol = styled.span`
 text-transform: uppercase;
 `
 export const CoinData = styled.div`

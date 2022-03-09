@@ -7,6 +7,7 @@ import { SButtonAdd, SButtonDelete, SValueProcent, FavouriteButton, SH1, ShowPer
 import StarIcon from '@mui/icons-material/Star';
 import Switch from 'react-switch';
 import CloseIcon from '@mui/icons-material/Close';
+import { useHistory } from 'react-router-dom';
 
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'; 
@@ -26,6 +27,7 @@ const ListOfYourCrypto = () => {
     
     const[show, setShow] = useState<boolean>(false);
 
+    const history = useHistory()
 
 
     useEffect(() => {
@@ -201,12 +203,12 @@ const ListOfYourCrypto = () => {
     return(<>
         <SH1>Mé portfolio</SH1>
         <SButtonAdd
-        onClick={() => {window.location.pathname = '/newCrypto'}}
+        onClick={() => {history.push('/newCrypto')}}
         >
             Přidat Coin
         </SButtonAdd>
         <SButtonDelete
-        onClick={() => {window.location.pathname = '/sellCrypto'}}
+        onClick={() => {history.push('/sellCrypto')}}
         >
             Odebrat Coin
         </SButtonDelete>

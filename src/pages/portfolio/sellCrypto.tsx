@@ -12,6 +12,7 @@ import { auth, db } from '../../database/firebase';
 import {ref, child, get, update} from 'firebase/database'
 import ErrorText from '../../components/ErrorText';
 import axios from "axios"
+import { useHistory } from 'react-router-dom';
 
 
 
@@ -26,6 +27,7 @@ const SellCrypto = () => {
     const[currencies, setCurrencies] = useState<any[]>([]);
     const[selectedCurrency, setSellectedCurrency] = useState<string>('CZK');
 
+    const history = useHistory()
 
     const fetchData = async () => {
         await axios.get('http://data.fixer.io/api/latest?access_key=52c22eedc8c48a6bbbab651c40021b43').then(res => {
@@ -86,7 +88,7 @@ const SellCrypto = () => {
                     }
 
                     update(ref(db, 'users/' + uid + "/" + selectedCoin), postData).then(() => {
-                        window.location.pathname = "/"
+                        history.push("/")
                     }).catch((error:any) => {
                         console.log("tohle se nepovedlo: " + error)
                     })
@@ -152,7 +154,7 @@ const SellCrypto = () => {
        </SButton>
        <SButtonBack
         color="success"
-        onClick={() => {window.location.pathname = "/"}}
+        onClick={() => {history.push("/")}}
         >
             Zpět
         </SButtonBack><br/>
