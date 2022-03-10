@@ -6,17 +6,17 @@ export const SDiv = styled.div`
   align-items: center;
   padding-bottom: 15px; 
 
-  a {
+  p {
   color: black;
   float: left;
   padding: 8px 16px;
   text-decoration: none;
   }
-  a.active {
+  p.active {
   background-color: #4CAF50;
   color: white;
 }
-  a:hover:not(.active) {background-color: #ddd;}
+  p:hover:not(.active) {background-color: #ddd;}
 
   @media (max-width: 460px){
   width: auto;
