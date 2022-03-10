@@ -9,6 +9,7 @@ import Main from '../pages/portfolio/main'
 import NewCrpyto from "../pages/portfolio/newCrypto";
 import Chart from "../components/Graphs/cryptoChart";
 import SellCrypto from "../pages/portfolio/sellCrypto";
+import InfoChart from "../components/Graphs/cryptoInfoChart"
 
 interface IRoute {
     path: string;
@@ -87,7 +88,7 @@ const routes: IRoute[] = [
         path: '/details/:id/:page',
         exact: true,
         component: Chart,
-        name: 'nasrat',
+        name: 'podrobnosti',
         protected: true
     },
     {
@@ -95,6 +96,13 @@ const routes: IRoute[] = [
         exact: true,
         component: SellCrypto,
         name: 'Prodat crypto',
+        protected: true
+    },    
+    {
+        path: '/details/:id',
+        exact: true,
+        component: InfoChart,
+        name: 'portfolio podrobnosti',
         protected: true
     }
 ];

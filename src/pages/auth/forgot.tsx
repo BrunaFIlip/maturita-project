@@ -5,6 +5,7 @@ import ErrorText from '../../components/ErrorText';
 import {auth} from '../../database/firebase';
 import logging from '../../database/logging';
 import { SInput, STable, UserBox, SButton, SP } from '../../styles/authStyles';
+import { useHistory } from 'react-router-dom';
 
 
 const ForgotPasswordPage: React.FunctionComponent = props => {
@@ -12,6 +13,8 @@ const ForgotPasswordPage: React.FunctionComponent = props => {
     const [sent, setSent] = useState<boolean>(false);
     const [email, setEmail] = useState<string>('');
     const [error, setError] = useState<string>('');
+
+    const history = useHistory();
 
     const resetPasswordRequest = () => {
         if (error !== '') setError('');
@@ -55,11 +58,18 @@ const ForgotPasswordPage: React.FunctionComponent = props => {
                         color="success"
                         onClick={() => resetPasswordRequest()}
                     >
-                        Zaslat link znovu.
+                        Zaslat link
                     </SButton>
                     <ErrorText error={error} />
                 </>
             }
+                    <SButton
+                        disabled={sending}
+                        color="success"
+                        onClick={() => history.push("/login")}
+                    >
+                        Zpět
+                    </SButton>
             </UserBox>
         </AuthContainer>
         </STable>

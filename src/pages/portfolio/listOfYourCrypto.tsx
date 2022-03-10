@@ -4,20 +4,23 @@ import { db, auth } from '../../database/firebase';
 import { SRec, SMainRec, DeleteButton } from '../../styles/myCrypto';
 import { getMarketData } from '../../components/Graphs/marketData';
 import { SButtonAdd, SButtonDelete, SValueProcent, FavouriteButton, SH1, ShowPercentage, Logo } from '../../styles/myCrypto';
-import StarIcon from '@mui/icons-material/Star';
 import Switch from 'react-switch';
-import CloseIcon from '@mui/icons-material/Close';
 import { useHistory } from 'react-router-dom';
 
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'; 
+import ReactLoading from 'react-loading'
+
+import StarIcon from '@mui/icons-material/Star';
+import CloseIcon from '@mui/icons-material/Close';
+import InfoIcon from '@mui/icons-material/Info';
 
 
 
 
 const ListOfYourCrypto = () => {
     const[uid] = useState(auth.currentUser?.uid);
-    const[data, setData] = useState<any>({});
+    const[data, setData] = useState<any>([]);
     const[absoluteValue, setAbsoluteValue] = useState<number>(0);
     const[marketData, setMarketData] = useState<any[]>([]);
     const[values, setValues] = useState<any>([]);
@@ -25,12 +28,23 @@ const ListOfYourCrypto = () => {
     const[showOnlyFavourites, setShowOnlyFavourites] = useState<boolean>(false);
     const[deletedCoin, setDeletedCoins] = useState<string[]>([]);
     
+    const[loading, setLoading] = useState(false)
+
     const[show, setShow] = useState<boolean>(false);
 
     const history = useHistory()
 
+    const callData = () => {
+        get(child(ref(db), 'users/'+uid)).then((snapshot) => {
+            if(snapshot.exists()){
+                setData(snapshot.val())
+            }
+        }).catch((error:any) => {
+            console.log(error);
+        })
+    }
 
-    useEffect(() => {
+    const callMarketData = () => {
         let ids:any = [];
         Object.entries(data).map((value) => {
             ids.push(data[value[0]].id)
@@ -42,29 +56,11 @@ const ListOfYourCrypto = () => {
         const fetchMarketData = async () => {
             const mData = await getMarketData(url);
             setMarketData(mData);
-
         }
         fetchMarketData();
-    }, [data])
+    }
 
-
-
-
-    useEffect(() => {
-        get(child(ref(db), 'users/'+uid)).then((snapshot) => {
-            if(snapshot.exists()){
-                setData(snapshot.val())
-            }
-        }).catch((error:any) => {
-            console.log(error);
-        })
-    }, [])
-
-    
-    const previousValues = useRef({ data, marketData });
-
-    useEffect(() => {
-
+    const onceMarketAndDataAreSet = () => {
         if (
             previousValues.current.data !== data &&
             previousValues.current.marketData !== marketData
@@ -96,9 +92,7 @@ const ListOfYourCrypto = () => {
                                 }
                             }
                         })
-                }catch{
-                    console.log("error: něco se nepovedlo")
-                }
+                }catch{}
                 
                 
         })
@@ -106,7 +100,27 @@ const ListOfYourCrypto = () => {
         setValues(xvalues);
         setInvest(yvalues);
     }
-    },[marketData])
+    }
+
+    useEffect(() => {
+        callData();
+    }, [])
+    useEffect(() => {
+        callMarketData();
+    }, [data])
+    useEffect(()=> {
+        onceMarketAndDataAreSet();
+    }, [marketData])
+    useEffect(() => {
+        if(Object.keys(data).length){
+            setLoading(true)
+        }
+    }, [invest])
+
+
+    
+    const previousValues = useRef({ data, marketData });
+
 
 
     const AddToFavourite = (coin: string) => {
@@ -179,7 +193,7 @@ const ListOfYourCrypto = () => {
           message: 'Tato akce nemůže být vrácena.',
           buttons: [
             {
-              label: 'Amp',
+              label: 'Ano',
               onClick: () => {
                   DeleteCard(name, id)
             }
@@ -216,7 +230,7 @@ const ListOfYourCrypto = () => {
 
         <SMainRec>
             <h2>Celkem</h2>
-            <p>Celková hodnota portfolia: {absoluteValue}</p>
+            <p>Celková hodnota portfolia: {absoluteValue.toLocaleString()}</p>
             {Object.entries(data).map((coin) => {
                 j++
                 Object.entries(data[coin[0]]).map((value) => {
@@ -225,20 +239,20 @@ const ListOfYourCrypto = () => {
                         inv = inv + invest[j];
                     }
                 })
-            proc = Number(((absoluteValue + valuesx) / (inv / 100))).toFixed(2)
+            proc = Number(((absoluteValue + valuesx) / (inv / 100)))
             })}
-            <SValueProcent><p>Profit: {show? (absoluteValue + valuesx).toFixed(2) + "Kč" : proc + "%" } </p></SValueProcent>
-            {/* <MainPieChart/> */}
+            <SValueProcent><p>Profit: {show? (absoluteValue + valuesx).toLocaleString() + "Kč" : proc.toFixed(2) + "%" } </p></SValueProcent>
             <Logo src='BCoin-logo.png'/>
 
         </SMainRec>
         <p>Zobrazit pouze oblíbené <Switch checked={showOnlyFavourites} onChange={ToggleFav}/></p>
         <ShowPercentage>Procenta/Částka <Switch checked={show} onChange={() => setShow(!show)}/></ShowPercentage>
         {/* vypíše mé coiny krom oblíbených */
+        !loading ? <ReactLoading type="bars" color="balck"/> :
         Object.entries(data).map((coin) =>{
             o++;
             if(!deletedCoin.some(item => coin[0] === item)){
-            return(<SRec className={CheckIfFav(coin[0])} id={data[coin[0]]['id']}><h2>{coin[0]}</h2>
+            return(<SRec className={CheckIfFav(coin[0])} id={data[coin[0]]['id']}><h2>{coin[0]} <InfoIcon onClick={() => history.push('details/'+data[coin[0]]['id'])}/></h2>
         <br/>
         
         <FavouriteButton onClick={() => AddToFavourite(coin[0])} isFavourite={data[coin[0]]['oblibene']}><StarIcon/></FavouriteButton>
@@ -249,21 +263,21 @@ const ListOfYourCrypto = () => {
             if(value[0] === "cena"){
                 let procent
                 if(values[o] === 0){
-                    procent = Number(100 / (invest[o] / Number(value[1]))).toFixed(2);
+                    procent = Number(100 / (invest[o] / Number(value[1]))).toFixed(2).toLocaleString();
                 }else{
-                procent = Number((values[o] + value[1]) / (values[o] / 100)).toFixed(2);
+                procent = Number((values[o] + value[1]) / (values[o] / 100)).toFixed(2).toLocaleString();
                 }
 
-                return(<SValueProcent><p>Profit: {show? (value[1] + values[o]).toFixed(2) + "Kč" : procent+ "%"} </p></SValueProcent>)
+                return(<SValueProcent><p>Profit: {show? (value[1] + values[o]).toLocaleString() + "Kč" : procent+ "%"} </p></SValueProcent>)
             }
             else if(value[0] === "investice"){
-                return(<p>Celková investice: {Number(value[1]).toFixed(2)} Kč</p>)
+                return(<p>Celková investice: {Number(value[1]).toLocaleString()} Kč</p>)
             }
             else if(value[0] === "pocet"){
-                return(<>Pocet vlasněných coinů: {value[1]}</>)
+                return(<>Pocet vlasněných coinů: {Number(value[1]).toLocaleString()}</>)
             }
         })}
-        <p>Hodnota vlastněných coinů: {values[o]} Kč</p>
+        <p>Hodnota vlastněných coinů: {Number(values[o]).toLocaleString()} Kč</p>
         </SRec>)
         }}
         )}

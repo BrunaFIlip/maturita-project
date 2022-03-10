@@ -21,6 +21,9 @@ list-style-type: none;
   overflow: auto;  
   padding-top: 6%;
   z-index: 8;
+  a{
+    text-decoration: none;
+  }
   @media (max-width: 1300px){
     width: 250px;
     padding-top: 80px

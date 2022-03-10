@@ -6,11 +6,14 @@ export const SDiv = styled.div`
   align-items: center;
   padding-bottom: 15px; 
 
-  p {
-  color: black;
+
+
+  
+  a {
+    color: black;
+    text-decoration: none;
   float: left;
   padding: 8px 16px;
-  text-decoration: none;
   }
   p.active {
   background-color: #4CAF50;

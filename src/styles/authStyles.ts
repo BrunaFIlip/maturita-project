@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import {colors} from '../styles/color'
 
 export const SErrorText = styled.small`
-color: white;
+color: red;
 `
 
 

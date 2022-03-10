@@ -64,7 +64,7 @@ const LoginPage: React.FunctionComponent = props => {
                 color="success"
                 onClick={() => signInWithEmailAndPassword()}
             >
-                Login
+                Přihlásit se
             </SButton>
                 <SP>Nemáte účet? <Link to="/register">Registrovat se.</Link></SP>
                 <SP><Link to="/forget">Zapomenuté heslo?</Link></SP>

@@ -5,11 +5,22 @@ type Props = {
   isFavourite: number;
 }
 
+export const SMiddle = styled.div`
+div{
+  margin: auto;
+  margin-top: 25%;
+}
+`
 
 export const SRec = styled.div`
 h2{
   padding-top: 25px;
   margin-bottom: -5px;
+
+  svg{
+    margin-bottom: -3px;
+    cursor: pointer;
+  }
 }
 
 

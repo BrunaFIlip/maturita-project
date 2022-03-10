@@ -9,7 +9,7 @@ import {
 import {SidebarData} from './SidebarData'
 import { Header } from '../Header'
 import MenuIcon from '@mui/icons-material/Menu';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const useWindowSize = () => {
   const [size, setSize] = useState([0, 0]);
@@ -29,8 +29,6 @@ const Sidebar = () => {
     const [width] = useWindowSize();
     const [show, setShow]=useState(false)
 
-    const history = useHistory();
-
 
     if(width > 1300){
     return (
@@ -40,17 +38,15 @@ const Sidebar = () => {
         <SUl>
             {SidebarData.map((val, key) => {
             return(
-                <li 
+                <Link
                 key={key} 
                 className="row"
-                onClick={() => {
-                    history.push(val.Link)
-                    }}
+                to={val.Link}
                 > 
                 {" "} 
                 <SIcon>{val.icon}</SIcon>
                 <STitle>{val.title}</STitle>{" "}
-                </li>
+                </Link>
             )
         })}
         </SUl>
@@ -70,17 +66,15 @@ const Sidebar = () => {
             <SUl>
                 {SidebarData.map((val, key) => {
                 return(
-                    <li 
+                    <Link 
                     key={key} 
                      className="row"
-                   onClick={() => {
-                    history.push(val.Link)
-                        }}
+                     to={val.Link}
                     > 
                     {" "} 
                     <SIcon>{val.icon}</SIcon>
                     <STitle>{val.title}</STitle>{" "}
-                    </li>
+                    </Link>
                 )
             })}
             </SUl>

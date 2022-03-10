@@ -9,7 +9,7 @@ SButtonBack,
 SInput,
 SP
 } from '../../styles/newCrypto';
-import { SH1 } from '../../styles/myCrypto';
+import { SH1, SMiddle } from '../../styles/myCrypto';
 import { auth, db } from '../../database/firebase';
 import {ref, set, child, get, update} from 'firebase/database'
 import ErrorText from '../../components/ErrorText';
@@ -18,6 +18,7 @@ import {
     SDataItem
 } from '../../styles/searchBar';
 import { useHistory } from 'react-router-dom';
+import ReactLoading from 'react-loading'
 
 
 
@@ -33,6 +34,8 @@ const NewCrpyto = ()  => {
     const[selectedCurrency, setSellectedCurrency] = useState<string>('CZK');
     const[filteredData, setFilteredData] = useState([]);
     const[coinsIds, setCoinIds] = useState<any[]>([])
+    const[loading, setLoading] = useState(false)
+
 
     const history = useHistory();
 
@@ -63,6 +66,12 @@ const NewCrpyto = ()  => {
     useEffect(() => {
         fetchData()
     }, [])
+
+    useEffect(() => {
+        if(Object.keys(coins).length != 0 && currencies.length != 0){
+            setLoading(true);
+            }
+    }, [coins, currencies])
 
 
       const saveToDatabase = () => {
@@ -148,7 +157,9 @@ const NewCrpyto = ()  => {
 
 
 
-
+if(!loading){
+    return(<SMiddle><ReactLoading color="black" type="bars"/></SMiddle>)
+}else{
     return(<Conteiner>
         <SH1>Přidat coin</SH1>
              <form>
@@ -216,6 +227,7 @@ const NewCrpyto = ()  => {
         <br/>
         <ErrorText error={error} />
     </Conteiner>)
+}
 }
 
 

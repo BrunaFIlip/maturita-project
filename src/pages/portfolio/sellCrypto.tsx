@@ -7,12 +7,13 @@ SButton,
 SInput,
 SButtonBack
 } from '../../styles/newCrypto';
-import { SH1 } from '../../styles/myCrypto';
+import { SH1, SMiddle } from '../../styles/myCrypto';
 import { auth, db } from '../../database/firebase';
 import {ref, child, get, update} from 'firebase/database'
 import ErrorText from '../../components/ErrorText';
 import axios from "axios"
 import { useHistory } from 'react-router-dom';
+import ReactLoading from 'react-loading'
 
 
 
@@ -26,6 +27,7 @@ const SellCrypto = () => {
     const[error, setError] = useState<string>('');
     const[currencies, setCurrencies] = useState<any[]>([]);
     const[selectedCurrency, setSellectedCurrency] = useState<string>('CZK');
+    const[loading, setLoading] = useState(false)
 
     const history = useHistory()
 
@@ -59,18 +61,23 @@ const SellCrypto = () => {
         setCoins(arr);
     }, [data])
     
+    useEffect(() => {
+        if(Object.keys(data).length != 0 && currencies.length != 0){
+            setLoading(true);
+            }
+    }, [data, currencies])
 
 
     const deleteCoin = () => {
         get(child(ref(db), 'users/'+ uid + '/' + selectedCoin)).then((snapshot) => {
             if(snapshot.exists()){
-                if(snapshot.val()['pocet'] >= count && Number(count) > 0 && selectedCurrency !== ""){
+                if(snapshot.val()['pocet'] >= Number(count) && Number(count) > 0 && selectedCurrency !== ""){
                     //převod na CZK
                     let newPriceCurr
                     let czk:number
                     Object.entries(currencies).map((val) =>{
                         if(val[1].code == "CZK"){
-                            czk = val[1];
+                            czk = val[1].value;
                         }
                     })
                     Object.entries(currencies).map((val) =>{
@@ -93,7 +100,7 @@ const SellCrypto = () => {
                         console.log("tohle se nepovedlo: " + error)
                     })
                 }
-                else setError("Zkontrolujte zdali jsou všechna pole zadaná zprávně (nejsou záporná a jsou ve zprávném formátu) a zkustě to znovu.")
+                else setError("Zkontrolujte zdali jsou všechna pole zadaná zprávně (nejsou záporná a jsou ve zprávném formátu) a zkuste to znovu.")
             }
         }).catch((error:any) => {
             console.log(error);
@@ -101,7 +108,9 @@ const SellCrypto = () => {
     }
 
 
-
+    if(!loading){
+        return(<SMiddle><ReactLoading color="black" type="bars"/></SMiddle>)
+    }else{
     return(<Conteiner>
                 <SH1>Odebrat coin</SH1>
         <SLabel>Vyber coin
@@ -160,6 +169,7 @@ const SellCrypto = () => {
         </SButtonBack><br/>
         <ErrorText error={error} />
    </Conteiner>)
+}
 }
 
 export default SellCrypto

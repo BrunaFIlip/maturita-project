@@ -6,6 +6,10 @@ import ErrorText from '../../components/ErrorText';
 import {auth} from '../../database/firebase';
 import logging from '../../database/logging';
 import { SInput, STable, UserBox, SButton} from '../../styles/authStyles';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
+
+
 
 
 const ChangePasswordPage: React.FunctionComponent = props => {
@@ -31,7 +35,8 @@ const ChangePasswordPage: React.FunctionComponent = props => {
         auth.currentUser?.updatePassword(password)
         .then(() => {
             logging.info('Heslo ústěšně změněno.');
-            history.push('/');
+            history.push('/')
+            oK()
         })
         .catch((error: any) => {
             logging.error(error);
@@ -39,6 +44,17 @@ const ChangePasswordPage: React.FunctionComponent = props => {
             setError(error.message);
         });
     }
+    const oK = () => {
+        confirmAlert({
+          title: 'Heslo bylo úspěšně změněno.',
+          buttons: [
+            {
+              label: 'OK',
+              onClick: () => {}
+            },
+          ]
+        });
+      };
 
     if (auth.currentUser?.providerData[0]?.providerId !== 'password')
         return <Redirect to="/" />;
@@ -81,6 +97,7 @@ const ChangePasswordPage: React.FunctionComponent = props => {
                 />
             </FormGroup>
             </UserBox>
+            <SButton color="danger" className="mr-2" onClick={() => history.goBack()}>Zrušit</SButton>
             <SButton
                 disabled={changing}
                 color="success"

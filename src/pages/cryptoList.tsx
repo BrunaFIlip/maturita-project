@@ -10,6 +10,7 @@ import {
 import { getMarketDataList } from '../components/Graphs/marketData';
 import {useParams, useHistory} from 'react-router-dom'
 import Paging from '../components/paging'
+import ReactLoading from 'react-loading'
 
 
 interface IPageProps {
@@ -21,17 +22,21 @@ const ListOfCrypto: FC<IPageProps> = () => {
     const[coins, setCoins] = useState<any[]>([])
     const[search, setSearch] = useState('')
     const {page}: {page: string} = useParams();
+    const[loading, setLoading] = useState(false)
     
     const history = useHistory()
     
-    useEffect(() => {
-      const fetchMarketData = async () => {
+
+    const fetchMarketData = async () => {
         const marketData = await getMarketDataList({page}.page);
         setCoins(marketData);
-        
-    }
-    fetchMarketData(); 
-    }, []);
+        setLoading(true);
+   }
+
+    useEffect(() => {
+      setLoading(false)
+     fetchMarketData();
+    }, [page]);
 
       const handleChange = (e:any) => {
           setSearch(e.target.value)
@@ -42,8 +47,7 @@ const ListOfCrypto: FC<IPageProps> = () => {
         coin['name'].toLowerCase().includes(search.toLowerCase())
       );
     
-
-    return (<>
+return (<>
 <SCoinApp>
 
 <SCoinSearch>
@@ -53,6 +57,7 @@ const ListOfCrypto: FC<IPageProps> = () => {
 </form>
 </SCoinText>
 </SCoinSearch>
+{!loading ? <ReactLoading type="bars" color="balck"/> : <>
 <Paging page={Number({page}.page)}/>
 <table>
 
@@ -80,6 +85,8 @@ const ListOfCrypto: FC<IPageProps> = () => {
   </tbody>
 </table>
 <Paging page={Number({page}.page)}/>
+</>
+}
 </SCoinApp>
 </>
     )
