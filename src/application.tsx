@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Route, RouteComponentProps, Switch } from 'react-router-dom';
-import { Spinner } from 'reactstrap';
+import ReactLoading from "react-loading"
 import AuthRoute from './components/AuthRoute';
 import {auth} from './database/firebase';
 import logging from './database/logging';
 import routes from './database/routes';
 import {Font, Background} from '../src/styles/padding'
+import {SMiddle} from "./styles/myCrypto"
 
 export interface IApplicationProps { }
 
@@ -28,7 +29,7 @@ const Application: React.FunctionComponent<IApplicationProps> = props => {
     }, []);
 
     if (loading)
-        return <Spinner color="info" />
+        return <SMiddle><ReactLoading type="bars" color="black"/></SMiddle>
 
     return (
         <div>
