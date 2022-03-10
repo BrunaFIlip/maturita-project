@@ -41,12 +41,12 @@ return formatedData
 
 export const getMarketDataChart = async (page:string) => {
   let curr:any
-  await axios.get('http://data.fixer.io/api/latest?access_key=52c22eedc8c48a6bbbab651c40021b43').then((value) => {
-    curr = value["data"]["rates"]
+  await axios.get("https://api.currencyapi.com/v3/latest?apikey=a9da5980-9586-11ec-acb5-adef3790cfd2").then((value) => {
+    curr = value.data.data.CZK.value
   })
   let formatedData:any
   await axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=czk&order=market_cap_rank&per_page=250&page='+page+'&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C200d%2C1y').then((value) => {
-    formatedData = formatMarketData(value.data, (curr["CZK"] / curr["USD"]))
+    formatedData = formatMarketData(value.data, curr)
 })
 
 // axios.all([getCoins1]).then(

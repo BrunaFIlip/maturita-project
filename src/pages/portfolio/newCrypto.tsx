@@ -39,14 +39,14 @@ const NewCrpyto = ()  => {
 
     const fetchData = async () => {
         const getCoins = await axios.get('https://api.coingecko.com/api/v3/coins/list?include_platform=false')
-        const getCurrencies = await axios.get('http://data.fixer.io/api/latest?access_key=52c22eedc8c48a6bbbab651c40021b43')
+        const getCurrencies = await axios.get('https://api.currencyapi.com/v3/latest?apikey=a9da5980-9586-11ec-acb5-adef3790cfd2')
         let help:any = [];
         let name:any = [];
         let id:any = []
 
         axios.all([getCoins, getCurrencies]).then(
             axios.spread((...allData) => {
-                setCurrencies(allData[1]['data']['rates'])
+                setCurrencies(allData[1].data.data)
                     help = allData[0].data;
                     help.map((value:any) => {
                         name.push(value['name'])
@@ -76,11 +76,11 @@ const NewCrpyto = ()  => {
               let coinId:string
               let czk:number
                 Object.entries(currencies).map((val) =>{
-                    if(val[0] == "CZK"){
+                    if(val[1].code === "CZK"){
                         czk = val[1];
                     }
-                    if(val[0] === selectedCurrency){
-                        const currCzk = czk / val[1]
+                    if(val[1].code === selectedCurrency){
+                        const currCzk = czk / val[1].value
                         newPrice = Number(price) * currCzk;
                     }
                 })
@@ -145,6 +145,8 @@ const NewCrpyto = ()  => {
             setFilteredData(newFilter)
         }
       }
+
+
 
 
     return(<Conteiner>

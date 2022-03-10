@@ -30,8 +30,8 @@ const SellCrypto = () => {
     const history = useHistory()
 
     const fetchData = async () => {
-        await axios.get('http://data.fixer.io/api/latest?access_key=52c22eedc8c48a6bbbab651c40021b43').then(res => {
-            setCurrencies(res['data']['rates']);
+        await axios.get('https://api.currencyapi.com/v3/latest?apikey=a9da5980-9586-11ec-acb5-adef3790cfd2').then(res => {
+            setCurrencies(res.data.data);
         }).catch(error => console.log(error))
     }
 
@@ -69,13 +69,13 @@ const SellCrypto = () => {
                     let newPriceCurr
                     let czk:number
                     Object.entries(currencies).map((val) =>{
-                        if(val[0] == "CZK"){
+                        if(val[1].code == "CZK"){
                             czk = val[1];
                         }
                     })
                     Object.entries(currencies).map((val) =>{
-                        if(val[0] === selectedCurrency){
-                            const currCzk = czk / val[1]
+                        if(val[1].code === selectedCurrency){
+                            const currCzk = czk / val[1].value
                             newPriceCurr = Number(price) * currCzk;
                         }
                     })
