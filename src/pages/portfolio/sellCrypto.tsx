@@ -138,7 +138,7 @@ const SellCrypto = () => {
            <SLabel>Měna za kterou jsem prodával
     <Dropdown options={Object.entries(currencies).map((value) => {
         return(
-            value[0]
+            value[1].code
         )
     })} value={selectedCurrency}
      placeholder="Vyber měnu za kterou jsi prodával" 

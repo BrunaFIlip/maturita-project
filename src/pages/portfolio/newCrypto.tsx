@@ -77,7 +77,7 @@ const NewCrpyto = ()  => {
               let czk:number
                 Object.entries(currencies).map((val) =>{
                     if(val[1].code === "CZK"){
-                        czk = val[1];
+                        czk = val[1].value;
                     }
                     if(val[1].code === selectedCurrency){
                         const currCzk = czk / val[1].value
@@ -191,9 +191,9 @@ const NewCrpyto = ()  => {
                 />
             </SLabel>
             <SLabel>Měna v které jsem nakupoval
-    <Dropdown options={Object.keys(currencies).map((keyName, i) => {
+    <Dropdown options={Object.entries(currencies).map((value) => {
         return(
-            keyName
+            value[1].code
         )
     })} value={selectedCurrency}
      placeholder="Vyber měnu v které jsi nakupoval" 
