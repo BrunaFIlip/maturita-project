@@ -45,6 +45,7 @@ const ListOfYourCrypto = () => {
     }
 
     const callMarketData = () => {
+        if(Object.keys(data).length != 0){
         let ids:any = [];
         Object.entries(data).map((value) => {
             ids.push(data[value[0]].id)
@@ -59,22 +60,24 @@ const ListOfYourCrypto = () => {
         }
         fetchMarketData();
     }
+    }
 
     const onceMarketAndDataAreSet = () => {
         if (
             previousValues.current.data !== data &&
             previousValues.current.marketData !== marketData
-          ) {
-        let number = 0;
-        let number2 = 0;
-        let xvalues: any = [];
-        let yvalues: any = [];
-        let favourite: any = [];
+            ) {
+                let number = 0;
+                let number2 = 0;
+                let xvalues: any = [];
+                let yvalues: any = [];
+                let favourite: any = [];
+                
+                Object.entries(data).map((coin) => {
+                    try{
+                        Object.entries(data[coin[0]]).map((value) => {
 
-        Object.entries(data).map((coin) => {
-                try{
-                    Object.entries(data[coin[0]]).map((value) => {
-                    if(value[0] === 'pocet'){
+                            if(value[0] === 'pocet'){
                         if(value[1] === 0){
                             xvalues.push(0);
                         }else{
@@ -112,10 +115,10 @@ const ListOfYourCrypto = () => {
         onceMarketAndDataAreSet();
     }, [marketData])
     useEffect(() => {
-        if(Object.keys(data).length != 0 && Object.keys(marketData).length != 0 && Object.keys(values).length != 0){
+        if(Object.keys(data).length != 0 && Object.keys(marketData).length){
             setLoading(true)
         }
-    }, [data, marketData, values])
+    }, [data, marketData])
 
 
     
