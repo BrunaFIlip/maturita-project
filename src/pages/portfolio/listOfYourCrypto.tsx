@@ -112,10 +112,10 @@ const ListOfYourCrypto = () => {
         onceMarketAndDataAreSet();
     }, [marketData])
     useEffect(() => {
-        if(Object.keys(data).length != 0 && Object.keys(marketData).length != 0){
+        if(Object.keys(data).length != 0 && Object.keys(marketData).length != 0 && Object.keys(values).length != 0){
             setLoading(true)
         }
-    }, [data, marketData])
+    }, [data, marketData, values])
 
 
     
