@@ -7,7 +7,7 @@
 export const SidebarData = [{
     title: "Portfolio",
     icon: <ListAltIcon />,
-    Link: "/"
+    Link: "/portfolio"
 },
 {
     title: "Přehled kryptoměn",

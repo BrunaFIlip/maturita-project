@@ -12,7 +12,7 @@ padding-right: 2%;
 `
 
 export const Font = styled.div`
-font-family: 'Sora', sans-serif;
+font-family: 'Epilogue', sans-serif;
 color: black;
 `
 export const Background = styled.div`
@@ -21,16 +21,21 @@ background-repeat: no-repeat;
 background-attachment: fixed;
 background-position: center;
 
-min-height: 100%;
-min-width: 100%;
+background-size: cover;
 
 
+height: 100%;
 width: 100%;
-height: auto; 
+
+
+/* width: 100%;
+height: auto; */
+
 
 
 
 position: fixed;
+size: cover;
 
 top: 0;
 left: 0;

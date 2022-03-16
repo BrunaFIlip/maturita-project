@@ -3,7 +3,7 @@ import {ref, child, get, update, remove} from 'firebase/database'
 import { db, auth } from '../../database/firebase';
 import { SRec, SMainRec, DeleteButton } from '../../styles/myCrypto';
 import { getMarketData } from '../../components/Graphs/marketData';
-import { SButtonAdd, SButtonDelete, SValueProcent, FavouriteButton, SH1, ShowPercentage, Logo } from '../../styles/myCrypto';
+import { SButtonAdd, SButtonDelete, SValueProcent, FavouriteButton, SH1, ShowPercentage, Logo, SP } from '../../styles/myCrypto';
 import Switch from 'react-switch';
 import { useHistory } from 'react-router-dom';
 
@@ -81,13 +81,20 @@ const ListOfYourCrypto = () => {
                         if(value[1] === 0){
                             xvalues.push(0);
                         }else{
+                            if(marketData[0][data[coin[0]].id].czk != undefined){
                             number += Math.round(Number(value[1]) * marketData[0][data[coin[0]].id].czk)
                             number2 = Math.round(Number(value[1]) * marketData[0][data[coin[0]].id].czk)
                             xvalues.push(number2);
+                            }else{
+                                let text = "neexistuje"
+                                xvalues.push(text)
+                            }
                         }
                             }
                             else if(value[0] === 'investice'){
+                                if(marketData[0][data[coin[0]].id].czk != undefined){
                                 yvalues.push(value[1]);
+                                }
                             }
                             if(value[0] === 'oblibene'){
                                 if(value[1] === 1){
@@ -104,6 +111,7 @@ const ListOfYourCrypto = () => {
         setInvest(yvalues);
     }
     }
+    
 
     useEffect(() => {
         callData();
@@ -120,10 +128,8 @@ const ListOfYourCrypto = () => {
         }
     }, [data, marketData])
 
-
     
     const previousValues = useRef({ data, marketData });
-
 
 
     const AddToFavourite = (coin: string) => {
@@ -185,6 +191,7 @@ const ListOfYourCrypto = () => {
             elemId.style.visibility = "hidden";
 
             deletedCoin.push(name)
+            setLoading(true)
             forceUpdate()
         }).catch((error) => {
             console.log(error);
@@ -238,8 +245,10 @@ const ListOfYourCrypto = () => {
                 j++
                 Object.entries(data[coin[0]]).map((value) => {
                     if(value[0] === "cena"){
+                        if(invest[j] != undefined){
                         valuesx = valuesx + value[1];
                         inv = inv + invest[j];
+                        }
                     }
                 })
             proc = Number(((absoluteValue + valuesx) / (inv / 100)))
@@ -267,11 +276,13 @@ const ListOfYourCrypto = () => {
                 let procent
                 if(values[o] === 0){
                     procent = Number(100 / (invest[o] / Number(value[1]))).toFixed(2).toLocaleString();
+                }else if(values[o] === "neexistuje"){
+                    procent = "Nejsme schopni určit."
                 }else{
                 procent = Number((values[o] + value[1]) / (values[o] / 100)).toFixed(2).toLocaleString();
                 }
 
-                return(<SValueProcent><p>Profit: {show? (value[1] + values[o]).toLocaleString() + "Kč" : procent+ "%"} </p></SValueProcent>)
+                return(<SValueProcent><p>Profit: {show? (values[o] === "neexistuje" ? "Nejsme schopni určit." : (value[1] + values[o]).toLocaleString() + "Kč") : procent + "%"} </p></SValueProcent>)
             }
             else if(value[0] === "investice"){
                 return(<p>Celková investice: {Number(value[1]).toLocaleString()} Kč</p>)
@@ -280,7 +291,8 @@ const ListOfYourCrypto = () => {
                 return(<>Pocet vlasněných coinů: {Number(value[1]).toLocaleString()}</>)
             }
         })}
-        <p>Hodnota vlastněných coinů: {Number(values[o]).toLocaleString()} Kč</p>
+        <p>Hodnota vlastněných coinů: {values[o] === "neexistuje" ? "Nejsme schopni určit." : Number(values[o]).toLocaleString() + "Kč"}</p>
+        {values[o] === "neexistuje" ? <SP>Omlouváme se, ale v našich zdrojích momentálně neexistují záznamy o tomto coinu.<br/>! Tento záznam se nopočítá do celkového součtu !</SP> : <></>}
         </SRec>)
         }}
         )}

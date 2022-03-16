@@ -115,7 +115,7 @@ const data2 = {
           </STable><tfoot></tfoot></>)
 
       <p></p>
-      <SButtonBack onClick={() => {history.push("/")}}>Zpět</SButtonBack>
+      <SButtonBack onClick={() => {history.push("/portfolio")}}>Zpět</SButtonBack>
       </>)
 } 
 }

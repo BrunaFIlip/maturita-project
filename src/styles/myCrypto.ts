@@ -34,6 +34,7 @@ border-radius: 25px;
 padding: 10px;
 margin: 5px;
 position: relative;
+max-width: 450px;
 `
 
 export const SMainRec = styled.div`
@@ -175,4 +176,8 @@ margin-top: -130px;
   @media (max-width: 530px){
     visibility: hidden;
   }
+`
+export const SP = styled.p`
+overflow-wrap: break-word;
+color: 	#ff9966;
 `

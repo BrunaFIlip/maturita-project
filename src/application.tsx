@@ -43,7 +43,7 @@ const Application: React.FunctionComponent<IApplicationProps> = props => {
                             if (route.protected)
                                 return <Font><Background /><AuthRoute><route.component  {...routeProps} /></AuthRoute></Font>;
 
-                            return <route.component  {...routeProps} />;
+                            return <Font><route.component  {...routeProps} /></Font>;
                         }}
                     />)}
             </Switch>

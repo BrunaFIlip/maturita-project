@@ -108,7 +108,7 @@ const NewCrpyto = ()  => {
                     oblibene: 0,
                     id: coinId
                 }).then(() => {
-                    history.push("/")
+                    history.push("/portfolio")
                 }).catch((error:any) =>{
                     console.log("tohle se nepovedlo: " + error)
                 })
@@ -127,7 +127,7 @@ const NewCrpyto = ()  => {
                 }
                 
                 update(ref(db, 'users/' + uid + "/" + selectedCoin), postData).then(() => {
-                    history.push("/")
+                    history.push("/portfolio")
                 }).catch((error:any) => {
                     console.log("tohle se nepovedlo: " + error)
                 })
@@ -220,7 +220,7 @@ if(!loading){
         </SButton>
         <SButtonBack
         color="success"
-        onClick={() => {history.push("/")}}
+        onClick={() => {history.push("/portfolio")}}
         >
             Zpět
         </SButtonBack>
