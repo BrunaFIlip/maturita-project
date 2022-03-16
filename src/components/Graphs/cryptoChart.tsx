@@ -113,7 +113,7 @@ const data2 = {
             <STr><th>60 dní:</th><STh percentage={data[0]["market_data"]['price_change_percentage_60d']}>{data[0]["market_data"]['price_change_percentage_60d']}%</STh></STr>
             <STr><th>200 dní:</th><STh percentage={data[0]["market_data"]['price_change_percentage_200d']}>{data[0]["market_data"]['price_change_percentage_200d']}%</STh></STr>
             <STr><th>1 rok:</th><STh percentage={data[0]["market_data"]['price_change_percentage_1y']}>{data[0]["market_data"]['price_change_percentage_1y']}%</STh></STr>
-          </STable><tfoot></tfoot></>)
+          </STable><tfoot></tfoot></>
 
       <p></p>
       <SButtonBack onClick={() => {history.push("/cryptoList/page"+page)}}>Zpět</SButtonBack>
