@@ -251,7 +251,7 @@ const ListOfYourCrypto = () => {
                         }
                     }
                 })
-            proc = Number(((absoluteValue + valuesx) / (inv / 100)))
+            proc = Number(((absoluteValue + valuesx) / (inv))*100)
             })}
             <SValueProcent><p>Profit: {show? (absoluteValue + valuesx).toLocaleString() + "Kč" : proc.toFixed(2) + "%" } </p></SValueProcent>
             <Logo src='BCoin-logo.png'/>
@@ -279,7 +279,7 @@ const ListOfYourCrypto = () => {
                 }else if(values[o] === "neexistuje"){
                     procent = "Nejsme schopni určit."
                 }else{
-                procent = Number((values[o] + value[1]) / (values[o] / 100)).toFixed(2).toLocaleString();
+                procent = Number(((values[o] + value[1]) / (invest[o]))*100).toFixed(2).toLocaleString();
                 }
 
                 return(<SValueProcent><p>Profit: {show? (values[o] === "neexistuje" ? "Nejsme schopni určit." : (value[1] + values[o]).toLocaleString() + "Kč") : procent + "%"} </p></SValueProcent>)

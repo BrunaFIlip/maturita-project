@@ -76,7 +76,8 @@ const NewCrpyto = ()  => {
 
       const saveToDatabase = () => {
           var valid = false;
-          if(Number(count) > 0 && Number(price) >= 0 && selectedCurrency !== ''){
+          if(Number(count) > 0 && Number(price) > 0 && selectedCurrency !== ''){
+              console.log(price)
           valid = true;
           }
 
