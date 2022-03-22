@@ -5,7 +5,8 @@ import { SLabel,
 Conteiner,
 SButton,
 SInput,
-SButtonBack
+SButtonBack,
+SP
 } from '../../styles/newCrypto';
 import { SH1, SMiddle } from '../../styles/myCrypto';
 import { auth, db } from '../../database/firebase';
@@ -14,6 +15,10 @@ import ErrorText from '../../components/ErrorText';
 import axios from "axios"
 import { useHistory } from 'react-router-dom';
 import ReactLoading from 'react-loading'
+import { 
+    SDataResult,
+    SDataItem
+} from '../../styles/searchBar';
 
 
 
@@ -26,8 +31,10 @@ const SellCrypto = () => {
     const[data, setData] = useState<any>({});
     const[error, setError] = useState<string>('');
     const[currencies, setCurrencies] = useState<any[]>([]);
-    const[selectedCurrency, setSellectedCurrency] = useState<string>('CZK');
+    const[selectedCurrency, setSelectedCurrency] = useState<string>('CZK');
     const[loading, setLoading] = useState(false)
+    const[filteredCurrencies, setFilteredCurrencies] = useState<any>([])
+
 
     const history = useHistory()
 
@@ -106,13 +113,27 @@ const SellCrypto = () => {
             console.log(error);
         })
     }
+    const handleCurrencyFilter = (e:any) => {
+        const searchWord = e.target.value
+        const newFilter: any = Object.entries(currencies).filter(value => {
+            if(value[1].code.toLowerCase().includes(searchWord.toLowerCase())){
+                return value[1].code
+            }
+        })
+        if(searchWord === ""){
+          setFilteredCurrencies([])
+      }else{
 
+          setFilteredCurrencies(newFilter)
+      }
+    }
 
     if(!loading){
         return(<SMiddle><ReactLoading color="black" type="bars"/></SMiddle>)
     }else{
     return(<Conteiner>
                 <SH1>Odebrat coin</SH1>
+                <form>
         <SLabel>Vyber coin
    <Dropdown options={coins.map(coin => {
        return(
@@ -123,7 +144,6 @@ const SellCrypto = () => {
    onChange={event => setSelectedCoin(event.value)}
    />
    </SLabel>
-       <form>
            <SLabel>Vyber počet coinu 
                <SInput type="number" 
                name="count"
@@ -133,8 +153,6 @@ const SellCrypto = () => {
                value={count}
                />
            </SLabel>
-           </form>
-           <form>
            <SLabel>Za kolik jsem to prodal
                <SInput type="number" 
                name="price"
@@ -143,16 +161,26 @@ const SellCrypto = () => {
                onChange={event => setPrice(event.target.value)}
                value={price}
                />
-           </SLabel>
-           <SLabel>Měna za kterou jsem prodával
-    <Dropdown options={Object.entries(currencies).map((value) => {
-        return(
-            value[1].code
-        )
-    })} value={selectedCurrency}
-     placeholder="Vyber měnu za kterou jsi prodával" 
-    onChange={event => setSellectedCurrency(event.value)}
-    />
+               </SLabel>
+           <SLabel>Měna za kterou jsem nakupoval
+            <div>
+        <div>
+            <SInput type="text" placeholder="Vyber coin" onChange={handleCurrencyFilter}/>
+        </div>
+        <SP>Zvolená měna: {selectedCurrency}</SP>
+        {filteredCurrencies.length !== 0 && (
+            <SDataResult>
+            {filteredCurrencies.slice(0,15).map((value:any) => {
+                return <SDataItem onClick={() => {
+                    setFilteredCurrencies([])
+                    setSelectedCurrency(value[1].code)
+                }}> 
+                    <p>{value[1].code} </p>
+                    </SDataItem>
+            })}
+        </SDataResult>
+        )}
+    </div>
     </SLabel>
        </form>
        <SButton

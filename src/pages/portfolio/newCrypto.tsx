@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import axios from "axios"
-import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import { SLabel,
 Conteiner,
@@ -31,10 +30,11 @@ const NewCrpyto = ()  => {
     const[price, setPrice] = useState<any>('');
     const[error, setError] = useState<string>('');
     const[currencies, setCurrencies] = useState<any[]>([]);
-    const[selectedCurrency, setSellectedCurrency] = useState<string>('CZK');
+    const[selectedCurrency, setSelectedCurrency] = useState<string>('CZK');
     const[filteredData, setFilteredData] = useState([]);
     const[coinsIds, setCoinIds] = useState<any[]>([])
     const[loading, setLoading] = useState(false)
+    const[filteredCurrencies, setFilteredCurrencies] = useState<any>([])
 
 
     const history = useHistory();
@@ -156,6 +156,21 @@ const NewCrpyto = ()  => {
         }
       }
 
+      const handleCurrencyFilter = (e:any) => {
+          const searchWord = e.target.value
+          const newFilter: any = Object.entries(currencies).filter(value => {
+              if(value[1].code.toLowerCase().includes(searchWord.toLowerCase())){
+                  return value[1].code
+              }
+          })
+          if(searchWord === ""){
+            setFilteredCurrencies([])
+        }else{
+
+            setFilteredCurrencies(newFilter)
+        }
+      }
+
 
 
 if(!loading){
@@ -202,15 +217,25 @@ if(!loading){
                 value={price}
                 />
             </SLabel>
-            <SLabel>Měna v které jsem nakupoval
-    <Dropdown options={Object.entries(currencies).map((value) => {
-        return(
-            value[1].code
-        )
-    })} value={selectedCurrency}
-     placeholder="Vyber měnu v které jsi nakupoval" 
-    onChange={event => setSellectedCurrency(event.value)}
-    />
+            <SLabel>Měna za kterou jsem nakupoval
+            <div>
+        <div>
+            <SInput type="text" placeholder="Vyber coin" onChange={handleCurrencyFilter}/>
+        </div>
+        <SP>Zvolená měna: {selectedCurrency}</SP>
+        {filteredCurrencies.length !== 0 && (
+            <SDataResult>
+            {filteredCurrencies.slice(0,15).map((value:any) => {
+                return <SDataItem onClick={() => {
+                    setFilteredCurrencies([])
+                    setSelectedCurrency(value[1].code)
+                }}> 
+                    <p>{value[1].code} </p>
+                    </SDataItem>
+            })}
+        </SDataResult>
+        )}
+    </div>
     </SLabel>
         </form>
         <SButton
