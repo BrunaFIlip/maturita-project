@@ -8,10 +8,6 @@ background-color: white;
 box-shadow: rgba(0,0,0,0.35) 0px 5px 15px;
 overflow: hidden;
 overflow-y: auto;
-
-::-webkit-scrollbar {
-    display: none;
-}
 `
 
 
