@@ -281,6 +281,7 @@ let data2 = {
       };
     }
   }
+  setGraphValues(days)
 
   if(!loading){
     return(<SMiddle><ReactLoading color="black" type="bars"/></SMiddle>)
