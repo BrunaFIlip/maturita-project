@@ -3,7 +3,7 @@ import { getMarketDataInfoChart } from './marketData';
 import {Line} from 'react-chartjs-2'
 import { SDiv } from '../../styles/popUpCharts';
 import {useParams} from 'react-router-dom'
-import { STable, STr, STh } from '../../styles/coinDetails';
+import { STable, STr, STh, GraphTable } from '../../styles/coinDetails';
 import { SButtonBack } from '../../styles/newCrypto';
 import { useHistory } from 'react-router-dom';
 import ReactLoading from 'react-loading'
@@ -288,16 +288,15 @@ let data2 = {
     return ( <>
       <SDiv>
         <Line data={data2} />
-        <table>
-          <tr>
-            <td onClick={() => setDays(7)}>7 dní</td>
-            <td onClick={() => setDays(15)}>15 dní</td>
-            <td onClick={() => setDays(30)}>30 dní</td>
-            <td onClick={() => setDays(60)}>60 dní</td>
-            <td onClick={() => setDays(90)}>90 dní</td>
-            <td onClick={() => setDays(365)}>1 rok</td>
-          </tr>
-        </table>
+        <GraphTable>
+            <p className={days === 7 ? "active" : ""} onClick={() => setDays(7)}>7 dní</p>
+            <p className={days === 10 ? "active" : ""} onClick={() => setDays(10)}>10 dní</p>
+            <p className={days === 15 ? "active" : ""} onClick={() => setDays(15)}>15 dní</p>
+            <p className={days === 30 ? "active" : ""} onClick={() => setDays(30)}>30 dní</p>
+            <p className={days === 60 ? "active" : ""} onClick={() => setDays(60)}>60 dní</p>
+            <p className={days === 90 ? "active" : ""} onClick={() => setDays(90)}>90 dní</p>
+            <p className={days === 365 ? "active" : ""} onClick={() => setDays(365)}>1 rok</p>
+          </GraphTable>
       </SDiv>
           <><STable>
             <STr><th>Cena:</th><th>{data[0]['market_data']['current_price']['czk'] == undefined || data[0]['market_data']['current_price']['czk'] == null ? "Záznam chybí" : Number(data[0]['market_data']['current_price']['czk']).toLocaleString()} CZK</th></STr>
