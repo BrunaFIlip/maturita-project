@@ -299,19 +299,19 @@ const setGraphValues = (days:number) => {
           </GraphTable>
       </SDiv>
           <><STable>
-            <STr><th>Cena:</th><th>{data[0]['market_data']['current_price']['czk'] == undefined || data[0]['market_data']['current_price']['czk'] == null ? "Záznam chybí" : Number(data[0]['market_data']['current_price']['czk']).toLocaleString()} CZK</th></STr>
-            <STr><th>Market Cap:</th><th>{data[0]["market_data"]['market_cap']["czk"] == undefined || data[0]["market_data"]['market_cap']["czk"] == null ? "Záznam chybí" : Number(data[0]["market_data"]['market_cap']["czk"]).toLocaleString()} CZK</th></STr>
-            <STr><th>Volume:</th><th>{data[0]['market_data']['fully_diluted_valuation']['czk'] == undefined || data[0]['market_data']['fully_diluted_valuation']['czk'] == null ? "Záznam chybí" : Number(data[0]['market_data']['fully_diluted_valuation']['czk']).toLocaleString()} CZK</th></STr>
-            <STr><th>Circulating supply:</th><th>{data[0]["market_data"]['circulating_supply'] == undefined || data[0]["market_data"]['circulating_supply'] == null ? "Záznam chybí" : Number(data[0]["market_data"]['circulating_supply']).toLocaleString()} CZK</th></STr>
-            <STr><th>All time high:</th><th>{data[0]["market_data"]['ath']["czk"] == undefined || data[0]["market_data"]['ath']["czk"] == null ? "Záznam chybí" : Number(data[0]["market_data"]['ath']["czk"]).toLocaleString()} CZK</th></STr>
+            <STr><th>Cena:</th><th>{data[0]['market_data']['current_price']['czk'] == undefined || data[0]['market_data']['current_price']['czk'] == null ? "Záznam chybí" : Number(data[0]['market_data']['current_price']['czk']).toLocaleString() + " CZK"}</th></STr>
+            <STr><th>Market Cap:</th><th>{data[0]["market_data"]['market_cap']["czk"] == undefined || data[0]["market_data"]['market_cap']["czk"] == null ? "Záznam chybí" : Number(data[0]["market_data"]['market_cap']["czk"]).toLocaleString() + " CZK"}</th></STr>
+            <STr><th>Volume:</th><th>{data[0]['market_data']['fully_diluted_valuation']['czk'] == undefined || data[0]['market_data']['fully_diluted_valuation']['czk'] == null ? "Záznam chybí" : Number(data[0]['market_data']['fully_diluted_valuation']['czk']).toLocaleString() + " CZK"}</th></STr>
+            <STr><th>Circulating supply:</th><th>{data[0]["market_data"]['circulating_supply'] == undefined || data[0]["market_data"]['circulating_supply'] == null ? "Záznam chybí" : Number(data[0]["market_data"]['circulating_supply']).toLocaleString() + " CZK"}</th></STr>
+            <STr><th>All time high:</th><th>{data[0]["market_data"]['ath']["czk"] == undefined || data[0]["market_data"]['ath']["czk"] == null ? "Záznam chybí" : Number(data[0]["market_data"]['ath']["czk"]).toLocaleString() + " CZK"}</th></STr>
             <STr><th>Oblíbenost:</th><th>#{data[0]['market_cap_rank'] == undefined || data[0]['market_cap_rank'] == null ? "Záznam chybí" : data[0]['market_cap_rank']}</th></STr>
             <STr></STr>
-            <STr><th>24 hodin:</th><STh percentage={data[0]["market_data"]['price_change_percentage_24h']}>{data[0]["market_data"]['price_change_percentage_24h']}%</STh></STr>
-            <STr><th>7 dní:</th><STh percentage={data[0]["market_data"]['price_change_percentage_7d']}>{data[0]["market_data"]['price_change_percentage_7d']}%</STh></STr>
-            <STr><th>30 dní:</th><STh percentage={data[0]["market_data"]['price_change_percentage_30d']}>{data[0]["market_data"]['price_change_percentage_30d']}%</STh></STr>
-            <STr><th>60 dní:</th><STh percentage={data[0]["market_data"]['price_change_percentage_60d']}>{data[0]["market_data"]['price_change_percentage_60d']}%</STh></STr>
-            <STr><th>200 dní:</th><STh percentage={data[0]["market_data"]['price_change_percentage_200d']}>{data[0]["market_data"]['price_change_percentage_200d']}%</STh></STr>
-            <STr><th>1 rok:</th><STh percentage={data[0]["market_data"]['price_change_percentage_1y']}>{data[0]["market_data"]['price_change_percentage_1y']}%</STh></STr>
+            <STr><th>24 hodin:</th><STh percentage={data[0]["market_data"]['price_change_percentage_24h']}>{data[0]["market_data"]['price_change_percentage_24h'] + "%"}</STh></STr>
+            <STr><th>7 dní:</th><STh percentage={data[0]["market_data"]['price_change_percentage_7d']}>{data[0]["market_data"]['price_change_percentage_7d'] + "%"}</STh></STr>
+            <STr><th>30 dní:</th><STh percentage={data[0]["market_data"]['price_change_percentage_30d']}>{data[0]["market_data"]['price_change_percentage_30d'] + "%"}</STh></STr>
+            <STr><th>60 dní:</th><STh percentage={data[0]["market_data"]['price_change_percentage_60d']}>{data[0]["market_data"]['price_change_percentage_60d'] + "%"}</STh></STr>
+            <STr><th>200 dní:</th><STh percentage={data[0]["market_data"]['price_change_percentage_200d']}>{data[0]["market_data"]['price_change_percentage_200d'] + "%"}</STh></STr>
+            <STr><th>1 rok:</th><STh percentage={data[0]["market_data"]['price_change_percentage_1y']}>{data[0]["market_data"]['price_change_percentage_1y'] + "%"}</STh></STr>
           </STable><tfoot></tfoot></>
 
       <p></p>
