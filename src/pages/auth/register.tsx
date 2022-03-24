@@ -5,7 +5,7 @@ import AuthContainer from '../../components/AuthContainer';
 import ErrorText from '../../components/ErrorText';
 import {auth} from '../../database/firebase';
 import logging from '../../database/logging';
-import { SInput, STable, UserBox, SButton, SP } from '../../styles/authStyles';
+import { SInput, STable, UserBox, SButton, SP, SH1 } from '../../styles/authStyles';
 
 
 const RegisterPage: React.FunctionComponent = props => {
@@ -57,6 +57,7 @@ const RegisterPage: React.FunctionComponent = props => {
         <STable>
         <AuthContainer>
             <UserBox>
+                <SH1>Registrace</SH1>
             <FormGroup>
                 <SInput 
                     type="email"
