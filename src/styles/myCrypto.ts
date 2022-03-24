@@ -13,13 +13,13 @@ div{
 `
 
 export const SRec = styled.div`
+  cursor: pointer;
 h2{
   padding-top: 25px;
   margin-bottom: -5px;
 
   svg{
     margin-bottom: -3px;
-    cursor: pointer;
   }
 }
 
