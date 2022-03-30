@@ -315,7 +315,7 @@ const setGraphValues = (days:number) => {
           </STable><tfoot></tfoot></>
 
       <p></p>
-      <SButtonBack onClick={() => {history.push("/portfolio")}}>Zpět</SButtonBack>
+      <SButtonBack onClick={() => {history.push("/")}}>Zpět</SButtonBack>
       </>)
 } 
 }

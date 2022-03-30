@@ -10,7 +10,6 @@ import NewCrpyto from "../pages/portfolio/newCrypto";
 import Chart from "../components/Graphs/cryptoChart";
 import SellCrypto from "../pages/portfolio/sellCrypto";
 import InfoChart from "../components/Graphs/cryptoInfoChart"
-import Signpost from "../pages/signpost"
 
 interface IRoute {
     path: string;
@@ -72,7 +71,7 @@ const routes: IRoute[] = [
         protected: true
     },
     {
-        path: '/portfolio',
+        path: '/',
         exact: true,
         component: Main,
         name: 'Portfolio Main Page',
@@ -105,13 +104,6 @@ const routes: IRoute[] = [
         component: InfoChart,
         name: 'portfolio podrobnosti',
         protected: true
-    },    
-    {
-        path: '/',
-        exact: true,
-        component: Signpost,
-        name: 'Rozcestník',
-        protected: false
     }
 ];
 
