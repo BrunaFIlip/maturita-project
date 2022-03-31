@@ -34,6 +34,7 @@ const SellCrypto = () => {
     const[selectedCurrency, setSelectedCurrency] = useState<string>('CZK');
     const[loading, setLoading] = useState(false)
     const[filteredCurrencies, setFilteredCurrencies] = useState<any>([])
+    const[mistake, setMistake] = useState<string>('Prosím vyplňte náslesdující položky správně: ')
 
 
     const history = useHistory()
@@ -76,6 +77,29 @@ const SellCrypto = () => {
 
 
     const deleteCoin = () => {
+        let valid = false
+        if (Number(count) > 0) {
+            console.log(price)
+            valid = true;
+        } else {
+            setMistake(mistake + "počet coinů, ")
+            valid = false
+        }
+        if (Number(price) > 0) {
+            console.log(price)
+            valid = true;
+        } else {
+            setMistake(mistake + "kolik jsem za to zaplatil, ")
+            valid = false
+        }
+        if (selectedCurrency !== '') {
+            console.log(price)
+            valid = true;
+        } else {
+            setMistake(mistake + "vyberte měnu, ")
+            valid = false
+        }
+        if(valid){
         get(child(ref(db), 'users/'+ uid + '/' + selectedCoin)).then((snapshot) => {
             if(snapshot.exists()){
                 if(snapshot.val()['pocet'] >= Number(count) && Number(count) > 0 && selectedCurrency !== ""){
@@ -112,6 +136,9 @@ const SellCrypto = () => {
         }).catch((error:any) => {
             console.log(error);
         })
+    }else{
+        setError(mistake)
+    }
     }
     const handleCurrencyFilter = (e:any) => {
         const searchWord = e.target.value
