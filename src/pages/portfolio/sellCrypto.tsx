@@ -93,6 +93,7 @@ const SellCrypto = () => {
         if(valid){
         get(child(ref(db), 'users/'+ uid + '/' + selectedCoin)).then((snapshot) => {
             if(snapshot.exists()){
+                if(snapshot.val()['pocet'] >= Number(count) && Number(count) > 0){
                     //převod na CZK
                     let newPriceCurr
                     let czk:number
@@ -120,13 +121,21 @@ const SellCrypto = () => {
                     }).catch((error:any) => {
                         console.log("tohle se nepovedlo: " + error)
                     })
-                
-            }
+                }
+                else {
+                    mistake = mistake + "počet coinů, "
+                    let error = mistake
+                    mistake = 'Prosím vyplňte náslesdující položky správně: '
+                    setError(error)
+                }
+                }
         }).catch((error:any) => {
             console.log(error);
         })
     }else{
-        setError(mistake)
+        let error = mistake
+        mistake = 'Prosím vyplňte náslesdující položky správně: '
+        setError(error)
     }
     }
     const handleCurrencyFilter = (e:any) => {
