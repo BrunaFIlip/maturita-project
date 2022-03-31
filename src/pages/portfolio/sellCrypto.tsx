@@ -34,7 +34,6 @@ const SellCrypto = () => {
     const[selectedCurrency, setSelectedCurrency] = useState<string>('CZK');
     const[loading, setLoading] = useState(false)
     const[filteredCurrencies, setFilteredCurrencies] = useState<any>([])
-    const[mistake, setMistake] = useState<string>('Prosím vyplňte náslesdující položky správně: ')
 
 
     const history = useHistory()
@@ -77,17 +76,18 @@ const SellCrypto = () => {
 
 
     const deleteCoin = () => {
+        let mistake = 'Prosím vyplňte náslesdující položky správně: '
         let valid = true
         if (Number(count) <= 0) {
-            setMistake(mistake + "počet coinů, ")
+            mistake = mistake + "počet coinů, "
             valid = false
         }
         if (Number(price) <= 0) {
-            setMistake(mistake + "za kolik jsem to prodal, ")
+            mistake = mistake + "za kolik jsem to prodal, "
             valid = false
         }
         if (selectedCurrency == '') {
-            setMistake(mistake + "vyberte měnu, ")
+            mistake = mistake + "vyberte měnu, "
             valid = false
         }
         if(valid){

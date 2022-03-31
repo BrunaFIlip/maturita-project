@@ -36,7 +36,6 @@ const NewCrpyto = () => {
     const [coinsIds, setCoinIds] = useState<any[]>([])
     const [loading, setLoading] = useState(false)
     const [filteredCurrencies, setFilteredCurrencies] = useState<any>([])
-    const [mistake, setMistake] = useState<string>('Prosím vyplňte náslesdující položky správně: ')
 
 
     const history = useHistory();
@@ -77,17 +76,18 @@ const NewCrpyto = () => {
 
 
     const saveToDatabase = () => {
+        let mistake = 'Prosím vyplňte náslesdující položky správně: '
         var valid = true;
         if (Number(count) <= 0) {
-            setMistake(mistake + "počet coinů, ")
+            mistake = mistake + "počet coinů, "
             valid = false
         }
         if (Number(price) <= 0) {
-            setMistake(mistake + "kolik jsem za to zaplatil, ")
+            mistake = mistake + "kolik jsem za to zaplatil, "
             valid = false
         }
         if (selectedCurrency == '') {
-            setMistake(mistake + "vyberte měnu, ")
+            mistake = mistake + + "vyberte měnu, "
             valid = false
         }
 
