@@ -77,27 +77,18 @@ const NewCrpyto = () => {
 
 
     const saveToDatabase = () => {
-        var valid = false;
-        if (Number(count) > 0) {
-            console.log(price)
-            valid = true;
-        } else {
+        var valid = true;
+        if (Number(count) <= 0) {
             setMistake(mistake + "počet coinů, ")
             valid = false
-            if (Number(price) > 0) {
-                console.log(price)
-                valid = true;
-            } else {
-                setMistake(mistake + "kolik jsem za to zaplatil, ")
-                valid = false
-                if (selectedCurrency !== '') {
-                    console.log(price)
-                    valid = true;
-                } else {
-                    setMistake(mistake + "vyberte měnu, ")
-                    valid = false
-                }
-            }
+        }
+        if (Number(price) <= 0) {
+            setMistake(mistake + "kolik jsem za to zaplatil, ")
+            valid = false
+        }
+        if (selectedCurrency == '') {
+            setMistake(mistake + "vyberte měnu, ")
+            valid = false
         }
 
         if (valid) {

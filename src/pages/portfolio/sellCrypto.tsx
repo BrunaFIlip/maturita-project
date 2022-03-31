@@ -77,27 +77,18 @@ const SellCrypto = () => {
 
 
     const deleteCoin = () => {
-        let valid = false
-        if (Number(count) > 0) {
-            console.log(price)
-            valid = true;
-        } else {
+        let valid = true
+        if (Number(count) <= 0) {
             setMistake(mistake + "počet coinů, ")
             valid = false
-            if (Number(price) > 0) {
-                console.log(price)
-                valid = true;
-            } else {
-                setMistake(mistake + "za kolik jsem to prodal, ")
-                valid = false
-                if (selectedCurrency !== '') {
-                    console.log(price)
-                    valid = true;
-                } else {
-                    setMistake(mistake + "vyberte měnu, ")
-                    valid = false
-                }
-            }
+        }
+        if (Number(price) <= 0) {
+            setMistake(mistake + "za kolik jsem to prodal, ")
+            valid = false
+        }
+        if (selectedCurrency == '') {
+            setMistake(mistake + "vyberte měnu, ")
+            valid = false
         }
         if(valid){
         get(child(ref(db), 'users/'+ uid + '/' + selectedCoin)).then((snapshot) => {
