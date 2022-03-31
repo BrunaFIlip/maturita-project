@@ -78,6 +78,10 @@ const SellCrypto = () => {
     const deleteCoin = () => {
         let mistake = 'Prosím vyplňte náslesdující položky správně: '
         let valid = true
+        if(selectedCoin == null || selectedCoin == undefined || selectedCoin == ''){
+            mistake = mistake + "vyber coin, "
+            valid = false
+        }
         if (Number(count) <= 0) {
             mistake = mistake + "počet coinů, "
             valid = false
