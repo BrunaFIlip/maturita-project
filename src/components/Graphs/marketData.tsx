@@ -71,7 +71,7 @@ return formatedData
 
 export const getMarketDataChart = async (page:string) => {
   let curr:any
-  await axios.get("https://api.currencyapi.com/v3/latest?apikey=a9da5980-9586-11ec-acb5-adef3790cfd2").then((value) => {
+  await axios.get("https://api.currencyapi.com/v3/latest?apikey="+process.env.REACT_APP_SECRET_API_KEY).then((value) => {
     curr = value.data.data.CZK.value
   })
   let formatedData:any
@@ -89,7 +89,7 @@ export const getMarketDataInfoChart = async (id:string) => {
   let sixtyD:any
   let ninetyD:any
   let year:any
-  await axios.get("https://api.currencyapi.com/v3/latest?apikey=a9da5980-9586-11ec-acb5-adef3790cfd2").then((value) => {
+  await axios.get("https://api.currencyapi.com/v3/latest?apikey="+process.env.REACT_APP_SECRET_API_KEY).then((value) => {
     curr = value.data.data.CZK.value
   })
   let formatedData:any
