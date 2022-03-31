@@ -147,7 +147,9 @@ const NewCrpyto = () => {
                 console.log(error);
             })
         } else {
-            setError(mistake)
+            let error = mistake
+            mistake = 'Prosím vyplňte náslesdující položky správně: '
+            setError(error)
         }
     }
 
