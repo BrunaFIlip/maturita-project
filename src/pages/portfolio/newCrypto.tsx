@@ -84,20 +84,20 @@ const NewCrpyto = () => {
         } else {
             setMistake(mistake + "počet coinů, ")
             valid = false
-        }
-        if (Number(price) > 0) {
-            console.log(price)
-            valid = true;
-        } else {
-            setMistake(mistake + "kolik jsem za to zaplatil, ")
-            valid = false
-        }
-        if (selectedCurrency !== '') {
-            console.log(price)
-            valid = true;
-        } else {
-            setMistake(mistake + "vyberte měnu, ")
-            valid = false
+            if (Number(price) > 0) {
+                console.log(price)
+                valid = true;
+            } else {
+                setMistake(mistake + "kolik jsem za to zaplatil, ")
+                valid = false
+                if (selectedCurrency !== '') {
+                    console.log(price)
+                    valid = true;
+                } else {
+                    setMistake(mistake + "vyberte měnu, ")
+                    valid = false
+                }
+            }
         }
 
         if (valid) {
