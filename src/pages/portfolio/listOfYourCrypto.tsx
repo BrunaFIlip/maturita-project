@@ -270,7 +270,7 @@ const ListOfYourCrypto = () => {
                 Object.entries(data).map((coin) => {
                     o++;
                     if (!deletedCoin.some(item => coin[0] === item)) {
-                        return (<SRec className={CheckIfFav(coin[0])} id={data[coin[0]]['id']}><h2 onClick={() => history.push('details/' + data[coin[0]]['id'])}>{coin[0]} <InfoIcon onClick={() => history.push('details/' + data[coin[0]]['id'])} /></h2>
+                        return (<SRec className={CheckIfFav(coin[0])} id={data[coin[0]]['id']}><h2 onClick={() => history.push('details/' + data[coin[0]]['id'])}>{coin[0]} <InfoIcon/></h2>
                             <br />
 
                             <FavouriteButton onClick={() => AddToFavourite(coin[0])} isFavourite={data[coin[0]]['oblibene']}><StarIcon /></FavouriteButton>
