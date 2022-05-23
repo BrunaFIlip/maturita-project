@@ -232,7 +232,7 @@ const NewCrpyto = () => {
                 <SLabel>Měna za kterou jsem nakupoval
                     <div>
                         <div>
-                            <SInput type="text" placeholder="Vyber coin" onChange={handleCurrencyFilter} />
+                            <SInput type="text" placeholder="Vyber měnu" onChange={handleCurrencyFilter} />
                         </div>
                         <SP>Zvolená měna: {selectedCurrency}</SP>
                         {filteredCurrencies.length !== 0 && (
